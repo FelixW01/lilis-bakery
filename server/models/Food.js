@@ -14,14 +14,12 @@ const foodSchema = new Schema({
     },
     spice: {
         type: Number,
-        required: true,
     },
     quantity: {
         type: Number,
     },
     img: {
         type: String,
-        required: true,
     },
 });
 
