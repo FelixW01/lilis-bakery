@@ -12,13 +12,14 @@ const foodSchema = new Schema({
         match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],
         required: true,
     },
+    spice: {
+        type: Number,
+    },
     quantity: {
         type: Number,
-        required: true,
     },
     img: {
         type: String,
-        required: true,
     },
 });
 
