@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
   }
 )
 
+// app.use(routes);
+
 // port
 const port = process.env.PORT || 3000;
 
