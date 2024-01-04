@@ -2,12 +2,7 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  lastName: {
+  userName: {
     type: String,
     required: true,
     trim: true,
@@ -21,15 +16,8 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: 5,
-  },
-  balance: {
-    type: Number,
-    match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],
-    default: 0.00
-  },
-  isChoreBuddy: {
-    type: Boolean,
+    minlength: 8,
+    match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!"],
   },
 });
 
