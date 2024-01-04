@@ -5,6 +5,7 @@ const app = express();
 require("dotenv").config();
 const Food = require("./models/Food.js");
 const port = process.env.PORT || 3000;
+const routes = require('./routes');
 app.use(express.json());
 
 // db
@@ -42,7 +43,7 @@ app.post("/food", async (req, res) => {
 });
 
 
-// app.use(routes);
+app.use(routes);
 
 // port
 
