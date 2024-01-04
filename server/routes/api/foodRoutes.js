@@ -12,10 +12,10 @@ router.get('/food', async (req, res) => {
         console.error(error);
         res.status(500).send(error)
     }
-    res.send(food);
 });
 
 router.post("/food", async (req, res) => {
+    try {
     const {name, price, count, weight, quantity, img, description, ingridients} = req.body;
 	const newFood = new Food({
 		name,
@@ -27,19 +27,23 @@ router.post("/food", async (req, res) => {
         description,
         ingridients
 	});
-	await newFood.save((err, food) => {
-		if (err) {
-			res.send(err);
-		} else {
-			res.send(food);
-		}
-	})	
+    await newFood.save()	
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error)
+    }
 });
 
 router.get('/food/:id', (req, res) => {
     // Handle GET request for /api/food/:id
-    const userId = req.params.id;
-    res.send(`Get user with ID ${userId}`);
+    try {
+        const foodId = req.params.id;
+        const food = Food.findById(foodId);
+        res.send(food)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error)
+    }
 });
 
 router.put('/food/:id', (req, res) => {
