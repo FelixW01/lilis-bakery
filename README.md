@@ -4,7 +4,7 @@
 https://github.com/FelixW01/lilis-kitchen
 
 ## Description
-E-commerce website created for the purpose of selling and advertising food from Lili's Kitchen.
+Welcome to Lili's Kitchen! This platform is designed to provide a delightful online shopping experience for food enthusiasts, allowing you to explore, discover, and purchase a wide array of delectable food products.
 
 ## Table of Contents
 - [App Demo](#app-demo)
