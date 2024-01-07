@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Food = require("../../models/Food.js");
 
-
+// Handle GET all request for /api/food
 router.get('/', async (req, res) => {
-    // Handle GET request for /api/food
     try {
         const food = await Food.find();
         res.send(food);
@@ -14,6 +13,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Handle POST request for /api/food
 router.post("/", async (req, res) => {
     try {
     const {name, price, count, weight, img, description, ingridients} = req.body;
@@ -33,26 +33,26 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get('/:id', (req, res) => {
-    // Handle GET request for /api/food/:id
+// Handle GET one by id request for /api/food/:id
+router.get('/:id', async(req, res) => {
     try {
         const foodId = req.params.id;
-        const food = Food.findById(foodId);
-        res.send(food)
+        const food = await Food.findById(foodId);
+        res.status(200).json(food)
     } catch (error) {
         console.error(error);
         res.status(500).send(error)
     }
 });
 
+// Handle PUT request for /api/food/:id
 router.put('/:id', (req, res) => {
-    // Handle PUT request for /api/food/:id
     const userId = req.params.id;
     res.send(`Update user with ID ${userId}`);
 });
 
+// Handle DELETE request for /api/food/:id
 router.delete('/:id', (req, res) => {
-    // Handle DELETE request for /api/food/:id
     const userId = req.params.id;
     res.send(`Delete user with ID ${userId}`);
 });
