@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Food = require("../../models/Food.js");
 
-// Define your API endpoints here
-router.get('/food', async (req, res) => {
+
+router.get('/', async (req, res) => {
     // Handle GET request for /api/food
     try {
         const food = await Food.find();
@@ -14,27 +14,26 @@ router.get('/food', async (req, res) => {
     }
 });
 
-router.post("/food", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
-    const {name, price, count, weight, quantity, img, description, ingridients} = req.body;
-	const newFood = new Food({
-		name,
-        price,
-        count,
-        weight,
-        quantity,
+    const {name, price, count, weight, img, description, ingridients} = req.body;
+	const newFood = await Food.create({
+		name, // Required
+        price, // Required
+        count, // Required
+        weight, // Required
         img,
         description,
         ingridients
-	});
-    await newFood.save()	
+	});	
+    res.status(200).json(newFood);
     } catch (error) {
         console.error(error);
         res.status(500).send(error)
     }
 });
 
-router.get('/food/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     // Handle GET request for /api/food/:id
     try {
         const foodId = req.params.id;
@@ -46,13 +45,13 @@ router.get('/food/:id', (req, res) => {
     }
 });
 
-router.put('/food/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     // Handle PUT request for /api/food/:id
     const userId = req.params.id;
     res.send(`Update user with ID ${userId}`);
 });
 
-router.delete('/food/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     // Handle DELETE request for /api/food/:id
     const userId = req.params.id;
     res.send(`Delete user with ID ${userId}`);
