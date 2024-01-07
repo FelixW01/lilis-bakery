@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Food = require("../../models/Food.js");
 
-// Define your API endpoints here
-router.get('/food', async (req, res) => {
-    // Handle GET request for /api/food
+// Handle GET all request for /api/food
+router.get('/', async (req, res) => {
     try {
         const food = await Food.find();
         res.send(food);
@@ -14,46 +13,46 @@ router.get('/food', async (req, res) => {
     }
 });
 
-router.post("/food", async (req, res) => {
+// Handle POST request for /api/food
+router.post("/", async (req, res) => {
     try {
-    const {name, price, count, weight, quantity, img, description, ingridients} = req.body;
-	const newFood = new Food({
-		name,
-        price,
-        count,
-        weight,
-        quantity,
+    const {name, price, count, weight, img, description, ingridients} = req.body;
+	const newFood = await Food.create({
+		name, // Required
+        price, // Required
+        count, // Required
+        weight, // Required
         img,
         description,
         ingridients
-	});
-    await newFood.save()	
+	});	
+    res.status(200).json(newFood);
     } catch (error) {
         console.error(error);
         res.status(500).send(error)
     }
 });
 
-router.get('/food/:id', (req, res) => {
-    // Handle GET request for /api/food/:id
+// Handle GET one by id request for /api/food/:id
+router.get('/:id', async(req, res) => {
     try {
         const foodId = req.params.id;
-        const food = Food.findById(foodId);
-        res.send(food)
+        const food = await Food.findById(foodId);
+        res.status(200).json(food)
     } catch (error) {
         console.error(error);
         res.status(500).send(error)
     }
 });
 
-router.put('/food/:id', (req, res) => {
-    // Handle PUT request for /api/food/:id
+// Handle PUT request for /api/food/:id
+router.put('/:id', (req, res) => {
     const userId = req.params.id;
     res.send(`Update user with ID ${userId}`);
 });
 
-router.delete('/food/:id', (req, res) => {
-    // Handle DELETE request for /api/food/:id
+// Handle DELETE request for /api/food/:id
+router.delete('/:id', (req, res) => {
     const userId = req.params.id;
     res.send(`Delete user with ID ${userId}`);
 });

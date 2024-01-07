@@ -9,7 +9,6 @@ const foodSchema = new Schema({
     },
     price: {
         type: Number,
-        match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],
         required: true,
     },
     count: {
@@ -19,11 +18,6 @@ const foodSchema = new Schema({
     weight: {
         type: String,
         required: true,
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        min: [1, "Quantity can not be less then 1."],
     },
     img: {
         type: String,
