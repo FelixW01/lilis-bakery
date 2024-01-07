@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
 });
 
 // Handle GET one by id request for /api/food/:id
-router.get('/:id', async(req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const foodId = req.params.id;
         const food = await Food.findById(foodId);
@@ -46,15 +46,36 @@ router.get('/:id', async(req, res) => {
 });
 
 // Handle PUT request for /api/food/:id
-router.put('/:id', (req, res) => {
-    const userId = req.params.id;
-    res.send(`Update user with ID ${userId}`);
+router.put('/:id', async (req, res) => {
+    try {
+        const foodId = req.params.id;
+        const food = await Food.findByIdAndUpdate(foodId, req.body);
+        const updatedFood = await Food.findById(foodId);
+        // Food wasn't found in DB
+        
+        if (!food) {res.status(404).send('Food not found')}
+        else {
+            res.status(200).json(updatedFood);
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error)
+    }
 });
 
 // Handle DELETE request for /api/food/:id
-router.delete('/:id', (req, res) => {
-    const userId = req.params.id;
-    res.send(`Delete user with ID ${userId}`);
+router.delete('/:id', async (req, res) => {
+    try {
+        const foodId = req.params.id;
+        const food = await Food.findByIdAndDelete(foodId);
+        if (!food) {res.status(404).send('Food not found')}
+        else {
+            res.status(200).json({message: `Food with ID ${foodId} was deleted`});
+        }        
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error)
+    }
 });
 
 // Export the router
