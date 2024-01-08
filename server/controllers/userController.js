@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
         }; 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error, "adsadasd");
+        res.status(500).json({message: error.message});
     }
 }
 
@@ -45,10 +45,21 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        // Check for user email
+        const user = await User.findOne({email})
+        if(user && (await bcrypt.compare(password, user.password))) {
+            res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid credentials')
+    }
     } catch (error) {
         console.error(error);
-        res.status(500).send(error);
+        res.status(500).json({message: error.message});
     }
 }
 
@@ -59,7 +70,7 @@ const getMe = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error);
+        res.status(500).json({message: error.message});
     }
 }
 
