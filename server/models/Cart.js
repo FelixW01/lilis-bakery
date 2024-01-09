@@ -15,6 +15,8 @@ const cartSchema = new Schema({
         type: Number,
         match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],
         default: 0.00,
+        orderby: Schema.Types.ObjectId,
+        ref: "User"
     },
     });
 
