@@ -4,7 +4,7 @@
   "description": "E-commerce website for lili's kitchen.",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js --ignore client",
+    "start": "start http://127.0.0.1:5173/ & npm run dev",
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
