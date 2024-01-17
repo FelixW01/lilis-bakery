@@ -8,14 +8,14 @@ import {
 const { Title, Text, Paragraph } = Typography;
 import { motion } from 'framer-motion'; 
 import { Link } from 'react-router-dom';
-
+import styles from './RegistrationForm.module.css';
 
 export default function Register() {
 const [form] = Form.useForm();
 
   return (
-    <div>
-    <div></div>
+    <div className={styles.backgroundContainer}>
+    {/* <div></div> */}
     <motion.div
       key="registration-form"
       initial={{ scale: 0, opacity: 0 }}
@@ -26,6 +26,7 @@ const [form] = Form.useForm();
     <Card 
       bordered={false} 
       style={{ width: 300 }} 
+      className={styles.registrationForm}
     >
       <Form
         form={form}
@@ -34,8 +35,8 @@ const [form] = Form.useForm();
       >
         <Title >Register</Title>
         <Form.Item
-          label="First name"
-          name="firstName"
+          label="Your name"
+          name="name"
           rules={[
             {
               required: true,
@@ -44,35 +45,7 @@ const [form] = Form.useForm();
           ]}
         >
           <Input
-            placeholder="First name"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Last name"
-          name="lastName"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your last name',
-            },
-          ]}
-        >
-          <Input
-            placeholder="Last name"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Family name"
-          name="family"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your family name',
-            },
-          ]}
-        >
-          <Input
-            placeholder="Family name"
+            placeholder="First and last name"
           />
         </Form.Item>
         <Form.Item
@@ -97,7 +70,7 @@ const [form] = Form.useForm();
               required: true,
               message: 'Please input your password!',
             },
-            { min: 5, message: "Password must be at least 5 characters" },
+            { min: 8, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, message: "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!" },
           ]}
         >
           <Input.Password
