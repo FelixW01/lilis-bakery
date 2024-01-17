@@ -3,7 +3,12 @@
 function Home() {
   return (
     <>
-        <h1>Home</h1>
+        <nav>
+          <h1>navbar here</h1>
+        </nav>
+        <div>
+          
+        </div>
     </>
   )
 }
