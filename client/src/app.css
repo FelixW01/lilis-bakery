@@ -1,0 +1,26 @@
+:root {
+  --white: #fff;
+  --black: #000;
+  --light-gray: #c3c3c3;
+  --gray: #999;
+  --dark: #353d3f;
+  --darker: #212628;
+  --darkest: #101213;
+  --dark-blue: #313866;
+  --light-green: #c1e4da;
+  --mid-green: #70aeaa;
+  --dark-green: #598983;
+  --red: #ed4c3e;
+  --red-dark: #dd3e34;
+}
+
+html,
+body {
+  font-family:
+    "Montserrat",
+    "Montserrat Regular",
+    "Montserrat Medium" sans-serif;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
