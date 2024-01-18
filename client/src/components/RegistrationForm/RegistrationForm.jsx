@@ -33,9 +33,10 @@ const [form] = Form.useForm();
         id="registration-form"
         layout="vertical"
       >
-        <Title >Register</Title>
+        <Title>Register</Title>
         <Form.Item
           label="Your name"
+          className={styles.formItem}
           name="name"
           rules={[
             {
@@ -50,6 +51,7 @@ const [form] = Form.useForm();
         </Form.Item>
         <Form.Item
           label="Email"
+          className={styles.formItem}
           name="email"
           rules={[
             {
@@ -64,6 +66,7 @@ const [form] = Form.useForm();
         </Form.Item>
         <Form.Item
           label="Password"
+          className={styles.formItem}
           name="password"
           rules={[
             {
@@ -77,10 +80,10 @@ const [form] = Form.useForm();
             placeholder="******"
           />
         </Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" className={styles.registrationFormButton}>
           Sign Up
         </Button>
-        <Paragraph>
+        <Paragraph className={styles.formText}>
           Already have an account? Login
           {' '}
           <Link to="/login">here</Link>
