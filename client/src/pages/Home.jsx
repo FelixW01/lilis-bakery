@@ -1,15 +1,8 @@
-
+import HomePage from '../components/HomePage';
 
 function Home() {
   return (
-    <>
-        <nav>
-          <h1>navbar here</h1>
-        </nav>
-        <div>
-          
-        </div>
-    </>
+      <HomePage />
   )
 }
 

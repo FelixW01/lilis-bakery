@@ -1,0 +1,22 @@
+.main {
+  max-width: 100vw;
+  min-height: 75svh;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+}
+
+video {
+  max-width: 100vw;
+  min-height: 75svh;
+  object-fit: cover;
+}
