@@ -1,0 +1,23 @@
+.logo {
+  max-height: 100%;
+  max-width: 32%;
+}
+
+.navbar {
+  display: flex;
+  background-color: var(--cream);
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.75rem 1rem;
+}
+
+.login {
+  text-decoration: none;
+  color: var(--logo-brown);
+}

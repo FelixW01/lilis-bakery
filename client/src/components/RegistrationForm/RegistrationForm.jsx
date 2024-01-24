@@ -5,7 +5,7 @@ import {
   Input,
   Button
 } from 'antd';
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 import { motion } from 'framer-motion'; 
 import { Link } from 'react-router-dom';
 import styles from './RegistrationForm.module.css';

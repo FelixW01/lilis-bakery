@@ -11,6 +11,7 @@ import Error from "./pages/error";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Cart from "./pages/Cart";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,12 @@ const router = createBrowserRouter(
         path="register" 
         element={
             <Register />
+      } 
+      />
+      <Route 
+        path="cart" 
+        element={
+            <Cart />
       } 
       />
     </Route>
