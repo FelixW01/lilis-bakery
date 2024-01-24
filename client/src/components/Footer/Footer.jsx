@@ -1,6 +1,6 @@
 import styles from "./Footer.module.css";
 
-export default function HomePage() {
+export default function Footer() {
   return (
     <>
     </>
