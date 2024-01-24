@@ -84,9 +84,9 @@ const [form] = Form.useForm();
           Sign Up
         </Button>
         <Paragraph className={styles.formText}>
-          Already have an account? Login
+          Already have an account?
           {' '}
-          <Link to="/login">here</Link>
+          <Link to="/login">Login</Link>
         </Paragraph>
       </Form>
     </Card>
