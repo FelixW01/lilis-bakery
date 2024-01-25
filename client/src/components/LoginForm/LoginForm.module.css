@@ -1,6 +1,6 @@
 .backgroundContainer {
   position: relative;
-  height: 100vh;
+  max-height: 100vh;
 }
 
 .loginForm {
