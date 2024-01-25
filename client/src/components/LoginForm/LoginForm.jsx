@@ -15,7 +15,6 @@ export default function Login() {
   const [form] = Form.useForm();
 
   return (
-    
     <div className={styles.backgroundContainer}>
     
     <motion.div
