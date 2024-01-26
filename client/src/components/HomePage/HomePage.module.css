@@ -32,3 +32,49 @@ video {
   object-fit: cover;
   position: relative;
 }
+
+.hero {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100svh;
+}
+
+.nastar {
+  max-width: 80vw;
+  max-height: 30vh;
+}
+
+.description {
+  text-align: center;
+}
+
+.description p {
+  font-size: 0.75rem;
+  width: 38ch;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.price p {
+  margin-right: 0.5rem;
+}
+
+.price button {
+  background-color: var(--dark-cream);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.price select {
+  border-radius: 0.4rem;
+  height: 2.5rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
