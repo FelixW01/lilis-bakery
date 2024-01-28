@@ -89,3 +89,7 @@ video {
   text-decoration: none;
   color: var(--black);
 }
+
+.orderNow:hover {
+  color: var(--black);
+}
