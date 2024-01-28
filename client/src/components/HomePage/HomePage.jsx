@@ -21,14 +21,13 @@ export default function HomePage() {
         </div>
         <div className={styles.price}>
             <p>$15</p>
-            <select id="quantity" name="quantity" className={styles.quantity} placeholder="qty">
-              <option value="" disabled selected hidden>Quantity</option>
+            <select id="quantity" name="quantity" className={styles.quantity} defaultValue={"DEFAULT"}>
+              <option value="DEFAULT" disabled hidden>Quantity</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
               <option value="5">5</option>
-              <option value="">custom</option>
             </select>
             <button>Add to Cart</button>
         </div>
