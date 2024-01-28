@@ -34,7 +34,7 @@ video {
 }
 
 .hero {
-  margin-top: 4rem;
+  padding-top: 8rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -78,4 +78,14 @@ video {
   height: 2.5rem;
   font-size: 0.75rem;
   text-align: center;
+}
+
+.content button {
+  background-color: var(--dark-cream);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+.orderNow {
+  text-decoration: none;
+  color: var(--black);
 }
