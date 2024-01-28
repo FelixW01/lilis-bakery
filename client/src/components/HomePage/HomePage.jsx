@@ -2,20 +2,21 @@ import styles from "./HomePage.module.css";
 import videoBG from "../../assets/nastar.mp4";
 import nastar from "../../assets/nastar.png";
 
+
 export default function HomePage() {
 
   return (
     <>
 
-      <div className={styles.main}>
+      <div className={styles.main} id="main">
       <video src={videoBG} autoPlay loop muted />
         <div className={styles.content}>
           <h3>Life's short, eat dessert first.</h3>
-          <button>Order Now</button>
+          <button><a href="#hero" className={styles.orderNow}>Order Now</a></button>
         </div>
       </div>
 
-      <div className={styles.hero}>
+      <div className={styles.hero} id="hero">
         <img src={nastar} className={styles.nastar}></img>
         <div className={styles.description}>
           <p>Nastar | 10 pieces | 8oz</p>

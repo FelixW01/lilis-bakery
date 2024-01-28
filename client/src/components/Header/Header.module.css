@@ -1,13 +1,16 @@
 .logo {
-  max-height: 100%;
-  max-width: 32%;
+  max-height: 80%;
+  max-width: 40%;
 }
 
 .navbar {
+  max-height: 20vh;
   display: flex;
-  background-color: var(--cream);
+  background-color: var(--dark-cream);
   flex-direction: row;
   justify-content: space-between;
+  position: fixed;
+  z-index: 100;
 }
 
 .navDiv {
@@ -16,8 +19,16 @@
   justify-content: center;
   margin: 0.75rem 1rem;
 }
+.logoDiv {
+  display: inline;
+  margin: 0.7rem 1rem;
+}
+
+.logoDiv a {
+  display: inline;
+}
 
 .navLink {
   text-decoration: none;
-  color: var(--logo-brown);
+  color: var(--black);
 }
