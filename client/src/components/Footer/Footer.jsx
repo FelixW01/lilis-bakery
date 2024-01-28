@@ -52,6 +52,11 @@ export default function Footer() {
         </li>
           )
         })}
+        <li>
+          <a href="mailto:felixwillem01@yahoo.com" className={styles.socialsLink}
+            ><i className="fa-solid fa-envelope"></i>
+          </a>
+        </li>
       </ul>
     </div>
       <p className={styles.copyright}>&copy; {getCurrentYear()} Lili's Bakery</p>
