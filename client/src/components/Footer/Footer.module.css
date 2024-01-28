@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark-cream);
+}
+
+.copyright {
+  font-size: 0.75rem;
+}
+
+.socialsUl li {
+  list-style-type: none;
+  margin: 1rem 2rem 0 2rem;
+}
+
+.socialsUl {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 0;
+  margin-bottom: 0.1rem;
+}
+
+.socialsLink {
+  color: var(--black);
+}
