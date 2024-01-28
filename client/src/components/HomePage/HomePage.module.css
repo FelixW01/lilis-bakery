@@ -49,6 +49,7 @@ video {
 
 .description {
   text-align: center;
+  margin-top: 0.8rem;
 }
 
 .description p {
