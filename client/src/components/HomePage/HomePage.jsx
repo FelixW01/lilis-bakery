@@ -6,6 +6,7 @@ export default function HomePage() {
 
   return (
     <>
+
       <div className={styles.main}>
       <video src={videoBG} autoPlay loop muted />
         <div className={styles.content}>
@@ -13,6 +14,7 @@ export default function HomePage() {
           <button>Order Now</button>
         </div>
       </div>
+
       <div className={styles.hero}>
         <img src={nastar} className={styles.nastar}></img>
         <div className={styles.description}>
@@ -31,6 +33,10 @@ export default function HomePage() {
             </select>
             <button>Add to Cart</button>
         </div>
+      </div>
+
+      <div className={styles.contact}>
+      
       </div>
     </>
   );

@@ -49,11 +49,12 @@ video {
 
 .description {
   text-align: center;
+  margin-top: 0.8rem;
 }
 
 .description p {
   font-size: 0.75rem;
-  width: 38ch;
+  width: 35ch;
 }
 
 .price {

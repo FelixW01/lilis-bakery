@@ -12,9 +12,9 @@ export default function Header() {
           </Link>
       </div>
       <div className={styles.navDiv}>
-            <Link to='/login' className={styles.login}>Login</Link>
+            <Link to='/login' className={styles.navLink}>Login</Link>
       </div>
-      <div className={styles.navDiv}><Link to='/cart' className={styles.login}>Cart</Link></div>
+      <div className={styles.navDiv}><Link to='/cart' className={styles.navLink}>Cart</Link></div>
     </nav>
     </>
   );
