@@ -16,7 +16,16 @@ export default function HomePage() {
         </div>
       </div>
 
+      <div className={styles.about}>
+      <h2>What is Nastar?</h2>
+      <img src={nastar} className={styles.nastar}></img>
+      <div className={styles.description}>
+        <p>Nastar is a traditional Indonesian pastry renowned for it's delightful combination of crunchy buttery pastry and sweet-tangy pineapple filling.</p>
+      </div>
+      </div>
+
       <div className={styles.hero} id="hero">
+      <h2>Order Today!</h2>
         <img src={nastar} className={styles.nastar}></img>
         <div className={styles.description}>
           <p>Nastar | 10 pieces | 8oz</p>

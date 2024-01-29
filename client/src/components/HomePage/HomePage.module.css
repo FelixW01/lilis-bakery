@@ -1,6 +1,7 @@
+/* Main/Video */
 .main {
   max-width: 100vw;
-  min-height: 70svh;
+  min-height: 100svh;
   display: inline;
   position: relative;
 }
@@ -28,18 +29,60 @@
 
 video {
   max-width: 100vw;
-  min-height: 75svh;
+  min-height: 80svh;
   object-fit: cover;
   position: relative;
 }
 
+.content button {
+  background-color: var(--dark-cream);
+  text-decoration: none;
+  margin-left: 0.25rem;
+}
+
+.orderNow {
+  text-decoration: none;
+  color: var(--black);
+}
+
+.orderNow:hover {
+  color: var(--black);
+}
+/* */
+
+/* About */
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-top: 4rem;
+}
+
+.about p {
+  font-size: 0.75rem;
+  width: 35ch;
+}
+
+.about h2 {
+  margin-bottom: 1rem;
+}
+
+/*  */
+
+/* Menu */
 .hero {
-  padding-top: 8rem;
+  padding-top: 7rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   min-height: 100svh;
+}
+
+.hero h2 {
+  margin-bottom: 1rem;
 }
 
 .nastar {
@@ -64,13 +107,14 @@ video {
   align-items: center;
 }
 .price p {
-  margin-right: 0.5rem;
+  margin: 0.5rem;
 }
 
 .price button {
   background-color: var(--dark-cream);
   text-decoration: none;
   margin-left: 0.25rem;
+  font-size: 0.9rem;
 }
 
 .price select {
@@ -78,18 +122,6 @@ video {
   height: 2.5rem;
   font-size: 0.75rem;
   text-align: center;
+  margin-right: 0.5rem;
 }
-
-.content button {
-  background-color: var(--dark-cream);
-  text-decoration: none;
-  margin-left: 0.25rem;
-}
-.orderNow {
-  text-decoration: none;
-  color: var(--black);
-}
-
-.orderNow:hover {
-  color: var(--black);
-}
+/*  */
