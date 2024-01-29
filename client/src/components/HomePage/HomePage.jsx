@@ -28,11 +28,11 @@ export default function HomePage() {
       <h2>Order Today!</h2>
         <img src={nastar} className={styles.nastar}></img>
         <div className={styles.description}>
-          <p>Nastar | 10 pieces | 8oz</p>
+          <p>Nastar | 25 Pieces | 13.4 oz</p>
           <p>All-Purpose flour, unsalted butter, egg yolks, powdered sugar, vanilla extract, pineapple jam.</p>
         </div>
         <div className={styles.price}>
-            <p>$15</p>
+            <p>$25</p>
             <select id="quantity" name="quantity" className={styles.quantity} defaultValue={"DEFAULT"}>
               <option value="DEFAULT" disabled hidden>Quantity</option>
               <option value="1">1</option>
