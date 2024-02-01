@@ -10,10 +10,13 @@ import {
 const { Title, Text, Paragraph } = Typography;
 import styles from './LoginForm.module.css';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 export default function Login() {
   const [form] = Form.useForm();
-
+  const handleFormSubmit = (values) => {
+    axios.get('/')
+  }
   return (
     <div className={styles.backgroundContainer}>
     
@@ -28,6 +31,7 @@ export default function Login() {
         form={form}
         id="login-form"
         layout="vertical"
+        onFinish={handleFormSubmit}
       >
         <Title>Login</Title>
         <Form.Item

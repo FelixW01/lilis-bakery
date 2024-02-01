@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
+const test = (req, res) => {
+    res.send('connected!')
+}
 
 
 // Register a new user
@@ -11,13 +14,15 @@ const registerUser = asyncHandler(async (req, res) => {
         const userExists = await User.findOne({email})
         // Validate user input
         if(!name || !email || !password) {
-            res.status(400)
-            throw new Error('Please add all fields')
+            return res.status(400).json({
+                error: 'Please enter all fields'
+            })
         }
         // Check if user exists
         if(userExists) {
-            res.status(400)
-            throw new Error('User already exists!')
+            return res.status(400).json({
+                error: 'Email is taken already.'
+            })
         } 
         // Create User
         const newUser = await User.create({
@@ -30,13 +35,13 @@ const registerUser = asyncHandler(async (req, res) => {
             _id: newUser._id,
             name: newUser.name,
             email: newUser.email,
-            token: generateToken(user._id)
+            token: generateToken(newUser._id)
         })
         } else {
-            res.status(400)
-            throw new Error('Invalid user data')
+            res.status(400).json({error: 'Invalid user data'})
         }; 
 })
+// }
 
 // Logs user in
 const loginUser = asyncHandler(async (req, res) => {
@@ -51,8 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
             token: generateToken(user._id)
         })
     } else {
-        res.status(400)
-        throw new Error('Invalid credentials')
+        res.status(400).json({error: 'Invalid Credentials'})
     }
 })
 
@@ -72,4 +76,4 @@ const generateToken = (id) => {
         expiresIn: '30d'})
 }
 
-module.exports = {registerUser, loginUser, getMe};
+module.exports = {registerUser, loginUser, getMe, test};
