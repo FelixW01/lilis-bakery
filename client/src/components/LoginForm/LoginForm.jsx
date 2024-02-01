@@ -11,12 +11,39 @@ const { Title, Text, Paragraph } = Typography;
 import styles from './LoginForm.module.css';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function Login() {
   const [form] = Form.useForm();
-  const handleFormSubmit = (values) => {
-    axios.get('/')
+    const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const navigate = useNavigate();
+  
+   // Handles login of user
+  const handleFormSubmit = async (e) => {
+    const {email, password} = data;
+    try {
+      const { data } = await axios.post('/login', {
+       email, password
+      });
+      if (data.error) {
+        toast.error(data.error)
+      } else {
+        setData({})
+        toast.success('Login Successful. Welcome!')
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
+
   return (
     <div className={styles.backgroundContainer}>
     
@@ -38,6 +65,8 @@ export default function Login() {
           label="Email"
           className={styles.formItem}
           name="email"
+          value={data.email}
+          onChange={(e) => setData({...data, email: e.target.value})}
           rules={[
             {
               required: true,
@@ -55,6 +84,8 @@ export default function Login() {
           label="Password"
           className={styles.formItem}
           name="password"
+          value={data.password}
+          onChange={(e) => setData({...data, password: e.target.value})}
           rules={[
             {
               required: true,
