@@ -5,7 +5,15 @@ const port = process.env.PORT || 3000;
 const routes = require('./routes');
 const db = require('./config/connection.js');
 const path = require('path');
+const cors = require('cors');
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  optionsSuccessStatus: 200,
+  credentials: true,
+}
 
+// middleware
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);

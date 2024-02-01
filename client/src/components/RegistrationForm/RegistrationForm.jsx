@@ -9,13 +9,41 @@ const { Title, Paragraph } = Typography;
 import { motion } from 'framer-motion'; 
 import { Link } from 'react-router-dom';
 import styles from './RegistrationForm.module.css';
+import { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
-const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+  
+  // Handles registration of new user
+  const handleFormSubmit = async (e) => {
+    const {name, email, password} = data;
+    try {
+      const { data } = await axios.post('/register', {
+        name, email, password
+      });
+      if (data.error) {
+        toast.error(data.error)
+      } else {
+        setData({})
+        toast.success('Registration Successful. Welcome!')
+        navigate('/')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className={styles.backgroundContainer}>
-    {/* <div></div> */}
     <motion.div
       key="registration-form"
       initial={{ scale: 0, opacity: 0 }}
@@ -31,6 +59,7 @@ const [form] = Form.useForm();
       <Form
         form={form}
         id="registration-form"
+        onFinish={handleFormSubmit}
         layout="vertical"
       >
         <Title>Register</Title>
@@ -38,6 +67,9 @@ const [form] = Form.useForm();
           label="Your name"
           className={styles.formItem}
           name="name"
+          type="text"
+          value={data.name}
+          onChange={(e) => setData({...data, name: e.target.value})}
           rules={[
             {
               required: true,
@@ -53,6 +85,9 @@ const [form] = Form.useForm();
           label="Email"
           className={styles.formItem}
           name="email"
+          type="email"
+          value={data.email}
+          onChange={(e) => setData({...data, email: e.target.value})}
           rules={[
             {
               required: true,
@@ -68,6 +103,9 @@ const [form] = Form.useForm();
           label="Password"
           className={styles.formItem}
           name="password"
+          type="password"
+          value={data.password}
+          onChange={(e) => setData({...data, password: e.target.value})}
           rules={[
             {
               required: true,
