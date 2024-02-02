@@ -1,7 +1,7 @@
 # Lili's Bakery
 
 ## App Repo 
-https://github.com/FelixW01/lilis-kitchen
+https://github.com/FelixW01/lilis-bakery
 
 ## Description
 Welcome to Lili's Kitchen. This platform is designed to provide a delightful online shopping experience for food enthusiasts, allowing you to explore, discover, and purchase food products from Lili's Bakery.
