@@ -7,7 +7,7 @@ const db = require('./config/connection.js');
 const path = require('path');
 const cors = require('cors');
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: 'http://127.0.0.1:5173',
   optionsSuccessStatus: 200,
   credentials: true,
 }
