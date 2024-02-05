@@ -14,11 +14,11 @@ const corsOptions = {
 }
 
 // middleware
+app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
-app.use(cookieParser());
 
 // if we're in production, serve client/dist as static assets
 if (process.env.NODE_ENV === 'production') {
