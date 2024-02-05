@@ -70,13 +70,18 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // Get User Data
-const getMe = asyncHandler(async (req, res) => {
-        const {_id, name, email} = await User.findById(req.user.id)
-        res.status(200).json({
-            id: _id,
-            name,
-            email,
+const getMe = (req, res) => {
+    const {token} = req.cookies;
+    if(token) {
+        jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
+            if(err) {
+                res.status(401).json({error: 'Not authorized, invalid token'})
+            }
+            res.status(200).json(user)
         })
-})
+    } else {
+        res.json(null)
+    }
+}
 
 module.exports = {registerUser, loginUser, getMe, test};
