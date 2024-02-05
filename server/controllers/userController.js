@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
+
 const test = (req, res) => {
     res.send('connected!')
 }
@@ -45,20 +46,28 @@ const registerUser = asyncHandler(async (req, res) => {
 
 // Logs user in
 const loginUser = asyncHandler(async (req, res) => {
-        const { email, password } = req.body;
-        // Check for user email
-        const user = await User.findOne({email})
-        if(user && (await bcrypt.compare(password, user.password))) {
-            res.json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            token: generateToken(user._id)
-        })
-    } else {
-        res.json({error: 'Invalid email or password'})
-    }
-})
+  const { email, password } = req.body;
+  // Check for user email
+  const user = await User.findOne({ email });
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    const token = jwt.sign(
+      { email: user.email, id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
+    // Set HttpOnly cookie
+    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token,
+    });
+  } else {
+    res.status(401).json({ error: 'Invalid email or password' });
+  }
+});
 
 // Get User Data
 const getMe = asyncHandler(async (req, res) => {
@@ -69,11 +78,5 @@ const getMe = asyncHandler(async (req, res) => {
             email,
         })
 })
-
-// Generate JWT
-const generateToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: '30d'})
-}
 
 module.exports = {registerUser, loginUser, getMe, test};
