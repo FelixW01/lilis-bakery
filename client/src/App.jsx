@@ -13,7 +13,7 @@ function App() {
   return (
     <>
     <Header />
-    <Toaster position="top-center" toastOptions={{duration: 2000}}/>
+    <Toaster position="bottom-center" toastOptions={{duration: 2000}}/>
       <Outlet/>
       <Footer />
     </>
