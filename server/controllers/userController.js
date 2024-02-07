@@ -4,10 +4,6 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
 
-const test = (req, res) => {
-    res.send('connected!')
-}
-
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -84,4 +80,4 @@ const getMe = (req, res) => {
     }
 }
 
-module.exports = {registerUser, loginUser, getMe, test};
+module.exports = {registerUser, loginUser, getMe};
