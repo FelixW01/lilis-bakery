@@ -15,7 +15,30 @@ Welcome to Lili's Kitchen. This platform is designed to provide a delightful onl
 ## App Demo
 
 ## Installation
-To run Locally, clone the repository and run "npm install" & "npm run dev" in the terminal, then open [localhost](http://127.0.0.1:5173/) on your browser.
+To run locally, follow these steps:
+
+1. Clone the repository using the following command:
+    ```bash
+    git clone https://github.com/FelixW01/lilis-bakery.git
+    ```
+
+2. Navigate to the project directory:
+    ```bash
+    cd lilis-bakery
+    ```
+
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
+
+4. Run the application:
+    ```bash
+    npm run dev
+    ```
+
+5. Open [localhost](http://127.0.0.1:5173/) in your web browser.
+
 
 ## Contributing
 Felix Willem
