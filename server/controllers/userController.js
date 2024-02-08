@@ -65,6 +65,13 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Logout
+ const logoutUser = (req, res) => {
+    res.clearCookie('token', { httpOnly: true, sameSite: 'none', secure: true });
+    res.json({ message: 'Logged out' });
+  };
+
+
 // Get User Data
 const getMe = (req, res) => {
     const {token} = req.cookies;
@@ -80,4 +87,4 @@ const getMe = (req, res) => {
     }
 }
 
-module.exports = {registerUser, loginUser, getMe};
+module.exports = {registerUser, loginUser, getMe, logoutUser};
