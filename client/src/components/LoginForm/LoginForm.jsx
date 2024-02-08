@@ -14,6 +14,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useContext } from "react";
+import { UserContext } from "../../../context/userContext";
 
 export default function Login() {
   const [form] = Form.useForm();
@@ -22,9 +24,9 @@ export default function Login() {
     email: '',
     password: ''
   })
-
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
-  
+
    // Handles login of user
   const handleFormSubmit = async (e) => {
     const {email, password} = data;
@@ -36,6 +38,7 @@ export default function Login() {
         toast.error(data.error)
       } else {
         setData({})
+        setUser(data)
         toast.success('Login Successful. Welcome!')
         navigate('/')
       }
