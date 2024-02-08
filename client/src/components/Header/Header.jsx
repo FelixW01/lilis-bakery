@@ -9,12 +9,12 @@ import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 
 export default function Header() {
   const location = useLocation();
-  const {user} = useContext(UserContext);
+  const {user, logout} = useContext(UserContext);
   const items = [
   {
     key: '1',
     label: (
-      <a type='text' className={styles.logoutButton}>Logout</a>
+      <a type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
     )
   },{
     key: '2',
@@ -32,7 +32,7 @@ export default function Header() {
   function capFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-
+  console.log(user)
   return (
     <>
    <nav className={styles.navbar}>
