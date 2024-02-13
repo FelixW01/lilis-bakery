@@ -14,17 +14,17 @@ export default function Header() {
   {
     key: '1',
     label: (
-      <a type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
+      <a type='text' className={styles.logoutButton}>Orders</a>
     )
   },{
-    key: '2',
+     key: '2',
     label: (
-      <a type='text' className={styles.logoutButton}>Your Orders</a>
+      <a type='text' className={styles.logoutButton}>Profile</a>
     )
   },{
     key: '3',
     label: (
-      <a type='text' className={styles.logoutButton}>Profile</a>
+      <a type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
     )
   },
 
