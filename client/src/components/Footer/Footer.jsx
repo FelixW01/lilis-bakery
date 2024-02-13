@@ -1,4 +1,5 @@
 import styles from "./Footer.module.css";
+import { UpOutlined } from '@ant-design/icons';
 
 const socials = [
     {
@@ -29,10 +30,13 @@ export default function Footer() {
   function getCurrentYear() {
     return new Date().getFullYear();
   }
-
+  function goToTop() {
+  document.documentElement.scrollTop = 0;
+}
   return (
     <>
     <div className={styles.container}>
+    <a className={styles.upArrow} onClick={goToTop}><UpOutlined /></a>
     <div className={styles.socialsDiv}>
       <ul className={styles.socialsUl}>
       {/* Loop through socials array */}
