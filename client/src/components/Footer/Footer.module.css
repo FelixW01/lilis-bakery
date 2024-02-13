@@ -27,3 +27,9 @@
 .socialsLink {
   color: var(--black);
 }
+
+.upArrow {
+  text-decoration: none;
+  color: var(--black);
+  margin-top: 0.75rem;
+}
