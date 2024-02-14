@@ -14,12 +14,12 @@ export default function Header() {
   {
     key: '1',
     label: (
-      <a type='text' className={styles.logoutButton}>Orders</a>
+      <Link to='/orders' className={styles.logoutButton}>Orders</Link>
     )
   },{
      key: '2',
     label: (
-      <a type='text' className={styles.logoutButton}>Profile</a>
+      <Link to='/profile' className={styles.logoutButton}>Profile</Link>
     )
   },{
     key: '3',

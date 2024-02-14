@@ -12,6 +12,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
+import Orders from "./pages/Orders";
+import Profile from "./pages/Profile";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +36,18 @@ const router = createBrowserRouter(
         path="cart" 
         element={
             <Cart />
+      } 
+      />
+      <Route 
+        path="Orders" 
+        element={ 
+            <Orders />
+      } 
+      />
+      <Route 
+        path="Profile" 
+        element={ 
+            <Profile />
       } 
       />
     </Route>
