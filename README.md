@@ -4,7 +4,7 @@
 https://github.com/FelixW01/lilis-bakery
 
 ## Description
-Welcome to Lili's Bakery. This platform is designed to provide a delightful online shopping experience for food enthusiasts, allowing you to explore, discover, and purchase food products from Lili's Bakery.
+Welcome to Lili's Bakery. This platform is designed to provide a delightful online shopping experience for food enthusiasts, allowing you to explore, discover, and purchase Indonesian baked goods products from Lili's Bakery.
 
 ## Table of Contents
 - [App Demo](#app-demo)
