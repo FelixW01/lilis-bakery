@@ -10,7 +10,7 @@ const navigate = useNavigate();
 const [user, setUser] = useState(null);
 useEffect(() => {
     if(!user) {
-        axios.get('/me').then(({data}) => {
+        axios.get('/user/me').then(({data}) => {
             setUser(data)
         })
     }
@@ -20,7 +20,7 @@ useEffect(() => {
 
 const logout = async() => {
     try {
-      const response = await axios.post('/logout', null, {
+      const response = await axios.post('/user/logout', null, {
         withCredentials: true,
       });
       if (response.status === 200) {
