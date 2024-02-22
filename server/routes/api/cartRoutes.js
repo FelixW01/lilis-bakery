@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Cart = require("../../models/Cart.js");
 const Food = require("../../models/Food.js");
+const auth = require("../../middleware/auth.js");
 
-// Handle GET all request for /api/food
+// Handle GET all request for /api/cart
 router.get('/', async (req, res) => {
     const user = req.user._id;
     try {
@@ -20,14 +21,15 @@ router.get('/', async (req, res) => {
 });
 
 // Handle POST request for /api/cart
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
+    const user = req.user._id;
     const {itemId, quantity} = req.body;
     try {
-	const cart = await Cart.findOne({userId});
+	const cart = await Cart.findOne({user});
     const item = await Food.findOne({_id: itemId});
 
     if (!item) {
-        res.status(404).send({message: 'Item not found'});
+        res.status(404).send({message: 'Item not found'});  
         return;
     }
     const price = item.price;
@@ -78,12 +80,12 @@ router.delete('/', async (req, res) => {
         const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
         if (itemIndex > -1) {
             let item = cart.items[itemIndex];
-            cart.bill -= item.quantity * item.price;
-            if(cart.bill < 0) {
-                cart.bill = 0
+            cart.subTotal -= item.quantity * item.price;
+            if(cart.subTotal < 0) {
+                cart.subTotal = 0
             }
             cart.items.splice(itemIndex, 1);
-            cart.bill = cart.items.reduce((acc, curr) => {
+            cart.subTotal = cart.items.reduce((acc, curr) => {
                 return acc + curr.quantity * curr.price;98
             }, 0)
             cart = await cart.save();

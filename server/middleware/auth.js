@@ -1,34 +1,28 @@
 const jwt = require('jsonwebtoken');
-const asyncHandler = require('express-async-handler')
 const User = require('../models/User.js');
 
-  const  protect = asyncHandler(async (req, res, next) => {
-    let token = req.body.token || req.query.token || req.headers.authorization;
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-      try {
-        // Get token from header
-        token = req.headers.authorization.split(' ')[1];
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        // Verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
 
-        // Get user from the token
-        req.user = await User.findById(decoded.id).select('-password');
-
-        next()
-      } catch(error) {
-        console.log(error)
-        res.status(401);
-        throw new Error('Not authorized, token failed');
-      }
+    if (!user || !isValidToken(decoded, user.tokens)) {
+      return res.status(401).send({ error: 'Authentication failed' });
     }
-    if(!token) {
-      res.status(401);
-      throw new Error('Not authorized, no token');
-    }
-  });
-    
 
+    req.token = token;
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).send({ error: 'Authentication required' });
+  }
+};
 
+const isValidToken = (decodedToken, userTokens) => {
+  // Check if the decoded token is not expired or revoked
+  return userTokens.some((userToken) => userToken.token === decodedToken);
+};
 
-module.exports = { protect }
+module.exports = auth;

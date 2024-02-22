@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { UserContextProvider } from "../context/userContext";
 
-axios.defaults.baseURL = 'http://localhost:3000/api/user';
+axios.defaults.baseURL = 'http://localhost:3000/api';
 axios.defaults.withCredentials = true;
 
 function App() {

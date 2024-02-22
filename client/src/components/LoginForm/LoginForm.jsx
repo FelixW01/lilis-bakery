@@ -31,7 +31,7 @@ export default function Login() {
   const handleFormSubmit = async (e) => {
     const {email, password} = data;
     try {
-      const { data } = await axios.post('/login', {
+      const { data } = await axios.post('/user/login', {
        email, password
       });
       if (data.error) {
