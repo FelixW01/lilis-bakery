@@ -2,27 +2,25 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
 
 const auth = async (req, res, next) => {
-  try {
-    const token = req.header('Authorization').replace('Bearer ', '');
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  
+    // Retrieve the token from the 'token' cookie
+    const { authorization } = req.headers;
 
-    const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
-
-    if (!user || !isValidToken(decoded, user.tokens)) {
-      return res.status(401).send({ error: 'Authentication failed' });
+    if (!authorization) { 
+      return res.status(401).json({error: 'Authorization token required'});
     }
 
-    req.token = token;
-    req.user = user;
+    const token = authorization.split(' ')[1];
+
+    try {
+    const {_id} = jwt.verify(token, process.env.JWT_SECRET)
+
+    req.user = await User.findOne({_id}).select('_id'); 
     next();
   } catch (error) {
-    res.status(401).send({ error: 'Authentication required' });
+    console.error('Error in auth middleware:', error);
+    res.status(401).json({ error: 'Request is not authorized' });
   }
-};
-
-const isValidToken = (decodedToken, userTokens) => {
-  // Check if the decoded token is not expired or revoked
-  return userTokens.some((userToken) => userToken.token === decodedToken);
 };
 
 module.exports = auth;
