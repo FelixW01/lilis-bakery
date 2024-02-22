@@ -1,15 +1,17 @@
 import styles from "./HomePage.module.css";
 import videoBG from "../../assets/nastar.mp4";
 import nastar from "../../assets/nastar.png";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
+import { UserContext } from "../../../context/userContext";
 
 export default function HomePage() {
   // hard code itemId because we only have one item in the database
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
-
+  const {user} = useContext(UserContext)
+  // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
       try {
@@ -23,9 +25,24 @@ export default function HomePage() {
     fetchFoodData()
   },[])
 
+  // Adds item to cart
   const addToCart = async () => {
+    
+    if (!token) {
+      console.error('Token not found');
+      return;
+    }
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${user.token}`,
+    };
+
     try {
-      const response = await axios.post('/cart', {itemId, quantity});
+      const response = await axios.post('/cart', {itemId, quantity}, {
+        withCredentials: true,
+        headers: headers,
+      });
 
       if (response.status === 200 || response.status === 201) {
         console.log('Item added to cart', response.data);

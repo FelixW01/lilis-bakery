@@ -8,6 +8,7 @@ export const UserContext = createContext({})
 export function UserContextProvider({ children }) {
 const navigate = useNavigate();
 const [user, setUser] = useState(null);
+// Get user data on mount
 useEffect(() => {
     if(!user) {
         axios.get('/user/me').then(({data}) => {
@@ -15,9 +16,9 @@ useEffect(() => {
         })
     }
 },[])
+// Logs in user
 
-
-
+// Logs out user
 const logout = async() => {
     try {
       const response = await axios.post('/user/logout', null, {

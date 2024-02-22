@@ -4,6 +4,7 @@ const Cart = require("../../models/Cart.js");
 const Food = require("../../models/Food.js");
 const auth = require("../../middleware/auth.js");
 
+
 // Handle GET all request for /api/cart
 router.get('/', async (req, res) => {
     const user = req.user._id;
@@ -58,7 +59,7 @@ router.post("/", auth, async (req, res) => {
     } else {
         //no cart exists, create one
         const newCart = await Cart.create({
-            userId,
+            user,
             items: [{ itemId, name, quantity, price}],
             subTotal: price * quantity
         });
@@ -71,9 +72,9 @@ router.post("/", auth, async (req, res) => {
 });
 
 // Handle Delete request for /api/cart/ by user's id
-router.delete('/', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     const user = req.user._id;
-    const itemId = req.query.itemId;
+    const itemId = req.body.itemId;
     try {
         let cart = await Cart.findOne({user})
 
