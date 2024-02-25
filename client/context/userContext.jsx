@@ -8,16 +8,24 @@ export const UserContext = createContext({})
 export function UserContextProvider({ children }) {
 const navigate = useNavigate();
 const [user, setUser] = useState(null);
+
 // Get user data on mount
 useEffect(() => {
+  const token = localStorage.getItem('token');
+  const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+
     if(!user) {
-        axios.get('/user/me').then(({data}) => {
+        axios.get('/user/me', {
+        withCredentials: true,
+        headers: headers,
+      }).then(({data}) => {
             setUser(data)
         })
     }
 },[])
-// Logs in user
-
 // Logs out user
 const logout = async() => {
     try {
