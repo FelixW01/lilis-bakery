@@ -1,26 +1,28 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User.js');
 
-const auth = async (req, res, next) => {
-  
-    // Retrieve the token from the 'token' cookie
-    const { authorization } = req.headers;
+const authMiddleware = (req, res, next) => {
+  // Get the token from the request cookies
+  const token = req.cookies.token;
 
-    if (!authorization) { 
-      return res.status(401).json({error: 'Authorization token required'});
-    }
+  // Check if the token exists
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized: No token provided' });
+  }
 
-    const token = authorization.split(' ')[1];
+  try {
+    // Verify the token using your secret or public key
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace 'your-secret-key' with your actual secret or public key
 
-    try {
-    const {_id} = jwt.verify(token, process.env.JWT_SECRET)
+    // Attach the decoded user information to the request for use in subsequent middleware/routes
+    req.user = decoded;
 
-    req.user = await User.findOne({_id}).select('_id'); 
+    // Continue to the next middleware or route handler
     next();
   } catch (error) {
-    console.error('Error in auth middleware:', error);
-    res.status(401).json({ error: 'Request is not authorized' });
+    // Token verification failed
+    console.error('Token verification failed:', error);
+    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
   }
 };
 
-module.exports = auth;
+module.exports = authMiddleware;

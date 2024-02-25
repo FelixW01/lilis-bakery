@@ -50,7 +50,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const token = jwt.sign(
       { email: user.email, id: user._id, name: user.name },
       process.env.JWT_SECRET,
-      { expiresIn: '30d' }
+      { expiresIn: '5d' }
     );
 
     // Set HttpOnly cookie

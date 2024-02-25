@@ -22,7 +22,7 @@ export default function Login() {
     const [data, setData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
   })
   const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
@@ -39,14 +39,16 @@ export default function Login() {
       } else {
         setData({})
         setUser(data)
+        localStorage.setItem('token', data.token)
         toast.success('Login Successful. Welcome!')
         navigate('/')
+        form.resetFields()
       }
     } catch (error) {
       console.log(error)
     }
   }
-
+console.log(user, '<<<<<<<<USER')
   return (
     <div className={styles.backgroundContainer}>
     
