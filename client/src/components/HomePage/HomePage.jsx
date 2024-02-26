@@ -63,7 +63,7 @@ export default function HomePage() {
   
   // Grabs the quantity selected
   const handleChange = (value) => {
-  setQuantity(value);
+    setQuantity(value);
   };
 
   return (
