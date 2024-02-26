@@ -5,6 +5,7 @@ import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../../context/userContext";
 import { Select } from 'antd';
+import { toast } from 'react-hot-toast';
 
 export default function HomePage() {
   // hard code itemId because we only have one item in the database
@@ -53,8 +54,10 @@ export default function HomePage() {
 
       if (response.status === 200 || response.status === 201) {
         console.log('Item added to cart', response.data);
+        toast.success('Item added to cart')
       } else {
         console.log('Error adding item to cart', response.data.message)
+        toast.error(data.error)
       }
     } catch (error) {
       console.error('Error adding item to cart', error.message);
