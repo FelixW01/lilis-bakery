@@ -4,6 +4,7 @@ import nastar from "../../assets/nastar.png";
 import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../../context/userContext";
+import { Select } from 'antd';
 
 export default function HomePage() {
   // hard code itemId because we only have one item in the database
@@ -44,7 +45,6 @@ export default function HomePage() {
       quantity: quantity,
       userId: user.id,
     }
-
     try {
       const response = await axios.post('/cart', cartItem, {
         withCredentials: true,
@@ -60,6 +60,11 @@ export default function HomePage() {
       console.error('Error adding item to cart', error.message);
     }
   }
+  
+  // Grabs the quantity selected
+  const handleChange = (value) => {
+  setQuantity(value);
+  };
 
   return (
     <>
@@ -89,20 +94,22 @@ export default function HomePage() {
         </div>
         <div className={styles.price}>
             <p>{`$${foodList[0].price}`}</p>
-            <select 
-            id="quantity" 
-            name="quantity" 
+            <Select
+            id="quantity"
+            name="quantity"
             className={styles.quantity} 
-            defaultValue={"quantity"}
-            onChange={(e) => setQuantity(e.target.value)}
-            >
-              <option value="quantity" disabled hidden>Quantity</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
+            defaultValue="Quantity"
+            style={{ width: 120 }}
+            onChange={handleChange}
+            options={[
+             { value: 'Quantity', label: 'Quantity', disabled: true, hidden: true},
+             { value: '1', label: '1' },
+             { value: '2', label: '2' },
+             { value: '3', label: '3' },
+             { value: '4', label: '4' },
+             { value: '5', label: '5' },
+      ]}
+    />
             <button onClick={addToCart}>Add to Cart</button>
         </div>
       </div>
