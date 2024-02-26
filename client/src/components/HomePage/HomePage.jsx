@@ -10,7 +10,7 @@ export default function HomePage() {
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
-
+  const {user} = useContext(UserContext)
   // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -38,8 +38,15 @@ export default function HomePage() {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     };
+
+    const cartItem = {
+      itemId: itemId,
+      quantity: quantity,
+      userId: user.id,
+    }
+
     try {
-      const response = await axios.get('/cart',  {
+      const response = await axios.post('/cart', cartItem, {
         withCredentials: true,
         headers: headers,
       });
@@ -53,6 +60,7 @@ export default function HomePage() {
       console.error('Error adding item to cart', error.message);
     }
   }
+
   return (
     <>
 
