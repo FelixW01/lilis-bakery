@@ -2,7 +2,7 @@ import styles from "./CartPage.module.css";
 import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../../context/userContext";
-import { Card } from 'antd';
+import { Card, Select } from 'antd';
 
 export default function CartPage() {
 
@@ -32,7 +32,19 @@ export default function CartPage() {
       <div className={styles.cardDiv}>
         {!loading && cart?.data?.items?.length > 0 ? (<Card title={cart.data.items[0].name} bordered={false} style={{ width: 300 }}>
           <p>{`Price: $${cart.data.items[0].price}`}</p>
-          <a>{`Qty: ${cart.data.items[0].quantity}`}</a>
+          <a></a>
+          <Select
+            defaultValue={cart.data.items[0].quantity}
+            style={{ width: 120 }}
+           // onChange={handleChange}
+            options={[
+             { value: '1', label: '1' },
+            { value: '2', label: '2' },
+             { value: '3', label: '3' },
+             { value: '4', label: '4' },
+             { value: '5', label: '5' },
+      ]}
+    />
           <div>
             <button>Delete</button>
           </div>
