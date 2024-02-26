@@ -7,7 +7,7 @@ const getCart = (async (req, res) => {
     try {
         const cart = await Cart.findOne({user});
         if (cart && cart.items.length > 0) {
-            res.status(200).send(cart);
+            res.status(200).json({ success: true, data: cart});
         } else {
             res.send({message: "Your Basket is empty"})
         }
@@ -19,10 +19,9 @@ const getCart = (async (req, res) => {
 
 // Handle POST request for /api/cart
 const addCart = (async (req, res) => {
-    const user = req.user._id;
-    const {itemId, quantity} = req.body;
+    const {itemId, quantity, userId} = req.body;
     try {
-	const cart = await Cart.findOne({user});
+	const cart = await Cart.findOne({userId});
     const item = await Food.findOne({_id: itemId});
 
     if (!item) {
@@ -34,6 +33,7 @@ const addCart = (async (req, res) => {
     // Check if cart already exists for user
     if (cart) {
         const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
+
     // Check if product exists in cart
     if (itemIndex > -1) {
         let product = cart.items[itemIndex];
@@ -43,19 +43,19 @@ const addCart = (async (req, res) => {
         }, 0)
         cart.items[itemIndex] = product;
         await cart.save();
-        res.status(200).send(cart);
+        res.status(200).json({ success: true, data: cart});
     } else {
         cart.items.push({itemId, name, quantity, price});
         cart.subTotal = cart.items.reduce((acc, curr) => {
             return acc + curr.quantity * curr.price;
         }, 0)
         await cart.save();
-        res.status(200).send(cart);
+        res.status(200).json({ success: true, data: cart});
     }
     } else {
         //no cart exists, create one
         const newCart = await Cart.create({
-            user,
+            userId,
             items: [{ itemId, name, quantity, price}],
             subTotal: price * quantity
         });
@@ -63,7 +63,7 @@ const addCart = (async (req, res) => {
     }
     } catch (error) {
         console.error(error);
-        res.status(500).send(error)
+        res.status(500).json({ success: false, error: error.message });
     }
 });
 
