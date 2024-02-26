@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getCart, addCart, deleteCart} = require("../../controllers/cartController.js");
+const {getCart, addCart, deleteCart, updateCartQuantity} = require("../../controllers/cartController.js");
 const auth = require("../../middleware/auth.js");
 
 // Assign auth middleware to all /cart routes
@@ -14,6 +14,9 @@ router.post("/", addCart);
 
 // Delete item from cart
 router.delete("/", deleteCart);
+
+// Update item quantity in cart
+router.put("/", updateCartQuantity);
 
 // Export the router
 module.exports = router;

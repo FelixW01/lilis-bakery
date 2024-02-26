@@ -72,6 +72,40 @@ const addCart = async (req, res) => {
     }
 };
 
+// Put route for updating cart quantity
+const updateCartQuantity = async (req, res) => {
+    const user = req.user._id;
+    const { itemId, newQuantity } = req.body;
+
+    // Convert newQuantity to a number
+    const parsedNewQuantity = parseInt(newQuantity, 10);
+
+    try {
+        let cart = await Cart.findOne({ user });
+
+        const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
+        if (itemIndex > -1) {
+            let item = cart.items[itemIndex];
+
+            // Update the quantity
+            item.quantity = parsedNewQuantity;
+
+            // Update subtotal
+            cart.subTotal = cart.items.reduce((acc, curr) => {
+                return acc + curr.quantity * curr.price;
+            }, 0);
+
+            // Save the updated cart
+            cart = await cart.save();
+            res.status(200).json({ success: true, data: cart });
+        } else {
+            res.status(404).send("Item not found in the cart");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
 
 // Handle Delete request for /api/cart/ by user's id
 const deleteCart = (async (req, res) => {
@@ -103,4 +137,4 @@ const deleteCart = (async (req, res) => {
 })
 
 // Export the router
-module.exports = {getCart, addCart, deleteCart};
+module.exports = {getCart, addCart, deleteCart, updateCartQuantity};
