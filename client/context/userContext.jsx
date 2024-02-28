@@ -23,6 +23,7 @@ useEffect(() => {
         headers: headers,
       }).then(({data}) => {
             setUser(data)
+            console.log(data)
         })
     }
 },[])

@@ -13,7 +13,8 @@ export default function HomePage() {
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
   const {user} = useContext(UserContext)
-  // console.log(user.id)
+  console.log(user)
+
   // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -45,7 +46,7 @@ export default function HomePage() {
     const cartItem = {
       itemId: itemId,
       quantity: quantity,
-      userId: user._id,
+      userId: user.id,
     }
     try {
     const response = await axios.post('/cart', cartItem, {
