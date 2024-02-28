@@ -27,7 +27,7 @@ export default function Register() {
   const handleFormSubmit = async (e) => {
     const {name, email, password} = data;
     try {
-      const { data } = await axios.post('/register', {
+      const { data } = await axios.post('/user/register', {
         name, email, password
       });
       if (data.error) {
@@ -35,7 +35,7 @@ export default function Register() {
       } else {
         setData({})
         toast.success('Registration Successful. Welcome!')
-        navigate('/')
+        navigate('/login')
       }
     } catch (error) {
       console.log(error)

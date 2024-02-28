@@ -14,26 +14,49 @@ export default function CartPage() {
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
   const [deleteItem, setDeleteItem] = useState(false)
+  const token = localStorage.getItem('token');
 
   // Grabs cart information on mount
   useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const response = await axios.get(`/cart`);
-        setCart(response.data)
-        setItemId(response.data.data.items[0].itemId)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching cart data', error.message)
-        setLoading(false)
+  const fetchCartData = async () => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+     };
+      const data = {
+        userId: user.id,
+      };
+
+    try {
+      if (!user || !user.id) {
+        console.error('User information not available');
+        return;
       }
+      const response = await axios.get(`/cart?userId=${user.id}`, {
+        withCredentials: true,
+        headers: headers,
+      });
+
+      if (response.status === 200) {
+        setCart(response.data);
+        setItemId(response.data.data.items[0].itemId);
+        setLoading(false);
+      } else {
+        console.error('Error fetching cart data: Unexpected response structure', response.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data', error.message);
+      setLoading(false);
     }
-    fetchCartData()
-  },[quantity, deleteItem])
+  };
+
+  fetchCartData();
+}, [quantity, deleteItem]);
+
 
 // Function to update cart quantity
 const updateCartQuantity = async (itemId, newQuantity) => {
-  const token = localStorage.getItem('token'); // Assuming you have a token stored in localStorage
 
   if (!token) {
     console.error('Token not found');
@@ -69,7 +92,6 @@ const updateCartQuantity = async (itemId, newQuantity) => {
 
 // deletes a cart item
 const deleteCartItem = async (itemId) => {
-  const token = localStorage.getItem('token');
 
   if (!token) {
     console.error('Token not found');
@@ -92,7 +114,7 @@ const deleteCartItem = async (itemId) => {
       withCredentials: true,
       headers: headers,
     });
-    
+
     if (response.status === 200) {
       console.log('Item deleted successfully', response.data);
       toast.success('Item successfully deleted from cart')
