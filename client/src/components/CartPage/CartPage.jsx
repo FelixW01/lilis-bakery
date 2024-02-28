@@ -4,6 +4,7 @@ import axios from "axios";
 import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
 import nastar from "../../assets/nastar.png";
+import { toast } from 'react-hot-toast';
 
 export default function CartPage() {
 
@@ -94,9 +95,11 @@ const deleteCartItem = async (itemId) => {
     
     if (response.status === 200) {
       console.log('Item deleted successfully', response.data);
+      toast.success('Item successfully deleted from cart')
       setDeleteItem(true);
     } else {
       console.log('Error deleting item', response.data.message);
+      toast.error(data.error)
     }
   } catch (error) {
     console.error('Error deleting item', error.message);
