@@ -29,6 +29,8 @@
   background-color: var(--dark-cream);
 }
 
-.deleteButton {
+.deleteAnchor {
   color: #007185;
+  margin-left: 1rem;
+  text-decoration: none;
 }

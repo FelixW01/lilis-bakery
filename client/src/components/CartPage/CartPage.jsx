@@ -13,7 +13,6 @@ export default function CartPage() {
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
   const [deleteItem, setDeleteItem] = useState(false)
-//  console.log(cart.data.items[0].itemId)
 
   // Grabs cart information on mount
   useEffect(() => {
@@ -134,12 +133,12 @@ const deleteCartItem = async (itemId) => {
              { value: '5', label: '5' },
       ]}
     />
-          <Button className={styles.deleteButton} type="text" onClick={() => deleteCartItem(cart.data.items[0].itemId)}>Delete</Button>
+          <a className={styles.deleteAnchor} type="text" onClick={() => deleteCartItem(cart.data.items[0].itemId)}>Delete</a>
         </Card>
 
     <div className={styles.subTotalDiv}>
         <Card className={styles.subTotal} bordered={false} style={{ width: 300 }}>
-          <p>{`Subtotal (${cart.data.items[0].quantity} ${cart.data.items[0].quantity === 1 ? 'item' : 'items'}): $${cart.data.subTotal}`}</p>
+          <p>{!loading ? `Subtotal (${cart.data.items[0].quantity} ${cart.data.items[0].quantity === 1 ? 'item' : 'items'}): $${cart.data.subTotal}` : "loading..."}</p>
       <div className={styles.checkoutDiv                                                                                                                                                                                                                                           }>
         <Button className={styles.checkoutButton} type='default'> Proceed to checkout </Button>
       </div>
