@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
+import nastar from "../../assets/nastar.png";
 
 export default function CartPage() {
 
@@ -11,7 +12,7 @@ export default function CartPage() {
   const {user} = useContext(UserContext)
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
-
+//  console.log(cart.data.items[0].quantity)
   // Grabs cart information on mount
   useEffect(() => {
     const fetchCartData = async () => {
@@ -26,7 +27,7 @@ export default function CartPage() {
       }
     }
     fetchCartData()
-  },[])
+  },[quantity])
 
 // Function to update cart quantity
 const updateCartQuantity = async (itemId, newQuantity) => {
@@ -75,9 +76,13 @@ const updateCartQuantity = async (itemId, newQuantity) => {
     <div className={styles.cartContainer}>
       <div className={styles.cardDiv}>
         {!loading && cart?.data?.items?.length > 0 ? 
-        (<Card title={cart.data.items[0].name} bordered={false} style={{ width: 300 }}>
+        (
+          <>
+          <Card title={cart.data.items[0].name} bordered={false} style={{ width: 300 }}>
+        <div className={styles.imgDiv}>
+          <img src={nastar} alt="nastar" style={{width: 150, height: 150}}/>
+        </div>
           <p>{`Price: $${cart.data.items[0].price}`}</p>
-          <a></a>
           <Select
             defaultValue={cart.data.items[0].quantity}
             style={{ width: 70 }}
@@ -90,8 +95,19 @@ const updateCartQuantity = async (itemId, newQuantity) => {
              { value: '5', label: '5' },
       ]}
     />
-            <Button type="text">Delete</Button>
-        </Card> ) : (<h2>{loading ? 'Loading...' : 'Your basket is empty.'}</h2>)}
+          <Button className={styles.deleteButton} type="text">Delete</Button>
+        </Card>
+
+    <div className={styles.subTotalDiv}>
+        <Card className={styles.subTotal} bordered={false} style={{ width: 300 }}>
+          <p>{`Subtotal (${cart.data.items[0].quantity} ${cart.data.items[0].quantity === 1 ? 'item' : 'items'}): $${cart.data.subTotal}`}</p>
+      <div className={styles.checkoutDiv                                                                                                                                                                                                                                           }>
+        <Button className={styles.checkoutButton} type='default'> Proceed to checkout </Button>
+      </div>
+        </Card>
+    </div>
+    </>
+      ) : (<h2>{loading ? 'Loading...' : 'Your basket is empty.'}</h2>)}
       </div>
     </div>
     </>

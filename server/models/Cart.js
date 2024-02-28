@@ -19,7 +19,8 @@ const cartSchema = new Schema({
             min: 1,
             default: 1
         },
-        price: Number
+        price: Number,
+        img: String
       }],
     subTotal: {
         type: Number,
