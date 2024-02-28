@@ -108,33 +108,44 @@ const updateCartQuantity = async (req, res) => {
 };
 
 // Handle Delete request for /api/cart/ by user's id
-const deleteCart = (async (req, res) => {
-    const user = req.user._id;
-    const itemId = req.body.itemId;
+const deleteCart = async (req, res) => {
+    const { itemId, userId } = req.body;
     try {
-        let cart = await Cart.findOne({user})
+        let cart = await Cart.findOne({ userId });
 
-        const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
-        if (itemIndex > -1) {
-            let item = cart.items[itemIndex];
-            cart.subTotal -= item.quantity * item.price;
-            if(cart.subTotal < 0) {
-                cart.subTotal = 0
+        if (cart) {
+            const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
+
+            if (itemIndex > -1) {
+                let item = cart.items[itemIndex];
+                cart.subTotal -= item.quantity * item.price;
+
+                if (cart.subTotal < 0) {
+                    cart.subTotal = 0;
+                }
+
+                cart.items.splice(itemIndex, 1);
+
+                // Recalculate subtotal
+                cart.subTotal = cart.items.reduce((acc, curr) => {
+                    return acc + curr.quantity * curr.price;
+                }, 0);
+
+                // Save the updated cart
+                cart = await cart.save();
+                res.status(200).send(cart);
+            } else {
+                res.status(404).send("Item not found in the cart");
             }
-            cart.items.splice(itemIndex, 1);
-            cart.subTotal = cart.items.reduce((acc, curr) => {
-                return acc + curr.quantity * curr.price;98
-            }, 0)
-            cart = await cart.save();
-            res.status(200).send(cart); 
-        } else {    
-            res.status(404).send("item not found");
+        } else {
+            res.status(404).send("Cart not found for the user");
         }
     } catch (error) {
         console.error(error);
-        res.status(400).send();
-} 
-})
+        res.status(500).json({ success: false, error: error.message });
+    }
+};
+
 
 // Export the router
 module.exports = {getCart, addCart, deleteCart, updateCartQuantity};
