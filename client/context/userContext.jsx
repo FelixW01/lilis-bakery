@@ -23,7 +23,6 @@ useEffect(() => {
         headers: headers,
       }).then(({data}) => {
             setUser(data)
-            console.log(data)
         })
     }
 },[])
@@ -36,6 +35,7 @@ const logout = async() => {
       if (response.status === 200) {
         setUser(null);
         toast.success('Successfully logged out. See you soon!')
+        localStorage.removeItem('token');
         navigate('/');
       }
     } catch(error) {

@@ -3,9 +3,9 @@ const Food = require("../models/Food.js");
 
 // Handle GET all request for /api/cart
 const getCart = (async (req, res) => {
-    const user = req.user._id;
+     const userId = req.query.userId
     try {
-        const cart = await Cart.findOne({user});
+        const cart = await Cart.findOne({userId});
         if (cart && cart.items.length > 0) {
             res.status(200).json({ success: true, data: cart});
         } else {
@@ -42,7 +42,7 @@ const addCart = async (req, res) => {
             // Check if product exists in cart
             if (itemIndex > -1) {
                 let product = cart.items[itemIndex];
-                product.quantity += parsedQuantity; // Use parsedQuantity
+                product.quantity += parsedQuantity; 
                 cart.subTotal = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
                 }, 0);
@@ -50,7 +50,7 @@ const addCart = async (req, res) => {
                 await cart.save();
                 res.status(200).json({ success: true, data: cart });
             } else {
-                cart.items.push({ itemId, name, quantity: parsedQuantity, price }); // Use parsedQuantity
+                cart.items.push({ itemId, name, quantity: parsedQuantity, price });
                 cart.subTotal = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
                 }, 0);
@@ -61,8 +61,8 @@ const addCart = async (req, res) => {
             // no cart exists, create one
             const newCart = await Cart.create({
                 userId,
-                items: [{ itemId, name, quantity: parsedQuantity, price }], // Use parsedQuantity
-                subTotal: price * parsedQuantity, // Use parsedQuantity
+                items: [{ itemId, name, quantity: parsedQuantity, price }],
+                subTotal: price * parsedQuantity,
             });
             res.status(201).json(newCart);
         }

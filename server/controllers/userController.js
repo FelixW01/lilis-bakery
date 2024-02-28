@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
 
+// Function to generate a token for a user
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, {
+    expiresIn: '5d',
+  });
+};
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
@@ -29,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
         });
         if(newUser) {
         res.status(201).json({
-            _id: newUser._id,
+            id: newUser._id,
             name: newUser.name,
             email: newUser.email,
             token: generateToken(newUser._id)
@@ -38,7 +44,6 @@ const registerUser = asyncHandler(async (req, res) => {
             res.status(400).json({error: 'Invalid user data'})
         }; 
 })
-// }
 
 // Logs user in
 const loginUser = asyncHandler(async (req, res) => {
