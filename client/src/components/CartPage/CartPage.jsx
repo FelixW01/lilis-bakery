@@ -12,7 +12,9 @@ export default function CartPage() {
   const {user} = useContext(UserContext)
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
-//  console.log(cart.data.items[0].quantity)
+  const [deleteItem, setDeleteItem] = useState(false)
+//  console.log(cart.data.items[0].itemId)
+
   // Grabs cart information on mount
   useEffect(() => {
     const fetchCartData = async () => {
@@ -27,7 +29,7 @@ export default function CartPage() {
       }
     }
     fetchCartData()
-  },[quantity])
+  },[quantity, deleteItem])
 
 // Function to update cart quantity
 const updateCartQuantity = async (itemId, newQuantity) => {
@@ -65,6 +67,43 @@ const updateCartQuantity = async (itemId, newQuantity) => {
   }
 };
 
+// deletes a cart item
+const deleteCartItem = async (itemId) => {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    console.error('Token not found');
+    return;
+  }
+
+  const headers = { 
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+  }
+
+  const data = {
+    itemId: itemId,
+    userId: user.id,
+  }
+
+  try {
+    const response = await axios.delete('/cart', {
+      data: data,
+      withCredentials: true,
+      headers: headers,
+    });
+    
+    if (response.status === 200) {
+      console.log('Item deleted successfully', response.data);
+      setDeleteItem(true);
+    } else {
+      console.log('Error deleting item', response.data.message);
+    }
+  } catch (error) {
+    console.error('Error deleting item', error.message);
+  }
+}
+
 // Grabs the quantity selected, updates cart quantity.
   const handleChange = (value) => {
     setQuantity(value);
@@ -95,7 +134,7 @@ const updateCartQuantity = async (itemId, newQuantity) => {
              { value: '5', label: '5' },
       ]}
     />
-          <Button className={styles.deleteButton} type="text">Delete</Button>
+          <Button className={styles.deleteButton} type="text" onClick={() => deleteCartItem(cart.data.items[0].itemId)}>Delete</Button>
         </Card>
 
     <div className={styles.subTotalDiv}>
