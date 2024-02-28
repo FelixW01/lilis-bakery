@@ -55,7 +55,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     // Set HttpOnly cookie
     res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).json({
-      _id: user._id,
+      id: user._id,
       name: user.name,
       email: user.email,
       token,
