@@ -13,6 +13,7 @@ export default function HomePage() {
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
   const {user} = useContext(UserContext)
+  // console.log(user.id)
   // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -44,25 +45,25 @@ export default function HomePage() {
     const cartItem = {
       itemId: itemId,
       quantity: quantity,
-      userId: user.id,
+      userId: user._id,
     }
     try {
-      const response = await axios.post('/cart', cartItem, {
-        withCredentials: true,
-        headers: headers,
-      });
+    const response = await axios.post('/cart', cartItem, {
+      withCredentials: true,
+      headers: headers,
+    });
 
-      if (response.status === 200 || response.status === 201) {
-        console.log('Item added to cart', response.data);
-        toast.success('Item added to cart')
-      } else {
-        console.log('Error adding item to cart', response.data.message)
-        toast.error(data.error)
-      }
-    } catch (error) {
-      console.error('Error adding item to cart', error.message);
+    if (response.status === 200 || response.status === 201) {
+      console.log('Item added to cart', response.data);
+      toast.success('Item added to cart');
+    } else {
+      console.log('Error adding item to cart', response.data.message);
+      toast.error(response.data.message);
     }
+  } catch (error) {
+    console.error('Error adding item to cart', error.message);
   }
+};
   
   // Grabs the quantity selected
   const handleChange = (value) => {

@@ -48,7 +48,7 @@ const updateCartQuantity = async (itemId, newQuantity) => {
   const data = {
     itemId: itemId,
     newQuantity: newQuantity,
-    userId: user.id,
+    userId: user._id,
   };
 
   try {
@@ -83,7 +83,7 @@ const deleteCartItem = async (itemId) => {
 
   const data = {
     itemId: itemId,
-    userId: user.id,
+    userId: user._id,
   }
 
   try {

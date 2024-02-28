@@ -48,7 +48,7 @@ export default function Login() {
       console.log(error)
     }
   }
-console.log(user, '<<<<<<<<USER')
+
   return (
     <div className={styles.backgroundContainer}>
     
