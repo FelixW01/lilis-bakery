@@ -3,10 +3,11 @@ import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
-import nastar from "../../assets/nastar.png";
+// import nastar from "../../assets/nastar.png";
 import { toast } from 'react-hot-toast';
 import {loadStripe} from '@stripe/stripe-js';
 import { json } from "react-router-dom";
+
 
 export default function CartPage() {
 
@@ -18,6 +19,7 @@ export default function CartPage() {
   const [deleteItem, setDeleteItem] = useState(false)
   const token = localStorage.getItem('token');
 
+  // console.log(cart.data.items)
   // Grabs cart information on mount
     useEffect(() => {
   const fetchCartData = async () => {
@@ -41,6 +43,7 @@ export default function CartPage() {
 
       if (response.status === 200 || loading) {
         setCart(response.data);
+        console.log(response.data)
         setItemId(response.data.data.items[0].itemId);
         setLoading(false);
       } else {
@@ -141,24 +144,24 @@ const deleteCartItem = async (itemId) => {
   try {
     const cartItems = cart.data.items;
     const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
-  
+
     const body = {
-      products: cartItems
-    }
+      products: cartItems,
+    };
 
     const headers = {
-      "Content-Type": "application/json",
-    }
+      'Content-Type': 'application/json',
+    };
 
     // Send a POST request to server endpoint for payment
-    const response = await axios.post('/checkout', body, { headers });
+    const response = await axios.post('/payment', body, { headers });
 
     // Extract the session ID from the response
-    const { sessionId } = response.data;
+    const { id: sessionId } = response.data;
 
     // Use Stripe.js to redirect to checkout
     const result = await stripe.redirectToCheckout({
-      sessionId: sessionId
+      sessionId: sessionId,
     });
 
     if (result.error) {
@@ -179,7 +182,7 @@ const deleteCartItem = async (itemId) => {
           <>
           <Card title={cart.data.items[0].name} bordered={false} style={{ width: 300 }}>
         <div className={styles.imgDiv}>
-          <img src={nastar} alt="nastar" style={{width: 150, height: 150}}/>
+          <img src="images/nastar.png" alt="nastar" style={{width: 150, height: 150}}/>
         </div>
           <p>{`Price: $${cart.data.items[0].price}`}</p>
           <Select
