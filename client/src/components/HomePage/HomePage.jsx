@@ -13,7 +13,7 @@ export default function HomePage() {
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
   const {user} = useContext(UserContext)
-  console.log(user)
+  
 
   // Grabs food information on mount
   useEffect(() => {
@@ -70,6 +70,7 @@ export default function HomePage() {
   const handleChange = (value) => {
     setQuantity(value);
   };
+
 
   return (
     <>

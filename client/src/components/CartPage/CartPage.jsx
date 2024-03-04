@@ -5,6 +5,7 @@ import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
 import nastar from "../../assets/nastar.png";
 import { toast } from 'react-hot-toast';
+import {loadStripe} from '@stripe/stripe-js';
 
 export default function CartPage() {
 
@@ -17,7 +18,7 @@ export default function CartPage() {
   const token = localStorage.getItem('token');
 
   // Grabs cart information on mount
-  useEffect(() => {
+    useEffect(() => {
   const fetchCartData = async () => {
     const headers = {
         'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ export default function CartPage() {
       };
 
     try {
-      if (!user || !user.id) {
+      if (!user && !loading || !user.id && !loading) {
         console.error('User information not available');
         return;
       }
@@ -37,7 +38,7 @@ export default function CartPage() {
         headers: headers,
       });
 
-      if (response.status === 200) {
+      if (response.status === 200 || loading) {
         setCart(response.data);
         setItemId(response.data.data.items[0].itemId);
         setLoading(false);
@@ -50,9 +51,10 @@ export default function CartPage() {
       setLoading(false);
     }
   };
-
-  fetchCartData();
-}, [quantity, deleteItem]);
+  if(user) {
+    fetchCartData();
+  }
+}, [user, token, loading, quantity, deleteItem]);
 
 
 // Function to update cart quantity
@@ -134,6 +136,19 @@ const deleteCartItem = async (itemId) => {
     updateCartQuantity(itemId, value);
   };
 
+  // const handlePayment = async () => {
+  //   const cartItems = cart.data.items;
+  //   const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
+  
+  //   body = {
+  //     products: cartItems
+  //   }
+
+  //   const headers = {
+  //     "Content-Type": "application/json",
+  //   }
+  // }
+  
   return (
     <>
     <div className={styles.cartContainer}>

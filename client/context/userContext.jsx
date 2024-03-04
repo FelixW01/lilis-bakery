@@ -8,24 +8,34 @@ export const UserContext = createContext({})
 export function UserContextProvider({ children }) {
 const navigate = useNavigate();
 const [user, setUser] = useState(null);
-
+const token = localStorage.getItem('token');
 // Get user data on mount
 useEffect(() => {
-  const token = localStorage.getItem('token');
-  const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get('/user/me', {
+          withCredentials: true,
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.error('Error fetching user data:', response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
     };
 
-    if(!user) {
-        axios.get('/user/me', {
-        withCredentials: true,
-        headers: headers,
-      }).then(({data}) => {
-            setUser(data)
-        })
+    // Fetch user data only if user is not available
+    if (!user) {
+      fetchUserData();
     }
-},[])
+  }, [token, user, setUser]);
+
 // Logs out user
 const logout = async() => {
     try {
