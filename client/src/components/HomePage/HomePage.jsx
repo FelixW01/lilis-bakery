@@ -54,12 +54,12 @@ export default function HomePage() {
       headers: headers,
     });
 
-    if (response.status === 200 || response.status === 201) {
+    if (response.status === 200 && quantity != 0 || response.status === 201 && quantity != 0) {
       console.log('Item added to cart', response.data);
       toast.success('Item added to cart');
     } else {
       console.log('Error adding item to cart', response.data.message);
-      toast.error(response.data.message);
+      toast.error('Please select a quantity');;
     }
   } catch (error) {
     console.error('Error adding item to cart', error.message);
