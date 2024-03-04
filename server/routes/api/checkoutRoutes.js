@@ -3,7 +3,7 @@ const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 
 // Stripe Checkout
-router.post("/checkout", async(req, res) => {
+router.post("/", async(req, res) => {
     const { products } = req.body;
 
     const lineItems = products.map((product) => ({

@@ -1,6 +1,5 @@
 import styles from "./HomePage.module.css";
 import videoBG from "../../assets/nastar.mp4";
-import nastar from "../../assets/nastar.png";
 import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../../context/userContext";
@@ -14,7 +13,6 @@ export default function HomePage() {
   const [foodList, setFoodList] = useState([{}])
   const {user} = useContext(UserContext)
   
-
   // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -47,6 +45,7 @@ export default function HomePage() {
       itemId: itemId,
       quantity: quantity,
       userId: user.id,
+      img: foodList[0].img,
     }
     try {
     const response = await axios.post('/cart', cartItem, {
@@ -71,7 +70,6 @@ export default function HomePage() {
     setQuantity(value);
   };
 
-
   return (
     <>
 
@@ -85,7 +83,7 @@ export default function HomePage() {
 
       <div className={styles.about}>
       <h2>What is Nastar?</h2>
-      <img src={nastar} className={styles.nastar}></img>
+      <img src={foodList[0].img} className={styles.nastar}></img>
       <div className={styles.description}>
         <p>{foodList[0].description}</p>
       </div>
@@ -93,7 +91,7 @@ export default function HomePage() {
 
       <div className={styles.hero} id="hero">
       <h2>Order Today!</h2>
-        <img src={nastar} className={styles.nastar}></img>
+        <img src={foodList[0].img} className={styles.nastar}></img>
         <div className={styles.description}>
           <p>{`${foodList[0].name} | ${foodList[0].count} Pieces | ${foodList[0].weight}`}</p>
           <p>{foodList[0].ingridients}</p>

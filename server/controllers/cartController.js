@@ -34,6 +34,7 @@ const addCart = async (req, res) => {
         }
         const price = item.price;
         const name = item.name;
+        const img = item.img;
 
         // Check if cart already exists for user
         if (cart) {
@@ -50,7 +51,7 @@ const addCart = async (req, res) => {
                 await cart.save();
                 res.status(200).json({ success: true, data: cart });
             } else {
-                cart.items.push({ itemId, name, quantity: parsedQuantity, price });
+                cart.items.push({ itemId, name, quantity: parsedQuantity, price, img });
                 cart.subTotal = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
                 }, 0);
