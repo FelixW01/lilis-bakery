@@ -14,7 +14,8 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
-
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,6 +51,19 @@ const router = createBrowserRouter(
             <Profile />
       } 
       />
+      <Route 
+        path="Success" 
+        element={ 
+            <Success />
+      } 
+      />
+      <Route 
+        path="Cancel" 
+        element={ 
+            <Cancel />
+      } 
+      />
+      
     </Route>
   )
 );
