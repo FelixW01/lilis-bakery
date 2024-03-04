@@ -6,6 +6,7 @@ import { UserContext } from "../../../context/userContext";
 import nastar from "../../assets/nastar.png";
 import { toast } from 'react-hot-toast';
 import {loadStripe} from '@stripe/stripe-js';
+import { json } from "react-router-dom";
 
 export default function CartPage() {
 
@@ -136,18 +137,38 @@ const deleteCartItem = async (itemId) => {
     updateCartQuantity(itemId, value);
   };
 
-  // const handlePayment = async () => {
-  //   const cartItems = cart.data.items;
-  //   const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
+  const handlePayment = async () => {
+  try {
+    const cartItems = cart.data.items;
+    const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
   
-  //   body = {
-  //     products: cartItems
-  //   }
+    const body = {
+      products: cartItems
+    }
 
-  //   const headers = {
-  //     "Content-Type": "application/json",
-  //   }
-  // }
+    const headers = {
+      "Content-Type": "application/json",
+    }
+
+    // Send a POST request to server endpoint for payment
+    const response = await axios.post('/checkout', body, { headers });
+
+    // Extract the session ID from the response
+    const { sessionId } = response.data;
+
+    // Use Stripe.js to redirect to checkout
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionId
+    });
+
+    if (result.error) {
+      console.error('Error during payment', result.error.message);
+    }
+  } catch (error) {
+    console.error('Error handling payment', error.message);
+  }
+};
+
   
   return (
     <>
@@ -180,7 +201,7 @@ const deleteCartItem = async (itemId) => {
         <Card className={styles.subTotal} bordered={false} style={{ width: 300 }}>
           <p>{!loading ? `Subtotal (${cart.data.items[0].quantity} ${cart.data.items[0].quantity === 1 ? 'item' : 'items'}): $${cart.data.subTotal}` : "loading..."}</p>
       <div className={styles.checkoutDiv                                                                                                                                                                                                                                           }>
-        <Button className={styles.checkoutButton} type='default'> Proceed to checkout </Button>
+        <Button onClick={handlePayment} className={styles.checkoutButton} type='default'> Proceed to checkout </Button>
       </div>
         </Card>
     </div>
