@@ -6,8 +6,6 @@ import { UserContext } from "../../../context/userContext";
 // import nastar from "../../assets/nastar.png";
 import { toast } from 'react-hot-toast';
 import {loadStripe} from '@stripe/stripe-js';
-import { json } from "react-router-dom";
-
 
 export default function CartPage() {
 
@@ -19,7 +17,6 @@ export default function CartPage() {
   const [deleteItem, setDeleteItem] = useState(false)
   const token = localStorage.getItem('token');
 
-  // console.log(cart.data.items)
   // Grabs cart information on mount
     useEffect(() => {
   const fetchCartData = async () => {
@@ -154,7 +151,7 @@ const deleteCartItem = async (itemId) => {
     };
 
     // Send a POST request to server endpoint for payment
-    const response = await axios.post('/payment', body, { headers });
+    const response = await axios.post('/checkout', body, { headers });
 
     // Extract the session ID from the response
     const { id: sessionId } = response.data;
