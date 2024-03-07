@@ -5,13 +5,14 @@ const stripe = require('stripe')(process.env.STRIPE_KEY)
 // Stripe Checkout
 router.post("/", async(req, res) => {
     const { products } = req.body;
+    console.log('Products: ', products);
 
     const lineItems = products.map((product) => ({
         price_data: {
             currency: 'usd',
             product_data: {
                 name: product.name,
-                images: [product.image]
+                images: ['https://i.imgur.com/ms5gRpW.png']
             },
             unit_amount: Math.round(product.price * 100)
         },

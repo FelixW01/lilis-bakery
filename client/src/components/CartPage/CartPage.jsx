@@ -155,7 +155,7 @@ const deleteCartItem = async (itemId) => {
 
     // Extract the session ID from the response
     const { id: sessionId } = response.data;
-
+    
     // Use Stripe.js to redirect to checkout
     const result = await stripe.redirectToCheckout({
       sessionId: sessionId,
