@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
+const Cart = require('../../models/Cart');
 
 // Stripe Checkout
 router.post("/", async(req, res) => {
-    const { products } = req.body;
+    const { products, userId } = req.body;
     console.log('Products: ', products);
 
     const lineItems = products.map((product) => ({
@@ -27,8 +28,26 @@ router.post("/", async(req, res) => {
     })
 
     res.json({id: session.id})
+    await deleteCart(userId);
 });
 
+const deleteCart = async (userId) => {
+  try {
+    let cart = await Cart.findOne({ userId });
+
+    if (cart) {
+      // Clear all items from the cart
+      cart.items = [];
+      cart.subTotal = 0;
+
+      // Save the updated cart
+      await cart.save();
+    }
+  } catch (error) {
+    console.error('Error deleting cart:', error);
+    throw new Error('Error deleting cart');
+  }
+};
 
 // Export the router
 module.exports = router;
