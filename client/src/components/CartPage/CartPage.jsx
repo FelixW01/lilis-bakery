@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
-// import nastar from "../../assets/nastar.png";
 import { toast } from 'react-hot-toast';
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -16,7 +15,7 @@ export default function CartPage() {
   const [quantity, setQuantity] = useState(0)
   const [deleteItem, setDeleteItem] = useState(false)
   const token = localStorage.getItem('token');
-
+  console.log(cart)
   // Grabs cart information on mount
     useEffect(() => {
   const fetchCartData = async () => {
@@ -144,6 +143,7 @@ const deleteCartItem = async (itemId) => {
 
     const body = {
       products: cartItems,
+      userId: cart.data.userId,
     };
 
     const headers = {
@@ -163,7 +163,7 @@ const deleteCartItem = async (itemId) => {
 
     if (result.error) {
       console.error('Error during payment', result.error.message);
-    }
+    } 
   } catch (error) {
     console.error('Error handling payment', error.message);
   }
