@@ -1,6 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const orderSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     items: [
         {
         type: Schema.Types.ObjectId,
@@ -14,6 +19,10 @@ const orderSchema = new Schema({
         orderby: Schema.Types.ObjectId,
         ref: "User"
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    }
     });
 
 const Order = model("order", orderSchema);

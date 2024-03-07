@@ -144,6 +144,7 @@ const deleteCartItem = async (itemId) => {
     const body = {
       products: cartItems,
       userId: cart.data.userId,
+      subTotal: cart.data.subTotal,
     };
 
     const headers = {

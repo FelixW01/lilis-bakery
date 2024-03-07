@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const Cart = require('../../models/Cart');
+const {createOrder} = require('../../controllers/orderController');
+
+
+router.use("/", (req, res, next) => {
+  req.userId = req.body.userId;
+  next();
+});
 
 // Stripe Checkout
 router.post("/", async(req, res) => {
-    const { products, userId } = req.body;
+    const { products, userId, subTotal } = req.body;
     console.log('Products: ', products);
-
+try {
     const lineItems = products.map((product) => ({
         price_data: {
             currency: 'usd',
@@ -28,7 +35,13 @@ router.post("/", async(req, res) => {
     })
 
     res.json({id: session.id})
-    await deleteCart(userId);
+
+    
+
+      } catch (error) {
+        console.error('Error during payment:', error);
+        res.status(500).json({ error: 'Error during payment' });
+      }
 });
 
 const deleteCart = async (userId) => {
@@ -42,6 +55,10 @@ const deleteCart = async (userId) => {
 
       // Save the updated cart
       await cart.save();
+
+      console.log('Cart deleted successfully:', cart);
+    } else {
+      console.log('Cart not found for userId:', userId);
     }
   } catch (error) {
     console.error('Error deleting cart:', error);
@@ -49,5 +66,27 @@ const deleteCart = async (userId) => {
   }
 };
 
+// Route for handling successful payment
+router.get("/success", async (req, res) => {
+    const { userId } = req;
+    
+    try {
+    
+    // Payment succeeded, create order history
+    // await createOrder(userId, products, subTotal);
+    
+    // Clear the cart
+    await deleteCart(userId);
+
+    } catch (error) {
+        console.error('Error creating order:', error);
+        res.status(500).json({ error: 'Error creating order' });
+    }
+});
+      
+      
+      
+      
+        
 // Export the router
 module.exports = router;
