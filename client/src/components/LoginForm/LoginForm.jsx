@@ -29,30 +29,37 @@ export default function Login() {
 
    // Handles login of user
   const handleFormSubmit = async (e) => {
-    const {email, password} = data;
     try {
-      const { data } = await axios.post('/user/login', {
-       email, password
+      const response = await axios.post('/user/login', data, {
+        withCredentials: true
       });
-      if (data.error) {
-        toast.error(data.error)
+      const responseData = response.data;
+
+      if (responseData.error) {
+        toast.error(responseData.error);
       } else {
-        document.cookie = `token=${data.token}; SameSite=None; Secure`
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-        console.log(axios.defaults.headers.common['Authorization']);
-        console.log(document.cookie)
-        console.log(data.token);
-        setData({})
-        setUser(data)
-        localStorage.setItem('token', data.token)
-        toast.success('Login Successful. Welcome!')
-        navigate('/')
-        form.resetFields()
+        // Store token in local storage
+        localStorage.setItem('token', responseData.token);
+
+        // Set Axios Authorization header
+        axios.defaults.headers.common['Authorization'] = `Bearer ${responseData.token}`;
+
+        // Update user context
+        setUser(responseData);
+
+        // Reset form fields
+        form.resetFields();
+
+        // Redirect user to home page
+        navigate('/');
+
+        // Display success message
+        toast.success('Login Successful. Welcome!');
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className={styles.backgroundContainer}>
