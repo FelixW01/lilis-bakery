@@ -66,13 +66,11 @@ const deleteCart = async (userId) => {
   }
 };
 
+
 // Route for handling successful payment
 router.get("/success", auth, async (req, res) => {
     const userId = req.user.id;
     try {
-    
-    // Payment succeeded, create order history
-    await createOrder(userId, products, subTotal);
     
     // Clear the cart
     await deleteCart(userId);
