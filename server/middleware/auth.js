@@ -1,28 +1,26 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-  // Get the token from the request cookies
-  const token = req.cookies.token;
-
-  // Check if the token exists
+  // Get the token from the Authorization header
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized: No token provided' });
+    // If token is not provided, return 401 Unauthorized
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  try {
-    // Verify the token using your secret or public key
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace 'your-secret-key' with your actual secret or public key
-
-    // Attach the decoded user information to the request for use in subsequent middleware/routes
-    req.user = decoded;
-
-    // Continue to the next middleware or route handler
+  // Verify the token
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      // If token is invalid, return 403 Forbidden
+      return res.status(403).json({ error: 'Invalid token' });
+    }
+    
+    // If token is valid, attach user information to request object
+    req.user = user;
     next();
-  } catch (error) {
-    // Token verification failed
-    console.error('Token verification failed:', error);
-    return res.status(401).json({ error: 'Unauthorized: Invalid token' });
-  }
+  });
 };
 
 module.exports = authMiddleware;
