@@ -3,7 +3,7 @@ const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_KEY)
 const Cart = require('../../models/Cart');
 const {createOrder} = require('../../controllers/orderController');
-
+const auth = require("../../middleware/auth.js");
 
 router.use("/", (req, res, next) => {
   req.userId = req.body.userId;
@@ -67,13 +67,12 @@ const deleteCart = async (userId) => {
 };
 
 // Route for handling successful payment
-router.get("/success", async (req, res) => {
-    const { userId } = req;
-    
+router.get("/success", auth, async (req, res) => {
+    const userId = req.user.id;
     try {
     
     // Payment succeeded, create order history
-    // await createOrder(userId, products, subTotal);
+    await createOrder(userId, products, subTotal);
     
     // Clear the cart
     await deleteCart(userId);

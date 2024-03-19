@@ -37,6 +37,11 @@ export default function Login() {
       if (data.error) {
         toast.error(data.error)
       } else {
+        document.cookie = `token=${data.token}; SameSite=None; Secure`
+        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+        console.log(axios.defaults.headers.common['Authorization']);
+        console.log(document.cookie)
+        console.log(data.token);
         setData({})
         setUser(data)
         localStorage.setItem('token', data.token)

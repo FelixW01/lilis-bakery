@@ -1,9 +1,10 @@
 const Order = require('../models/Order');
 
 // Create order
-const createOrder = (async (req, res) => {
-  const { userId, products, subTotal } = req.body;
-
+const createOrder = async (req, res) => {
+  const { products, subTotal } = req.body;
+  const userId = req.user.id;
+  
   try {
     const order = new Order({
       userId,
@@ -18,6 +19,6 @@ const createOrder = (async (req, res) => {
     console.error('Error creating order:', error);
     res.status(500).json({ success: false, error: 'Error creating order' });
   }
-});
+};
 
 module.exports = {createOrder};
