@@ -28,38 +28,47 @@ export default function Login() {
   const navigate = useNavigate();
 
    // Handles login of user
-  const handleFormSubmit = async (e) => {
-    try {
-      const response = await axios.post('/user/login', data, {
-        withCredentials: true
-      });
-      const responseData = response.data;
+const handleFormSubmit = async (values, e) => {
 
-      if (responseData.error) {
-        toast.error(responseData.error);
-      } else {
-        // Store token in local storage
-        localStorage.setItem('token', responseData.token);
+  try {
+    const response = await axios.post('/user/login', data, {
+      withCredentials: true
+    });
+    const responseData = response.data;
 
-        // Set Axios Authorization header
-        axios.defaults.headers.common['Authorization'] = `Bearer ${responseData.token}`;
+    if (responseData.error) {
+      toast.error(responseData.error);
+    } else {
+      // Set Axios Authorization header
+      const token = responseData.token;
 
-        // Update user context
-        setUser(responseData);
+      // Debugging
+      console.log('Received token:', token);
 
-        // Reset form fields
-        form.resetFields();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-        // Redirect user to home page
-        navigate('/');
+      // Debugging
+      console.log('Authorization header set:', axios.defaults.headers.common['Authorization']);
 
-        // Display success message
-        toast.success('Login Successful. Welcome!');
-      }
-    } catch (error) {
-      console.log(error);
+      // Update user context
+      setUser(responseData);
+
+      // Store token in local storage
+      localStorage.setItem('token', token);
+
+      // Reset form fields
+      form.resetFields();
+
+      // Redirect user to home page
+      navigate('/');
+
+      // Display success message
+      toast.success('Login Successful. Welcome!');
     }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div className={styles.backgroundContainer}>

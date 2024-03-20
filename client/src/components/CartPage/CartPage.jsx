@@ -17,8 +17,8 @@ export default function CartPage() {
   const token = localStorage.getItem('token');
 
   // Grabs cart information on mount
-    useEffect(() => {
-  const fetchCartData = async () => {
+  useEffect(() => {
+    const fetchCartData = async () => {
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -136,30 +136,6 @@ const deleteCartItem = async (itemId) => {
     updateCartQuantity(itemId, value);
   };
 
-  const handleCreateOrder = async () => {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    };
-    const body = {
-      products: cart.data.items,
-      subTotal: cart.data.subTotal,
-    };
-    try {
-      const response = await axios.post('/order', body, {
-        withCredentials: true,
-        headers: headers,
-      });
-      if (response.status === 201) {
-        console.log('Order created successfully', response.data);
-      } else {
-        console.error('Error creating order', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error creating order', error.message);
-  }
-};
-
   const handlePayment = async () => {
   try {
     const cartItems = cart.data.items;
@@ -190,7 +166,6 @@ const deleteCartItem = async (itemId) => {
       console.error('Error during payment', result.error.message);
     } else {
       console.log('Payment successful');
-      handleCreateOrder(); // Call handleCreateOrder only if payment is successful
     }
   } catch (error) {
     console.error('Error handling payment', error.message);

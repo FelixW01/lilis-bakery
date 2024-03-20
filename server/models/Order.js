@@ -6,12 +6,22 @@ const orderSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    items: [
-        {
+    items: [{
+        itemId: {
         type: Schema.Types.ObjectId,
         ref: "Food",
+        required: true,
         },
-    ],
+        name: String,
+        quantity: {
+            type: Number,
+            required: true,
+            min: 1,
+            default: 1
+        },
+        price: Number,
+        img: String
+      }],
     subTotal: {
         type: Number,
         match: [/^[0-9]*\.[0-9]{2}$/, "Must be in dollar format!"],

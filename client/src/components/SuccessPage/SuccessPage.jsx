@@ -1,30 +1,107 @@
 import styles from "./SuccessPage.module.css";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from "../../../context/userContext";
 
 export default function SuccessPage() {
-  
-  useEffect(() => {
-    // Retrieve the token from localStorage
-    const token = localStorage.getItem('token');
+  // Success payment
+  // Get cart info done -
+  // create an order based on cart info
+  // clear cart
+  // Where and how do you get cart info ??
+  // Context?
+const token = localStorage.getItem('token');
+const [loading, setLoading] = useState(true)
+const [cart, setCart] = useState([]);
+const {user} = useContext(UserContext)
+
+  if(!loading) {
+    console.log(cart, '<<<<<<<<<<<<<<<< cart')
+  }
+
+  const handleDeleteCart = async () => {
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     };
-    // Make a GET request to the "/success" endpoint
-    axios.get('/checkout/success', {
+    try {
+    const response = await axios.delete('/checkout', {
       withCredentials: true,
       headers: headers,
-    })
-      .then(response => {
-        // Handle the success response
-        console.log('Successfully reached the /success endpoint', response.data);
-      })
-      .catch(error => {
-        // Handle errors
-        console.error('Error reaching the /success endpoint', error);
+    });
+    if (response.status === 200) {
+      console.log('Cart deleted successfully', response.data);
+    } else {
+      console.error('Error deleting cart', response.data.message);
+    }
+    } catch {
+      console.error('Error deleting cart', error.message);
+    }
+  };
+
+  const handleCreateOrder = async () => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    };
+    const body = {
+      items: cart.data.items,
+      subTotal: cart.data.subTotal,
+    };
+    try {
+      const response = await axios.post('/order', body, {
+        withCredentials: true,
+        headers: headers,
       });
-  }, []); 
+      if (response.status === 201) {
+        console.log('Order created successfully', response.data);
+      } else {
+        console.error('Error creating order', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error creating order', error.message);
+  }
+};
+
+  useEffect(() => {
+    const fetchCartData = async () => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+     };
+      const data = {
+        userId: user.id,
+      };
+
+    try {
+      if (!user && !loading || !user.id && !loading) {
+        console.error('User information not available');
+        return;
+      }
+      const response = await axios.get(`/cart?userId=${user.id}`, {
+        withCredentials: true,
+        headers: headers,
+      });
+
+      if (response.status === 200 || loading) {
+        setCart(response.data);
+        setLoading(false);
+        handleCreateOrder(); // Call handleCreateOrder only if payment is successful
+        handleDeleteCart(); // Call handleDeleteOrder only if payment is successful
+      } else {
+        console.error('Error fetching cart data: Unexpected response structure', response.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error fetching cart data', error.message);
+      setLoading(false);
+    }
+  };
+  if(user) {
+    fetchCartData();
+  }
+}, [user, token, loading]);
+  
 
   return (
     <div className={styles.container}>
