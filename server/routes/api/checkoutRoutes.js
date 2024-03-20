@@ -44,7 +44,8 @@ try {
       }
 });
 
-const deleteCart = async (userId) => {
+router.delete('/', auth, async (req, res) => {
+  const userId = req.user.id;
   try {
     let cart = await Cart.findOne({ userId });
 
@@ -64,24 +65,8 @@ const deleteCart = async (userId) => {
     console.error('Error deleting cart:', error);
     throw new Error('Error deleting cart');
   }
-};
-
-
-// Route for handling successful payment
-router.get("/success", auth, async (req, res) => {
-    const userId = req.user.id;
-    try {
-    
-    // Clear the cart
-    await deleteCart(userId);
-
-    } catch (error) {
-        console.error('Error creating order:', error);
-        res.status(500).json({ error: 'Error creating order' });
-    }
 });
-      
-      
+
       
       
         
