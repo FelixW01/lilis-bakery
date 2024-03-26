@@ -17,6 +17,8 @@ import Profile from "./pages/Profile";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 
+import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoutes/ProtectedRoutes";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<Error />}>
@@ -24,43 +26,57 @@ const router = createBrowserRouter(
       <Route 
         path="login" 
         element={ 
+          <ProtectedRoute2>
             <Login />
+          </ProtectedRoute2>
       } 
       />
       <Route 
         path="register" 
         element={
+          <ProtectedRoute2>
             <Register />
+          </ProtectedRoute2>
       } 
       />
       <Route 
         path="cart" 
         element={
+          <ProtectedRoute>
             <Cart />
+          </ProtectedRoute>
       } 
       />
       <Route 
         path="Orders" 
         element={ 
+          <ProtectedRoute>
             <Orders />
+          </ProtectedRoute>
       } 
       />
       <Route 
         path="Profile" 
         element={ 
+          <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
       } 
       />
       <Route 
         path="Success" 
         element={ 
+          <ProtectedRoute>
             <Success />
+          </ProtectedRoute>
       } 
       />
       <Route 
         path="Cancel" 
         element={ 
+          <ProtectedRoute>
             <Cancel />
+          </ProtectedRoute>
       } 
       />
       

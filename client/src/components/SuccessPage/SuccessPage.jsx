@@ -4,20 +4,11 @@ import axios from 'axios';
 import { UserContext } from "../../../context/userContext";
 
 export default function SuccessPage() {
-  // Success payment
-  // Get cart info done -
-  // create an order based on cart info
-  // clear cart
-  // Where and how do you get cart info ??
-  // Context?
+
 const token = localStorage.getItem('token');
 const [loading, setLoading] = useState(true)
 const [cart, setCart] = useState([]);
 const {user} = useContext(UserContext)
-
-  if(!loading) {
-    console.log(cart, '<<<<<<<<<<<<<<<< cart')
-  }
 
   const handleDeleteCart = async () => {
     const headers = {
@@ -86,8 +77,11 @@ const {user} = useContext(UserContext)
       if (response.status === 200 || loading) {
         setCart(response.data);
         setLoading(false);
-        handleCreateOrder(); // Call handleCreateOrder only if payment is successful
-        handleDeleteCart(); // Call handleDeleteOrder only if payment is successful
+
+        if(cart && cart.data) {
+          handleCreateOrder(); // Call handleCreateOrder only if payment is successful
+          handleDeleteCart(); // Call handleDeleteOrder only if payment is successful
+        }
       } else {
         console.error('Error fetching cart data: Unexpected response structure', response.data);
         setLoading(false);

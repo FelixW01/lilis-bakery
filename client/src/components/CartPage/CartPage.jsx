@@ -39,7 +39,6 @@ export default function CartPage() {
 
       if (response.status === 200 || loading) {
         setCart(response.data);
-        console.log(response.data)
         setItemId(response.data.data.items[0].itemId);
         setLoading(false);
       } else {

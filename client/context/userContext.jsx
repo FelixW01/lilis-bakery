@@ -8,7 +8,9 @@ export const UserContext = createContext({})
 export function UserContextProvider({ children }) {
 const navigate = useNavigate();
 const [user, setUser] = useState(null);
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 const token = localStorage.getItem('token');
+
 // Get user data on mount
 useEffect(() => {
     const fetchUserData = async () => {
@@ -22,6 +24,7 @@ useEffect(() => {
 
         if (response.status === 200) {
           setUser(response.data);
+          setIsLoggedIn(true);
         } else {
           console.error('Error fetching user data:', response.data);
         }
@@ -55,7 +58,7 @@ const logout = async() => {
 
 
  return (
-    <UserContext.Provider value={{user, setUser, logout}}>
+    <UserContext.Provider value={{isLoggedIn, user, setUser, logout}}>
         {children}
     </UserContext.Provider>
  )
