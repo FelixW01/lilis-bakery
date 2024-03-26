@@ -5,6 +5,7 @@ import axios from "axios";
 import { UserContext } from "../../../context/userContext";
 import { Select } from 'antd';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
   // hard code itemId because we only have one item in the database
@@ -12,7 +13,8 @@ export default function HomePage() {
   const [quantity, setQuantity] = useState(0)
   const [foodList, setFoodList] = useState([{}])
   const {user} = useContext(UserContext)
-  
+  const navigate = useNavigate();
+
   // Grabs food information on mount
   useEffect(() => {
     const fetchFoodData = async () => {
@@ -30,6 +32,10 @@ export default function HomePage() {
   // Adds item to cart
   const addToCart = async () => {
     const token = localStorage.getItem('token');
+
+    if (!user) {
+      navigate('/login')
+    }
 
     if (!token) {
       console.error('Token not found');
