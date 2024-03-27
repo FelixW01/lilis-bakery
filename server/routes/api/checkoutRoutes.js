@@ -11,37 +11,34 @@ router.use("/", (req, res, next) => {
 });
 
 // Stripe Checkout
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
     const { products, userId, subTotal } = req.body;
     console.log('Products: ', products);
-try {
-    const lineItems = products.map((product) => ({
-        price_data: {
-            currency: 'usd',
-            product_data: {
-                name: product.name,
-                images: ['https://i.imgur.com/ms5gRpW.png']
+    try {
+        const lineItems = products.map((product) => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: product.name,
+                    images: ['https://i.imgur.com/ms5gRpW.png']
+                },
+                unit_amount: Math.round(product.price * 100)
             },
-            unit_amount: Math.round(product.price * 100)
-        },
-        quantity: product.quantity
-    }));
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: lineItems,
-        mode: 'payment',
-        success_url: 'http://127.0.0.1:5173/success',
-        cancel_url: 'http://127.0.0.1:5173/cancel',
-    })
+            quantity: product.quantity
+        }));
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: lineItems,
+            mode: 'payment',
+            success_url: 'http://127.0.0.1:5173/success',
+            cancel_url: 'http://127.0.0.1:5173/cancel',
+        });
 
-    res.json({id: session.id})
-
-    
-
-      } catch (error) {
+        res.json({ sessionId: session.id }); // Send session ID back to client
+    } catch (error) {
         console.error('Error during payment:', error);
         res.status(500).json({ error: 'Error during payment' });
-      }
+    }
 });
 
 router.delete('/', auth, async (req, res) => {

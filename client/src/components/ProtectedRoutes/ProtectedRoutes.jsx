@@ -1,13 +1,24 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../../context/UserContext";
-  
 
- export function ProtectedRoute({ children }) {
+function useToken() {
+ const [token, setToken] = useState(localStorage.getItem('token'));
+ const {isLoggedIn} = useContext(UserContext)
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem('token');
+    setToken(tokenFromStorage);
+  }, [isLoggedIn]); // Runs once on component mount
+
+  return token;
+}
+
+export function ProtectedRoute({ children }) {
   const {isLoggedIn} = useContext(UserContext)
   const location = useLocation();
-  const token = localStorage.getItem('token');
-
+  const token = useToken();
+  
   if (!isLoggedIn && !token) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
@@ -21,10 +32,23 @@ import { UserContext } from "../../../context/UserContext";
  export function ProtectedRoute2({ children }) {
   const {isLoggedIn} = useContext(UserContext)
   const location = useLocation();
-  if (isLoggedIn && token) {
-    return <Navigate to="/dashboard" state={{ from: location }} replace />;
+  const token = useToken();
+
+  if (token || isLoggedIn) {
+    return <Navigate to="/" state={{ from: location }} replace />;
   }
 
   return children;
 }
 
+export function SuccessRoute({ children }) {
+  const {isLoggedIn, isCheckedOut} = useContext(UserContext)
+  const location = useLocation();
+  const token = useToken();
+
+  if (!isLoggedIn && !token && !isCheckedOut) {
+    return <Navigate to="/" state={{ from: location }} replace />;
+  }
+
+  return children;
+}
