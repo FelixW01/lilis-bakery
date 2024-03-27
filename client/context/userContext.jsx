@@ -9,6 +9,8 @@ export function UserContextProvider({ children }) {
 const navigate = useNavigate();
 const [user, setUser] = useState(null);
 const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [isCheckedOut, setIsCheckedOut] = useState(false);
+
 const token = localStorage.getItem('token');
 
 // Get user data on mount
@@ -58,7 +60,7 @@ const logout = async() => {
 
 
  return (
-    <UserContext.Provider value={{isLoggedIn, user, setUser, logout}}>
+    <UserContext.Provider value={{isCheckedOut, setIsCheckedOut, isLoggedIn, user, setUser, logout}}>
         {children}
     </UserContext.Provider>
  )
