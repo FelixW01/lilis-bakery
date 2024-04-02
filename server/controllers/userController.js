@@ -7,7 +7,7 @@ const asyncHandler = require('express-async-handler')
 // Function to generate a token for a user
 const generateToken = (userId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: '5d',
+    expiresIn: '30d',
   });
 };
 
@@ -55,7 +55,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const token = jwt.sign(
       { email: user.email, id: user._id, name: user.name },
       process.env.JWT_SECRET,
-      { expiresIn: '5d' }
+      { expiresIn: '30d' }
     );
 
     // Set HttpOnly cookie

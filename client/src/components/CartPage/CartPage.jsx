@@ -4,7 +4,7 @@ import axios from "axios";
 import { Card, Select, Button} from 'antd';
 import { UserContext } from "../../../context/userContext";
 import { toast } from 'react-hot-toast';
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 export default function CartPage() {
 
