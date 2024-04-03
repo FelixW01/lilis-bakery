@@ -1,9 +1,9 @@
 import styles from "./OrdersPage.module.css";
 import React, { useState, useEffect, useContext} from "react";
 import { UserContext } from "../../../context/userContext";
-import { Card, Button} from 'antd';
+import { Avatar, Card, Skeleton, Switch } from 'antd';
 import axios from "axios";
-
+const { Meta } = Card;
 
 export default function OrdersPage() {
  const [loading, setLoading] = useState(true)
@@ -32,14 +32,14 @@ export default function OrdersPage() {
 
       if (response.status === 200 || loading) {
         setOrders(response.data);
-        setLoading(false);
+        // setLoading(false);
       } else {
         console.error('Error fetching order data: Unexpected response structure', response.data);
-        setLoading(false);
+        // setLoading(false);
       }
     } catch (error) {
       console.error('Error fetching order data', error.message);
-      setLoading(false);
+      // setLoading(false);
     }
   }
   if(user) {
@@ -51,16 +51,47 @@ export default function OrdersPage() {
     <>
     <div className={styles.container}>
       <div className={styles.cardDiv}>
-      {loading && orders.length === 0 
-      ? <h1>No orders found.</h1> 
-      : orders.map(order => (
-          <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
-            <div className={styles.imgDiv}>
-              <img src="images/nastar.png" alt="nastar" style={{width: 150, height: 150}}/>
-            </div>
-          </Card>
-        ))
-      }
+        {loading ? 
+        // Loading skeleton cards
+        <>
+          <Card style={{ width: 300, marginTop: 16 }}>
+            <Skeleton loading={loading} avatar active>
+              <Meta
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Skeleton>
+           </Card>
+           <Card style={{ width: 300, marginTop: 16 }}>
+            <Skeleton loading={loading} avatar active>
+              <Meta
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Skeleton>
+           </Card>
+           <Card style={{ width: 300, marginTop: 16 }}>
+            <Skeleton loading={loading} avatar active>
+              <Meta
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Skeleton>
+           </Card>
+        </>
+          : orders.length === 0
+            ? <h1>No orders found.</h1>
+            : orders.map(order => (
+              <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
+                <div className={styles.imgDiv}>
+                  <img src="images/nastar.png" alt="nastar" style={{ width: 150, height: 150 }} />
+                </div>
+              </Card>
+            ))
+        }
       </div>
     </div>
     </>
