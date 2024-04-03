@@ -15,6 +15,12 @@ export default function OrdersPage() {
   console.log(orders, '<<<<<<order')
  }
 
+   // Function to format the date string
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
  // Grabs order information on mount
  useEffect(() => {
   const fetchOrderData = async () => {
@@ -32,14 +38,14 @@ export default function OrdersPage() {
 
       if (response.status === 200 || loading) {
         setOrders(response.data);
-        // setLoading(false);
+        setLoading(false);
       } else {
         console.error('Error fetching order data: Unexpected response structure', response.data);
-        // setLoading(false);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Error fetching order data', error.message);
-      // setLoading(false);
+      setLoading(false);
     }
   }
   if(user) {
@@ -86,6 +92,7 @@ export default function OrdersPage() {
             ? <h1>No orders found.</h1>
             : orders.map(order => (
               <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
+                <p>Order Placed: {formatDate(order.createdAt)}</p>
                 <div className={styles.imgDiv}>
                   <img src="images/nastar.png" alt="nastar" style={{ width: 150, height: 150 }} />
                 </div>
