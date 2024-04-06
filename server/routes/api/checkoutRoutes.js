@@ -10,6 +10,23 @@ router.use("/", (req, res, next) => {
   next();
 });
 
+async function triggerUpdateCart(userId) {
+    try {
+        let cart = await Cart.findOne({ userId });
+        if (!cart) {
+            console.log('Cart not found');
+            return;
+        }
+
+        cart.isPaid = true;
+        await cart.save();
+
+        console.log('Cart updated successfully:', cart);
+    } catch (error) {
+        console.error('Error updating cart:', error);
+    }
+}
+
 // Stripe Checkout
 router.post("/", async (req, res) => {
     const { products, userId, subTotal } = req.body;
@@ -35,6 +52,9 @@ router.post("/", async (req, res) => {
         });
 
         res.json({ sessionId: session.id }); // Send session ID back to client
+        // Trigger the router.put endpoint to update cart status to 'isPaid' after successful payment
+        await triggerUpdateCart(userId);
+
     } catch (error) {
         console.error('Error during payment:', error);
         res.status(500).json({ error: 'Error during payment' });
@@ -51,6 +71,7 @@ router.delete('/', auth, async (req, res) => {
       cart.items = [];
       cart.subTotal = 0;
 
+      cart.isPaid = false;
       // Save the updated cart
       await cart.save();
 

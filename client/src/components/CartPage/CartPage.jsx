@@ -10,7 +10,7 @@ export default function CartPage() {
 
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true)
-  const {user, isCheckedOut, setIsCheckedOut} = useContext(UserContext)
+  const {user} = useContext(UserContext)
   const [itemId, setItemId] = useState()
   const [quantity, setQuantity] = useState(0)
   const [deleteItem, setDeleteItem] = useState(false)
@@ -136,44 +136,45 @@ const deleteCartItem = async (itemId) => {
   };
 
   const handlePayment = async () => {
-    try {
-        const cartItems = cart.data.items;
-        const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
+  try {
+    const cartItems = cart.data.items;
+    const stripe = await loadStripe('pk_test_51OqP0IP7dWwtNpQwfOkZutQr1AiOoFSSezFT1lvs9Ojhdprt4QZRHY4yySq96e0L0uSfsVXSCGuRasJJcoNJL6ve00GrFnqlg2');
 
-        const body = {
-            products: cartItems,
-            userId: cart.data.userId,
-            subTotal: cart.data.subTotal,
-        };
+    const body = {
+      products: cartItems,
+      userId: cart.data.userId,
+      subTotal: cart.data.subTotal,
+    };
 
-        const headers = {
-            'Content-Type': 'application/json',
-        };
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
-        // Send a POST request to server endpoint for payment
-        const response = await axios.post('/checkout', body, { headers });
+    // Send a POST request to server endpoint for payment
+    const response = await axios.post('/checkout', body, { headers });
 
-        // Extract the session ID from the response
-        const { sessionId } = response.data;
+    // Extract the session ID from the response
+    const { sessionId } = response.data;
 
-        // Use Stripe.js to redirect to checkout
-        const result = await stripe.redirectToCheckout({
-            sessionId: sessionId,
-        });
+    // Use Stripe.js to redirect to checkout
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionId,
+    });
 
-        // Set isCheckedOut to true upon successful checkout
-        if (result.error) {
-            console.error('Error during payment', result.error.message);
-        } else {
-            console.log('Payment successful');
-            setIsCheckedOut(true);
-        }
-    } catch (error) {
-        console.error('Error handling payment', error.message);
+    // Log the result after redirection
+    console.log(result, '<<<<<<<<<<<<<<<<<<<result');
+
+    if (result.error) {
+      console.error('Error during payment', result.error.message);
+    } else {
+      console.log('Payment successful');
     }
+  } catch (error) {
+    console.error('Error handling payment', error.message);
+  }
 };
 
-  
+  {!loading ? console.log(cart.data.isPaid) : console.log('loading...')}
   return (
     <>
     <div className={styles.cartContainer}>
