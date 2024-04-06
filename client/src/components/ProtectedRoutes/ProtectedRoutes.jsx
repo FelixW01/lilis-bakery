@@ -34,7 +34,7 @@ export function ProtectedRoute({ children }) {
   const location = useLocation();
   const token = useToken();
 
-  if (token || user) {
+  if (user !== null) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
