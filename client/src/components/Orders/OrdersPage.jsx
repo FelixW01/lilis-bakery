@@ -5,6 +5,7 @@ import { Avatar, Card, Skeleton, Switch } from 'antd';
 import axios from "axios";
 const { Meta } = Card;
 
+
 export default function OrdersPage() {
  const [loading, setLoading] = useState(true)
  const token = localStorage.getItem('token');
@@ -53,6 +54,8 @@ export default function OrdersPage() {
   }
  }, [user, token, loading])
 
+
+  
   return (
     <>
     <div className={styles.container}>
@@ -93,8 +96,9 @@ export default function OrdersPage() {
             : orders.map(order => (
               <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
                 <p>Order Placed: {formatDate(order.createdAt)}</p>
+                <p>Total: ${order.subTotal}</p>
                 <div className={styles.imgDiv}>
-                  <img src="images/nastar.png" alt="nastar" style={{ width: 150, height: 150 }} />
+                  <img src="images/nastar.png" alt="nastar" style={{ width: 125, height: 125 }} />
                 </div>
               </Card>
             ))

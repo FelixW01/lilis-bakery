@@ -7,7 +7,7 @@ import {
   Button,
   Checkbox
 } from 'antd';
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 import styles from './LoginForm.module.css';
 import { motion } from 'framer-motion';
 import axios from 'axios';
