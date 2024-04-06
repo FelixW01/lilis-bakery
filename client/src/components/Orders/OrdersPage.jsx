@@ -12,9 +12,10 @@ export default function OrdersPage() {
  const [orders, setOrders] = useState([]);
  const {user} = useContext(UserContext)
  const [visibleOrders, setVisibleOrders] = useState(2); // Initial number of orders to display
- 
+
+
  if (!loading) {
-  console.log(orders, '<<<<<<order')
+  console.log(orders, '<<<<<<latest order')
  }
 
    // Function to format the date string
@@ -61,7 +62,6 @@ export default function OrdersPage() {
   }
  }, [user, token, loading])
 
-
   
   return (
     <>
@@ -106,6 +106,7 @@ export default function OrdersPage() {
                 <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
                   <p>Order Placed: {formatDate(order.createdAt)}</p>
                   <p>Total: ${order.subTotal}</p>
+                  <p>Order ID: {order._id}</p>
                   <div className={styles.imgDiv}>
                     <img src="images/nastar.png" alt="nastar" style={{ width: 100, height: 100 }} />
                   </div>

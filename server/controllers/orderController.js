@@ -21,6 +21,7 @@ const createOrder = async (req, res) => {
   }
 };
 
+// Get Order
 const getOrder = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -33,4 +34,19 @@ const getOrder = async (req, res) => {
   }
 }
 
-module.exports = {createOrder, getOrder};
+// Get Latest Order
+const getLatestOrder = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const latestOrder = await Order.findOne({ userId }).sort({ createdAt: -1 }).limit(1);
+    if (!latestOrder) {
+      return res.status(404).json({ success: false, message: 'No orders found' });
+    }
+    res.status(200).json({ success: true, order: latestOrder });
+  } catch (error) {
+    console.error('Error getting latest order:', error);
+    res.status(500).json({ success: false, error: 'Error getting latest order' });
+  }
+}
+
+module.exports = {createOrder, getOrder, getLatestOrder};
