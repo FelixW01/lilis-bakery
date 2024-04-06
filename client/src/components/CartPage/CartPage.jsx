@@ -174,7 +174,6 @@ const deleteCartItem = async (itemId) => {
   }
 };
 
-  {!loading ? console.log(cart.data.isPaid) : console.log('loading...')}
   return (
     <>
     <div className={styles.cartContainer}>
