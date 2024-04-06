@@ -30,11 +30,11 @@ export function ProtectedRoute({ children }) {
 }
 
  export function ProtectedRoute2({ children }) {
-  const {isLoggedIn} = useContext(UserContext)
+  const {isLoggedIn, user} = useContext(UserContext)
   const location = useLocation();
   const token = useToken();
 
-  if (token || isLoggedIn) {
+  if (token || user) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
