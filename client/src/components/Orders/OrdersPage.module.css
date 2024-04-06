@@ -16,8 +16,15 @@
 
 .cardDiv {
   margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .orderCard {
   margin: 2rem 0;
+}
+
+.button {
+  margin-bottom: 2rem;
+  background-color: var(--dark-cream);
 }
