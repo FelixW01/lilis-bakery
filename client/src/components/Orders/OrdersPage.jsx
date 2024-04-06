@@ -1,7 +1,7 @@
 import styles from "./OrdersPage.module.css";
 import React, { useState, useEffect, useContext} from "react";
 import { UserContext } from "../../../context/userContext";
-import { Avatar, Card, Skeleton, Switch } from 'antd';
+import { Avatar, Card, Skeleton, Button } from 'antd';
 import axios from "axios";
 const { Meta } = Card;
 
@@ -11,7 +11,8 @@ export default function OrdersPage() {
  const token = localStorage.getItem('token');
  const [orders, setOrders] = useState([]);
  const {user} = useContext(UserContext)
-
+ const [visibleOrders, setVisibleOrders] = useState(2); // Initial number of orders to display
+ 
  if (!loading) {
   console.log(orders, '<<<<<<order')
  }
@@ -21,6 +22,12 @@ export default function OrdersPage() {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+
+  // Increase the number of visible orders by a certain amount
+  const handleLoadMore = () => {
+    setVisibleOrders(prevVisibleOrders => prevVisibleOrders + 3);
+  };
+
 
  // Grabs order information on mount
  useEffect(() => {
@@ -58,53 +65,59 @@ export default function OrdersPage() {
   
   return (
     <>
-    <div className={styles.container}>
-      <div className={styles.cardDiv}>
-        {loading ? 
-        // Loading skeleton cards
-        <>
-          <Card style={{ width: 300, marginTop: 16 }}>
-            <Skeleton loading={loading} avatar active>
-              <Meta
-                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
-                title="Card title"
-                description="This is the description"
-              />
-            </Skeleton>
-           </Card>
-           <Card style={{ width: 300, marginTop: 16 }}>
-            <Skeleton loading={loading} avatar active>
-              <Meta
-                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
-                title="Card title"
-                description="This is the description"
-              />
-            </Skeleton>
-           </Card>
-           <Card style={{ width: 300, marginTop: 16 }}>
-            <Skeleton loading={loading} avatar active>
-              <Meta
-                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
-                title="Card title"
-                description="This is the description"
-              />
-            </Skeleton>
-           </Card>
-        </>
-          : orders.length === 0
-            ? <h1>No orders found.</h1>
-            : orders.map(order => (
-              <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
-                <p>Order Placed: {formatDate(order.createdAt)}</p>
-                <p>Total: ${order.subTotal}</p>
-                <div className={styles.imgDiv}>
-                  <img src="images/nastar.png" alt="nastar" style={{ width: 125, height: 125 }} />
-                </div>
+      <div className={styles.container}>
+        <div className={styles.cardDiv}>
+          {loading ? (
+            // Loading skeleton cards
+            <>
+              <Card style={{ width: 300, marginTop: 16 }}>
+                <Skeleton loading={loading} avatar active>
+                  <Meta
+                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                    title="Card title"
+                    description="This is the description"
+                  />
+                </Skeleton>
               </Card>
-            ))
-        }
+              <Card style={{ width: 300, marginTop: 16 }}>
+                <Skeleton loading={loading} avatar active>
+                  <Meta
+                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                    title="Card title"
+                    description="This is the description"
+                  />
+                </Skeleton>
+              </Card>
+              <Card style={{ width: 300, marginTop: 16 }}>
+                <Skeleton loading={loading} avatar active>
+                  <Meta
+                    avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                    title="Card title"
+                    description="This is the description"
+                  />
+                </Skeleton>
+              </Card>
+            </>
+          ) : orders.length === 0 ? (
+            <h1>No orders found.</h1>
+          ) : (
+            <>
+              {orders.slice(0, visibleOrders).map(order => (
+                <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
+                  <p>Order Placed: {formatDate(order.createdAt)}</p>
+                  <p>Total: ${order.subTotal}</p>
+                  <div className={styles.imgDiv}>
+                    <img src="images/nastar.png" alt="nastar" style={{ width: 100, height: 100 }} />
+                  </div>
+                </Card>
+              ))}
+              {visibleOrders < orders.length && ( // Render "Load More" button if there are more orders to load
+                <Button onClick={handleLoadMore} className={styles.button}>More Orders</Button>
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
-}
+};
