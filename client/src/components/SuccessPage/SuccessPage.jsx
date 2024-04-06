@@ -8,7 +8,7 @@ export default function SuccessPage() {
 const token = localStorage.getItem('token');
 const [loading, setLoading] = useState(true)
 const [cart, setCart] = useState([]);
-const {user, isCheckedOut, setIsCheckedOut} = useContext(UserContext)
+const {user} = useContext(UserContext)
 
   const handleDeleteCart = async () => {
     const headers = {
@@ -78,12 +78,9 @@ const {user, isCheckedOut, setIsCheckedOut} = useContext(UserContext)
         setCart(response.data);
         setLoading(false);
 
-        if(cart && cart.data) {
+        if(cart && cart.data && cart.data.isPaid) {
           handleCreateOrder(); // Call handleCreateOrder only if payment is successful
           handleDeleteCart(); // Call handleDeleteOrder only if payment is successful
-          console.log(isCheckedOut, '<<<<<<<BEFORE')
-          // setIsCheckedOut(false);
-          // console.log(isCheckedOut, '<<<<<<<AFTER')
         }
       } else {
         console.error('Error fetching cart data: Unexpected response structure', response.data);

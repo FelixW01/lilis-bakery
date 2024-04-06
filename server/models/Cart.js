@@ -30,6 +30,11 @@ const cartSchema = new Schema({
         orderby: Schema.Types.ObjectId,
         ref: "User"
     },
+    isPaid: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
     },
     {
         timestamps: true,
