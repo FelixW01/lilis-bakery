@@ -1,3 +1,3 @@
-import CancelPage from './CancelPage';
+import CancelPage from './CancelPage.jsx';
 
 export default CancelPage;
