@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "start http://127.0.0.1:5173/ & npm run dev",
+    "start": "cd server && node server.js",
     "dev": "npx concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
