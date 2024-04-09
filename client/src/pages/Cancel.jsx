@@ -1,4 +1,4 @@
-import CancelPage from '../components/CancelPage.jsx';
+import CancelPage from '../components/CancelPage';
 
 
 function Cart() {
