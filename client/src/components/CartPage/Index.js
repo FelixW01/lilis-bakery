@@ -1,3 +1,3 @@
-import CartPage from './CartPage.jsx';
+import CartPage from './CartPage';
 
 export default CartPage;

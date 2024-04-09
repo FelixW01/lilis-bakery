@@ -1,3 +1,3 @@
-import Profile from './ProfilePage.jsx';
+import Profile from './ProfilePage';
 
 export default Profile;

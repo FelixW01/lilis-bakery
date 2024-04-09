@@ -1,3 +1,3 @@
-import SuccessPage from './SuccessPage.jsx';
+import SuccessPage from './SuccessPage';
 
 export default SuccessPage;

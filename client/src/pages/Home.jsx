@@ -1,4 +1,4 @@
-import HomePage from '../components/HomePage.jsx';
+import HomePage from '../components/HomePage/';
 
 function Home() {
   return (

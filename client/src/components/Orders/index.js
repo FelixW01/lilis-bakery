@@ -1,3 +1,3 @@
-import Orders from './OrdersPage.jsx';
+import Orders from './OrdersPage';
 
 export default Orders;

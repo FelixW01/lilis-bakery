@@ -1,4 +1,4 @@
-import CartPage from '../components/CartPage.jsx';
+import CartPage from '../components/CartPage/';
 
 
 function Cart() {
