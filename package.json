@@ -2,6 +2,9 @@
   "name": "lilis-kitchen",
   "version": "1.0.0",
   "description": "E-commerce website for lili's kitchen.",
+  "engines": {
+    "node": "16.14.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "start http://127.0.0.1:5173/ & npm run dev",
@@ -22,7 +25,8 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
-    "prettier": "^3.0.2"
+    "prettier": "^3.0.2",
+    "vite": "^5.2.8"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",

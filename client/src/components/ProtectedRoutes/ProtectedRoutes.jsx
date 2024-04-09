@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../../context/userContext";
 
 function useToken() {
  const [token, setToken] = useState(localStorage.getItem('token'));
@@ -19,18 +19,16 @@ export function ProtectedRoute({ children }) {
   const location = useLocation();
   const token = useToken();
   
+  // If the user is not logged in and there is no token in local storage, redirect them to the login page
   if (!isLoggedIn && !token) {
-    // Redirect them to the /login page, but save the current location they were
-    // trying to go to when they were redirected. This allows us to send them
-    // along to that page after they login, which is a nicer user experience
-    // than dropping them off on the home page.
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
   return children;
 }
 
+// If the user is logged in, redirect them to the home page
  export function ProtectedRoute2({ children }) {
-  const {isLoggedIn, user} = useContext(UserContext)
+  const {user} = useContext(UserContext)
   const location = useLocation();
   const token = useToken();
 
@@ -41,14 +39,14 @@ export function ProtectedRoute({ children }) {
   return children;
 }
 
-export function SuccessRoute({ children }) {
-  const {isLoggedIn} = useContext(UserContext)
-  const location = useLocation();
-  const token = useToken();
+// export function SuccessRoute({ children }) {
+//   const {isLoggedIn} = useContext(UserContext)
+//   const location = useLocation();
+//   const token = useToken();
 
-  if (!isLoggedIn && !token) {
-    return <Navigate to="/" state={{ from: location }} replace />;
-  }
+//   if (!isLoggedIn && !token) {
+//     return <Navigate to="/" state={{ from: location }} replace />;
+//   }
 
-  return children;
-}
+//   return children;
+// }
