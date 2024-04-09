@@ -1,4 +1,4 @@
-import OrdersPage from '../components/Orders/OrdersPage';
+import OrdersPage from '../components/Orders/OrdersPage.jsx';
 
 function Orders() {
   return (

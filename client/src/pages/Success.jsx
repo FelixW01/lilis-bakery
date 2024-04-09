@@ -1,4 +1,4 @@
-import SuccessPage from '../components/SuccessPage';
+import SuccessPage from '../components/SuccessPage.jsx';
 
 
 function Cart() {
