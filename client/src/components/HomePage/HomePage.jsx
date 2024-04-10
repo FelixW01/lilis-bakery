@@ -3,7 +3,7 @@ import videoBG from "../../assets/nastar.mp4";
 import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../../../context/userContext";
-import { Select } from 'antd';
+import { Select, Button } from 'antd';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -112,6 +112,7 @@ export default function HomePage() {
         <div className={styles.price}>
             <p>{`$${foodList[0].price}`}</p>
             <Select
+            size="large"
             id="quantity"
             name="quantity"
             className={styles.quantity} 
@@ -127,12 +128,12 @@ export default function HomePage() {
              { value: '5', label: '5' },
       ]}
     />
-            <button onClick={addToCart}>Add to Cart</button>
+            <Button onClick={addToCart} className={styles.addToCartBtn} type='default' size='large'> Add to cart </Button>
+            
         </div>
       </div>
 
       <div className={styles.contact}>
-      
       </div>
     </>
   );

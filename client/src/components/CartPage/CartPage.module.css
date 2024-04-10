@@ -27,6 +27,11 @@
 
 .checkoutButton {
   background-color: var(--dark-cream);
+  text-decoration: none;
+}
+.checkoutButton:hover {
+  color: var(--black) !important;
+  border-color: var(--dark-cream) !important;
 }
 
 .deleteAnchor {
