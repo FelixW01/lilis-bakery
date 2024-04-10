@@ -83,8 +83,10 @@ const updateCartQuantity = async (itemId, newQuantity) => {
 
     if (response.status === 200) {
       console.log('Cart quantity updated successfully', response.data);
+      toast.success('Cart quantity updated')
     } else {
       console.log('Error updating cart quantity', response.data.message);
+      toast.error(data.error)
     }
   } catch (error) {
     console.error('Error updating cart quantity', error.message);
