@@ -5,7 +5,7 @@ require("dotenv").config();
 // db
 mongoose.set("strictQuery", false);
 mongoose
-	.connect('mongodb://127.0.0.1:27017/lilis-kitchen' || process.env.MONGO_URI , {
+	.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/lilis-kitchen'  , {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
