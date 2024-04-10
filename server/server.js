@@ -15,7 +15,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Length', 'Set-Cookie'],
 }
-
+// ['http://127.0.0.1:5173'], 
 // middleware
 app.use(cookieParser());
 app.use(cors(corsOptions));
