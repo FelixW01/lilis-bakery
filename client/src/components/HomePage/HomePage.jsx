@@ -76,11 +76,18 @@ export default function HomePage() {
     setQuantity(value);
   };
 
+  // Checks if user is on mobile
+  function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
   return (
     <>
 
       <div className={styles.main} id="main">
-      <video src={videoBG} autoPlay loop muted />
+      {isMobile() 
+      ? ( <video src={videoBG} loop muted playsInline autoPlay />) 
+      : (<video src={videoBG} loop muted autoPlay />)}
         <div className={styles.content}>
           <h3>Life's short, eat dessert first.</h3>
           <button><a href="#hero" className={styles.orderNow}>Order Now</a></button>
