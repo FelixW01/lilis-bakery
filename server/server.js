@@ -9,13 +9,13 @@ const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const corsOptions = {
-  origin: 'https://lilisbakery-81b213953aed.herokuapp.com',
+  origin: ['http://127.0.0.1:5173', 'https://lilisbakery-81b213953aed.herokuapp.com'],
   optionsSuccessStatus: 200,
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Content-Length', 'Set-Cookie'],
 }
-// ['http://127.0.0.1:5173'], 
+
 // middleware
 app.use(cookieParser());
 app.use(cors(corsOptions));
