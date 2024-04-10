@@ -96,7 +96,7 @@ video {
 }
 
 .description p {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   width: 35ch;
 }
 
@@ -108,6 +108,7 @@ video {
 }
 .price p {
   margin: 0.5rem;
+  font-size: 1rem;
 }
 
 .price button {
@@ -123,5 +124,18 @@ video {
   font-size: 0.75rem;
   text-align: center;
   margin-right: 0.5rem;
+}
+
+.addToCartBtn {
+  background-color: var(--dark-cream);
+  text-decoration: none;
+  margin-left: 0.25rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.addToCartBtn:hover {
+  color: var(--black) !important;
+  border-color: var(--dark-cream) !important;
 }
 /*  */
