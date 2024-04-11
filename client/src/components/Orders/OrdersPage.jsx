@@ -14,10 +14,6 @@ export default function OrdersPage() {
  const [visibleOrders, setVisibleOrders] = useState(2); // Initial number of orders to display
 
 
- if (!loading) {
-  console.log(orders, '<<<<<<latest order')
- }
-
    // Function to format the date string
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -103,7 +99,7 @@ export default function OrdersPage() {
           ) : (
             <>
               {orders.slice(0, visibleOrders).map(order => (
-                <Card key={order.id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
+                <Card key={order._id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
                   <p>Order Placed: {formatDate(order.createdAt)}</p>
                   <p>Total: ${order.subTotal}</p>
                   <p>Order ID: {order._id}</p>
