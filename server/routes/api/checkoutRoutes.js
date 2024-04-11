@@ -27,6 +27,14 @@ async function triggerUpdateCart(userId) {
     }
 }
 
+function getBaseUrl() {
+  if (process.env.NODE_ENV === 'production') {
+    return 'https://lilisbakery-81b213953aed.herokuapp.com';
+  } else {
+    return 'http://127.0.0.1:5173';
+  }
+}
+
 // Stripe Checkout
 router.post("/", async (req, res) => {
     const { products, userId, subTotal } = req.body;
@@ -47,8 +55,8 @@ router.post("/", async (req, res) => {
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'http://127.0.0.1:5173/success',
-            cancel_url: 'http://127.0.0.1:5173/cancel',
+            success_url: `${getBaseUrl()}/success`,
+            cancel_url: `${getBaseUrl()}/cancel`,
         });
 
         res.json({ sessionId: session.id }); // Send session ID back to client
