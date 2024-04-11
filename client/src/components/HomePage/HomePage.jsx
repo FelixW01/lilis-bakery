@@ -33,6 +33,12 @@ export default function HomePage() {
   const addToCart = async () => {
     const token = localStorage.getItem('token');
 
+    if (quantity === 0 || !quantity) {
+    console.log('Error adding item to cart: Quantity not selected');
+    toast.error('Please select a quantity');
+    return;
+  }
+
     if (!user) {
       navigate('/login')
     }
