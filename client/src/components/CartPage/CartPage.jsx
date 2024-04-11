@@ -1,10 +1,11 @@
 import styles from "./CartPage.module.css";
 import React, { useState, useEffect, useContext} from "react";
 import axios from "axios";
-import { Card, Select, Button} from 'antd';
+import { Card, Select, Button, Skeleton, Avatar} from 'antd';
 import { UserContext } from "../../../context/userContext";
 import { toast } from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
+const { Meta } = Card;
 
 export default function CartPage() {
 
@@ -175,7 +176,6 @@ const deleteCartItem = async (itemId) => {
     console.error('Error handling payment', error.message);
   }
 };
-
   return (
     <>
     <div className={styles.cartContainer}>
@@ -212,7 +212,28 @@ const deleteCartItem = async (itemId) => {
         </Card>
     </div>
     </>
-      ) : (<h2>{loading ? 'Loading...' : 'Your basket is empty.'}</h2>)}
+      ) : (<h2>{loading ? 
+      <>
+      <Card style={{ width: 300, marginTop: 16 }}>
+            <Skeleton loading={loading} avatar active>
+              <Meta
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Skeleton>
+        </Card> 
+        <Card style={{ width: 300, marginTop: 16 }}>
+            <Skeleton loading={loading} avatar active>
+              <Meta
+                avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+                title="Card title"
+                description="This is the description"
+              />
+            </Skeleton>
+      </Card> 
+      </>
+      : 'Your basket is empty.'}</h2>)}
       </div>
     </div>
     </>
