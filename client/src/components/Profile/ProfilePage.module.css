@@ -4,4 +4,5 @@
   align-items: center;
   justify-content: center;
   min-height: 90vh;
+  font-size: clamp(0.85rem, 1vw, 1.25rem);
 }
