@@ -105,7 +105,7 @@ export default function HomePage() {
       <div className={styles.about}>
       <h2>What is Nastar?</h2>
       <img src={foodList[0].img} className={styles.nastar}></img>
-      <div className={styles.description}>
+      <div className={styles.aboutDescription}>
         <p>{foodList[0].description}</p>
       </div>
       </div>

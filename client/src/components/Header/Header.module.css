@@ -68,6 +68,7 @@
   height: auto;
   padding: 0;
   text-decoration: none;
+  font-size: clamp(0.85rem, 0.8vw, 1rem);
 }
 
 .downOutlined {
@@ -77,6 +78,6 @@
 }
 
 .navIcon {
-  font-size: 1.1rem;
+  font-size: clamp(0.85rem, 1vw, 1.25rem);
   margin-right: 0.25rem;
 }
