@@ -91,15 +91,17 @@ export default function HomePage() {
     <>
 
       <div className={styles.main} id="main">
+       <div className={styles.videoWrapper}>
       {isMobile() 
-      ? ( <video src={videoBG} loop muted playsInline autoPlay />) 
+      ? (<video src={videoBG} loop muted playsInline autoPlay />) 
       : (<video src={videoBG} loop muted autoPlay />)}
         <div className={styles.content}>
           <h3>Life's short, eat dessert first.</h3>
           <button><a href="#hero" className={styles.orderNow}>Order Now</a></button>
         </div>
-      </div>
-
+       </div>
+      
+      
       <div className={styles.about}>
       <h2>What is Nastar?</h2>
       <img src={foodList[0].img} className={styles.nastar}></img>
@@ -141,6 +143,7 @@ export default function HomePage() {
 
       <div className={styles.contact}>
       </div>
+    </div>
     </>
   );
 }

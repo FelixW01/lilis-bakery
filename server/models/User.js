@@ -17,7 +17,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minlength: 8,
-    match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!"],
+    match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\w\p{P}]{8,}$/, "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!"],
   },
 });
 
