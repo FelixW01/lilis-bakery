@@ -1,7 +1,7 @@
 # Lili's Bakery
 
-## App Repo 
-https://github.com/FelixW01/lilis-bakery
+## Live Website 
+[https://github.com/FelixW01/lilis-bakery](https://lilisbakery-81b213953aed.herokuapp.com/)
 
 ## Description
 Welcome to Lili's Bakery. An e-commerce platform designed to provide a delightful online shopping experience for food enthusiasts, allowing you to explore, discover, and purchase Indonesian baked goods products from Lili's Bakery.
