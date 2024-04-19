@@ -13,6 +13,7 @@ Welcome to Lili's Bakery. An e-commerce platform designed to provide a delightfu
 - [Questions](#questions)
 
 ## App Demo
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/PlWWhpj49pc/0.jpg)](https://www.youtube.com/watch?v=PlWWhpj49pc)
 
 ## Installation
 To run locally, follow these steps:
