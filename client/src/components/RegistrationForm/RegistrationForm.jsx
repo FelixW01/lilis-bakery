@@ -111,7 +111,7 @@ export default function Register() {
               required: true,
               message: 'Please input your password!',
             },
-            { min: 8, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, message: "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!" },
+            { min: 8, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\w!@#$%^&*()-+=]*[^\s]?/, message: "Must have a minimum of eight characters, at least one uppercase letter, one lowercase letter and one number!" },
           ]}
         >
           <Input.Password
