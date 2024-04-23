@@ -5,15 +5,8 @@ const socials = [
     {
       instagram: {
       icon: "fa-brands fa-instagram",
-      href: "https://www.instagram.com/lilisbakery_/",
+      href: "https://www.instagram.com/lilisculinary/",
       name: "Instagram",
-    }
-  },
-  {
-    facebook: {
-      icon: "fa-brands fa-square-facebook",
-      href: "https://www.instagram.com/lilisbakery_/",
-      name: "Facebook",
     }
   },
   {
