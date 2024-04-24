@@ -118,7 +118,8 @@ export default function HomePage() {
           <p>{foodList[0].ingridients}</p>
         </div>
         <div className={styles.price}>
-            <p>{`$${foodList[0].price}`}</p>
+            
+            <label htmlFor="quantity"><p>{`$${foodList[0].price}`}</p></label>
             <Select
             size="large"
             id="quantity"

@@ -43,6 +43,7 @@ export default function Footer() {
              target="_blank"
              rel="noopener noreferrer" // Added for Security
              className={styles.socialsLink}
+             aria-label={name} // Add aria-label with the name of the social media platform
              >
               <i className={icon} alt={`${name}_icon`}></i>
             </a>
@@ -51,7 +52,9 @@ export default function Footer() {
         })}
         <li>
           <a href="mailto:felixwillem01@yahoo.com" className={styles.socialsLink}
-            ><i className="fa-solid fa-envelope"></i>
+          aria-label="Email" // Add aria-label for the email link
+            >
+            <i className="fa-solid fa-envelope"></i>
           </a>
         </li>
       </ul>
