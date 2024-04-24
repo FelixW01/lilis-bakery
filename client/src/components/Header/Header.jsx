@@ -24,7 +24,7 @@ export default function Header() {
   },{
     key: '3',
     label: (
-      <a type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
+      <a href="#logout" type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
     )
   },
 

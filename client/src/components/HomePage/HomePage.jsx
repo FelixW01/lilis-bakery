@@ -104,7 +104,7 @@ export default function HomePage() {
       
       <div className={styles.about}>
       <h2>What is Nastar?</h2>
-      <img src={foodList[0].img} className={styles.nastar}></img>
+      <img src={foodList[0].img} className={styles.nastar} alt={`${foodList[0].name}_img`}></img>
       <div className={styles.aboutDescription}>
         <p>{foodList[0].description}</p>
       </div>
@@ -112,7 +112,7 @@ export default function HomePage() {
 
       <div className={styles.hero} id="hero">
       <h2>Order Today!</h2>
-        <img src={foodList[0].img} className={styles.nastar}></img>
+        <img src={foodList[0].img} className={styles.nastar} alt={`${foodList[0].name}_img`}></img>
         <div className={styles.description}>
           <p>{`${foodList[0].name} | ${foodList[0].count} Pieces | ${foodList[0].weight}`}</p>
           <p>{foodList[0].ingridients}</p>
@@ -123,6 +123,7 @@ export default function HomePage() {
             size="large"
             id="quantity"
             name="quantity"
+            label="quantity"
             className={styles.quantity} 
             defaultValue="Quantity"
             style={{ width: 120 }}
