@@ -51,11 +51,14 @@ video {
 .orderNow {
   text-decoration: none;
   color: var(--black);
+  display: flex;
+  flex-direction: column;
 }
 
 .orderNow:hover {
   color: var(--black);
 }
+
 /* */
 
 /* About */

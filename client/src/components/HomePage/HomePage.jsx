@@ -97,7 +97,7 @@ export default function HomePage() {
       : (<video src={videoBG} loop muted autoPlay />)}
         <div className={styles.content}>
           <h3>Life's short, eat dessert first.</h3>
-          <button><a href="#hero" className={styles.orderNow}>Order Now</a></button>
+          <a href="#hero" className={styles.orderNow}><button>Order Now</button></a>
         </div>
        </div>
       

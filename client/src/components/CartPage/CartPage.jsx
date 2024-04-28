@@ -54,7 +54,7 @@ export default function CartPage() {
   if(user) {
     fetchCartData();
   }
-}, [user, token, loading, quantity, deleteItem]);
+}, [user, token, loading, quantity, deleteItem, cart]);
 
 
 // Function to update cart quantity
@@ -133,7 +133,7 @@ const deleteCartItem = async (itemId) => {
 }
 
 // Grabs the quantity selected, updates cart quantity.
-  const handleChange = (value) => {
+  const handleChange = (value) => { 
     setQuantity(value);
     updateCartQuantity(itemId, value);
   };
@@ -164,8 +164,6 @@ const deleteCartItem = async (itemId) => {
       sessionId: sessionId,
     });
 
-    // Log the result after redirection
-    console.log(result, '<<<<<<<<<<<<<<<<<<<result');
 
     if (result.error) {
       console.error('Error during payment', result.error.message);
