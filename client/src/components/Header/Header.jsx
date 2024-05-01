@@ -47,7 +47,7 @@ export default function Header() {
       {user ? 
       <div className={styles.navDiv2}>
       <Dropdown menu={{ items }} trigger={['hover']} lacement='bottomRight'>
-        <a onClick={(e) => e.preventDefault()} className={styles.navLink2}>{`Hi, ${capFirst(user.name)}`}<DownOutlined className={styles.downOutlined}/></a>
+        <a href="#" onClick={(e) => e.preventDefault()} className={styles.navLink2}>{`Hi, ${capFirst(user.name)}`}<DownOutlined className={styles.downOutlined}/></a>
       </Dropdown>
       </div>
       : <div className={styles.navDiv}>
