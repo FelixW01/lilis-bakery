@@ -29,7 +29,7 @@ export default function Footer() {
   return (
     <>
     <div className={styles.container}>
-    <a className={styles.upArrow} onClick={goToTop}><UpOutlined /></a>
+    <a href="#" className={styles.upArrow} onClick={goToTop}><UpOutlined /></a>
     <div className={styles.socialsDiv}>
       <ul className={styles.socialsUl}>
       {/* Loop through socials array */}
