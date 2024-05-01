@@ -38,7 +38,7 @@ export default function Header() {
    <nav className={styles.navbar}>
       <div className={styles.logoDiv}>
       {location.pathname === "/" ? 
-      <a href="#main"><img src={logo} alt='logo' className={styles.logo}></img></a> 
+      <a href="#main"><img src={logo} alt='logo' className={styles.logo} loading="lazy"></img></a> 
       : <Link to={'/'}>
           <img src={logo} alt='logo' className={styles.logo}/>
           </Link>}
