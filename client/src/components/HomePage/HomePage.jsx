@@ -93,8 +93,8 @@ export default function HomePage() {
       <div className={styles.main} id="main">
        <div className={styles.videoWrapper}>
       {isMobile() 
-      ? (<video src={videoBG} loop muted playsInline autoPlay />) 
-      : (<video src={videoBG} loop muted autoPlay />)}
+      ? (<video src={videoBG} loading="lazy" type="video/mp4" loop muted playsInline autoPlay />) 
+      : (<video src={videoBG} loading="lazy" type="video/mp4" loop muted autoPlay />)}
         <div className={styles.content}>
           <h3>Life's short, eat dessert first.</h3>
           <a href="#hero" className={styles.orderNow}><button>Order Now</button></a>

@@ -68,7 +68,7 @@ video {
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 18rem;
+  padding-top: 18rem;
 }
 
 .about p {
@@ -158,4 +158,12 @@ video {
 
 p {
   font-size: clamp(0.85rem, 1vw, 1.25rem);
+}
+
+@media (hover: none) {
+  .price button,
+  .addToCartBtn {
+    -webkit-tap-highlight-color: transparent; /* Disable tap highlight */
+    outline: none; /* Disable outline on focus */
+  }
 }

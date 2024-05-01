@@ -11,7 +11,7 @@ export default function OrdersPage() {
  const token = localStorage.getItem('token');
  const [orders, setOrders] = useState([]);
  const {user} = useContext(UserContext)
- const [visibleOrders, setVisibleOrders] = useState(2); // Initial number of orders to display
+ const [visibleOrders, setVisibleOrders] = useState(1); // Initial number of orders to display
 
 
    // Function to format the date string
