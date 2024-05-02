@@ -98,7 +98,7 @@ export default function OrdersPage() {
             <h1>No orders found.</h1>
           ) : (
             <>
-              {orders.slice(0, visibleOrders).map(order => (
+              {orders.slice(-visibleOrders).reverse().map(order => (
                 <Card key={order._id} title={order.items[0].name} bordered={false} style={{ width: 300 }} className={styles.orderCard}>
                   <p>Order Placed: {formatDate(order.createdAt)}</p>
                   <p>Total: ${order.subTotal}</p>
