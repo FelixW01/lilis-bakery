@@ -6,6 +6,7 @@ import { UserContext } from "../../../context/userContext";
 import { toast } from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
 const { Meta } = Card;
+import { motion } from 'framer-motion';
 
 export default function CartPage() {
 
@@ -174,6 +175,20 @@ const deleteCartItem = async (itemId) => {
     console.error('Error handling payment', error.message);
   }
 };
+
+const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: .1,
+      duration: .8,
+    },
+  },
+};
+
   return (
     <>
     <div className={styles.cartContainer}>
@@ -181,6 +196,12 @@ const deleteCartItem = async (itemId) => {
         {!loading && cart?.data?.items?.length > 0 ? 
         (
           <>
+          <motion.div
+        variants={fadeInAnimationVariants}
+        initial= "initial"
+        whileInView= "animate"
+        viewport={{ once: true }}
+      >
           <Card title={cart.data.items[0].name} bordered={false} style={{ width: 300 }}>
         <div className={styles.imgDiv}>
           <img src="images/nastar.png" alt="nastar" style={{width: 150, height: 150}}/>
@@ -209,6 +230,7 @@ const deleteCartItem = async (itemId) => {
       </div>
         </Card>
     </div>
+    </motion.div>
     </>
       ) : (<h2>{loading ? 
       <>

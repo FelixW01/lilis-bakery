@@ -6,6 +6,7 @@ import { UserContext } from "../../../context/userContext";
 import { Select, Button } from 'antd';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 export default function HomePage() {
   // hard code itemId because we only have one item in the database
@@ -87,10 +88,28 @@ export default function HomePage() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
+const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: .25,
+      duration: 1.25,
+    },
+  },
+};
+
   return (
     <>
-
-      <div className={styles.main} id="main">
+    <div className={styles.main} id="main">
+    <motion.div
+        initial= {{opacity: 0}}
+        whileInView= {{opacity: 1}}
+        transition= {{delay: .1, duration: .8}}
+        viewport={{ once: true }}
+      >
        <div className={styles.videoWrapper}>
       {isMobile() 
       ? (<video src={videoBG} loading="lazy" type="video/mp4" loop muted playsInline autoPlay />) 
@@ -100,16 +119,31 @@ export default function HomePage() {
           <a href="#hero" className={styles.orderNow}><button>Order Now</button></a>
         </div>
        </div>
+    </motion.div>
       
       
       <div className={styles.about}>
+      <motion.div
+        variants={fadeInAnimationVariants}
+        initial= "initial"
+        whileInView= "animate"
+        viewport={{ once: true }}
+      >
       <h2>What is Nastar?</h2>
       <img src={foodList[0].img} className={styles.nastar} alt={`${foodList[0].name}_img`}></img>
       <div className={styles.aboutDescription}>
         <p>{foodList[0].description}</p>
       </div>
+      </motion.div>
       </div>
+      
 
+      <motion.div
+        variants={fadeInAnimationVariants}
+        initial= "initial"
+        whileInView= "animate"
+        viewport={{ once: true }}
+      >
       <div className={styles.hero} id="hero">
       <h2>Order Today!</h2>
         <img src={foodList[0].img} className={styles.nastar} alt={`${foodList[0].name}_img`}></img>
@@ -142,9 +176,7 @@ export default function HomePage() {
             
         </div>
       </div>
-
-      <div className={styles.contact}>
-      </div>
+    </motion.div>
     </div>
     </>
   );
