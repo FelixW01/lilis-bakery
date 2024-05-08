@@ -4,7 +4,7 @@ import { UserContext } from "../../../context/userContext";
 import { Avatar, Card, Skeleton, Button } from 'antd';
 import axios from "axios";
 const { Meta } = Card;
-
+import { motion } from 'framer-motion';
 
 export default function OrdersPage() {
  const [loading, setLoading] = useState(true)
@@ -58,10 +58,28 @@ export default function OrdersPage() {
   }
  }, [user, token, loading])
 
-  
+ const fadeInAnimationVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      delay: .1,
+      duration: .8,
+    },
+  },
+ };
+
   return (
     <>
       <div className={styles.container}>
+      <motion.div
+        variants={fadeInAnimationVariants}
+        initial= "initial"
+        whileInView= "animate"
+        viewport={{ once: true }}
+      >
         <div className={styles.cardDiv}>
           {loading ? (
             // Loading skeleton cards
@@ -114,6 +132,7 @@ export default function OrdersPage() {
             </>
           )}
         </div>
+        </motion.div>
       </div>
     </>
   );
