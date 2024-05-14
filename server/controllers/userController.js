@@ -11,6 +11,33 @@ const generateToken = (userId) => {
   });
 };
 
+// Guest Login
+const guestLogin = asyncHandler(async (req, res) => {
+  const { name, email } = req.body;
+
+  try {
+    // Check if a guest with the same email already exists
+    let guest = await User.findOne({ email });
+
+    // If guest does not exist, create a new guest account
+    if (!guest) {
+      guest = await User.create({ name, email, isGuest: true });
+    }
+
+    // Retrieve the _id of the newly created or existing guest account
+    const guestId = guest._id;
+
+    // Generate JWT token for the guest using the guestId
+    const token = generateToken(guestId);
+
+    // Return the generated token
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error('Error during guest login:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
         const { name, email, password } = req.body;
@@ -92,4 +119,4 @@ const getMe = (req, res) => {
     }
 }
 
-module.exports = {registerUser, loginUser, getMe, logoutUser};
+module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin};
