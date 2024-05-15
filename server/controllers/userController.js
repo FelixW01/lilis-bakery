@@ -14,7 +14,7 @@ const generateToken = (userId) => {
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
         const { name, email, password } = req.body;
-        const userExists = await User.findOne({email})
+        const userExists = await User.findOne({ email });
         // Validate user input
         if(!name || !email || !password) {
             return res.status(400).json({
@@ -77,18 +77,15 @@ const guestLogin = asyncHandler(async (req, res) => {
   try {
     // Check if a guest with the same email already exists
     let guest = await User.findOne({ email });
-
     // If guest does not exist, create a new guest account
     if (!guest) {
       guest = await User.create({ name, email, isGuest: true });
     }
 
-    // Retrieve the _id of the newly created or existing guest account
-    const guestId = guest._id;
-
-    // Generate JWT token for the guest using the guest's email, name and _id
+    // write logic so this block only runs when mail is not found.
+    // Generate JWT token for the guest
     const token = jwt.sign(
-      { email: guest.email, id: guest._id, name: guest.name },
+      { email: guest.email, id: guest._id, name: guest.nae },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
@@ -98,10 +95,10 @@ const guestLogin = asyncHandler(async (req, res) => {
       name: guest.name,
       email: guest.email,
       token,
-    });
+    }); 
+    
 
     // Return the generated token and guest information
-    res.status(200).json({ token, name, email, guestId });
   } catch (error) {
     console.error('Error during guest login:', error);
     res.status(500).json({ error: 'Internal Server Error' });

@@ -96,7 +96,6 @@ export default function Login() {
   
         // Update user context
         setUser(responseData);
-        console.log(responseData)
         // Store token in local storage
         localStorage.setItem('token', token);
   
@@ -205,7 +204,7 @@ export default function Login() {
           <Link to="/register">Register</Link>
         </Paragraph>
       </Form>
-         <Button type="primary" onClick={showModal} className={styles.loginFormButton}>
+         <Button type="primary" onClick={showModal} className={styles.guestButton}>
           Guest Login
       </Button>
       <Modal
