@@ -11,33 +11,6 @@ const generateToken = (userId) => {
   });
 };
 
-// Guest Login
-const guestLogin = asyncHandler(async (req, res) => {
-  const { name, email } = req.body;
-
-  try {
-    // Check if a guest with the same email already exists
-    let guest = await User.findOne({ email });
-
-    // If guest does not exist, create a new guest account
-    if (!guest) {
-      guest = await User.create({ name, email, isGuest: true });
-    }
-
-    // Retrieve the _id of the newly created or existing guest account
-    const guestId = guest._id;
-
-    // Generate JWT token for the guest using the guestId
-    const token = generateToken(guestId);
-
-    // Return the generated token
-    res.status(200).json({ token });
-  } catch (error) {
-    console.error('Error during guest login:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
         const { name, email, password } = req.body;
@@ -96,6 +69,45 @@ const loginUser = asyncHandler(async (req, res) => {
     res.json({ error: 'Invalid email or password' });
   }
 });
+
+// Guest Login
+const guestLogin = asyncHandler(async (req, res) => {
+  const { name, email } = req.body;
+
+  try {
+    // Check if a guest with the same email already exists
+    let guest = await User.findOne({ email });
+
+    // If guest does not exist, create a new guest account
+    if (!guest) {
+      guest = await User.create({ name, email, isGuest: true });
+    }
+
+    // Retrieve the _id of the newly created or existing guest account
+    const guestId = guest._id;
+
+    // Generate JWT token for the guest using the guest's email, name and _id
+    const token = jwt.sign(
+      { email: guest.email, id: guest._id, name: guest.name },
+      process.env.JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+    // Set HttpOnly cookie with the token
+    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).json({
+      id: guest._id,
+      name: guest.name,
+      email: guest.email,
+      token,
+    });
+
+    // Return the generated token and guest information
+    res.status(200).json({ token, name, email, guestId });
+  } catch (error) {
+    console.error('Error during guest login:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 // Logout
  const logoutUser = (req, res) => {
