@@ -76,19 +76,17 @@ const guestLogin = asyncHandler(async (req, res) => {
 
   try {
     // Check if a guest with the same email already exists
-    let guest = await User.findOne({ email });
-    // If guest does not exist, create a new guest account
+    let guest = await User.findOne({ email, isGuest: false});
+
     if (!guest) {
       guest = await User.create({ name, email, isGuest: true });
-    }
-
-    // write logic so this block only runs when mail is not found.
-    // Generate JWT token for the guest
+      // Generate JWT token for the guest
     const token = jwt.sign(
-      { email: guest.email, id: guest._id, name: guest.nae },
+      { email: guest.email, id: guest._id, name: guest.name },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
+
     // Set HttpOnly cookie with the token
     res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).json({
       id: guest._id,
@@ -96,14 +94,16 @@ const guestLogin = asyncHandler(async (req, res) => {
       email: guest.email,
       token,
     }); 
-    
+    } else {
+      console.error('Account already exist');
+    }
 
-    // Return the generated token and guest information
   } catch (error) {
     console.error('Error during guest login:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 // Logout
