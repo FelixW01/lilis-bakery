@@ -13,37 +13,54 @@ const generateToken = (userId) => {
 
 // Register a new user
 const registerUser = asyncHandler(async (req, res) => {
-        const { name, email, password } = req.body;
-        const userExists = await User.findOne({ email });
-        // Validate user input
-        if(!name || !email || !password) {
-            return res.status(400).json({
-                error: 'Please enter all fields'
-            })
-        }
-        // Check if user exists
-        if(userExists) {
-            return res.status(400).json({
-                error: 'Email is taken already.'
-            })
-        } 
-        // Create User
-        const newUser = await User.create({
-            name,
-            email,
-            password
-        });
-        if(newUser) {
-        res.status(201).json({
-            id: newUser._id,
-            name: newUser.name,
-            email: newUser.email,
-            token: generateToken(newUser._id)
-        })
-        } else {
-            res.status(400).json({error: 'Invalid user data'})
-        }; 
-})
+  const { name, email, password } = req.body;
+
+  // Validate user input
+  if (!name || !email || !password) {
+    return res.status(400).json({
+      error: 'Please enter all fields',
+    });
+  }
+
+  // Check if a regular user (non-guest) with the same email already exists
+  const userExists = await User.findOne({ email, isGuest: false });
+  if (userExists) {
+    return res.status(400).json({
+      error: 'Email is taken already.',
+    });
+  }
+
+  // Check if a guest with the same email exists
+  let guest = await User.findOne({ email, isGuest: true });
+
+  let newUser;
+  if (guest) {
+    // Convert the guest account to a regular user account
+    guest.name = name;
+    guest.password = password;
+    guest.isGuest = false;
+    newUser = await guest.save();
+  } else {
+    // Create a new user account if no guest account exists
+    newUser = await User.create({
+      name,
+      email,
+      password,
+      isGuest: false,
+    });
+  }
+
+  if (newUser) {
+    res.status(201).json({
+      id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      token: generateToken(newUser._id),
+    });
+  } else {
+    res.status(400).json({ error: 'Invalid user data' });
+  }
+});
 
 // Logs user in
 const loginUser = asyncHandler(async (req, res) => {
@@ -76,11 +93,14 @@ const guestLogin = asyncHandler(async (req, res) => {
 
   try {
     // Check if a guest with the same email already exists
-    let guest = await User.findOne({ email, isGuest: false});
+    let guest = await User.findOne({ email, isGuest: true });
 
     if (!guest) {
+      // Create a new guest account if it doesn't exist
       guest = await User.create({ name, email, isGuest: true });
-      // Generate JWT token for the guest
+    }
+
+    // Generate JWT token for the guest
     const token = jwt.sign(
       { email: guest.email, id: guest._id, name: guest.name },
       process.env.JWT_SECRET,
@@ -88,15 +108,13 @@ const guestLogin = asyncHandler(async (req, res) => {
     );
 
     // Set HttpOnly cookie with the token
-    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true }).json({
+    res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
+    res.status(200).json({
       id: guest._id,
       name: guest.name,
       email: guest.email,
       token,
-    }); 
-    } else {
-      console.error('Account already exist');
-    }
+    });
 
   } catch (error) {
     console.error('Error during guest login:', error);
