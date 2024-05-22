@@ -34,11 +34,12 @@ useEffect(() => {
       }
     };
 
-    // Fetch user data only if user is not available
-    if (!user) {
+    // Fetch user data only if token is present
+    if (token) {
       fetchUserData();
     }
-  }, [token, user, setUser]);
+  }, [token, setUser, setIsLoggedIn]);
+
 
 // Logs out user
 const logout = async() => {
