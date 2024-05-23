@@ -75,14 +75,14 @@ const addCart = async (req, res) => {
 
 // Put route for updating cart quantity
 const updateCartQuantity = async (req, res) => {
-    const user = req.user._id;
-    const { itemId, newQuantity } = req.body;
+    
+    const { itemId, newQuantity, userId } = req.body;
 
     // Convert newQuantity to a number
     const parsedNewQuantity = parseInt(newQuantity, 10);
 
     try {
-        let cart = await Cart.findOne({ user });
+        let cart = await Cart.findOne({ userId });
 
         const itemIndex = cart.items.findIndex((item) => item.itemId == itemId);
         if (itemIndex > -1) {

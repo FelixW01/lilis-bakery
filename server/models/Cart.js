@@ -5,10 +5,6 @@ const cartSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    guest: {
-        email: String,
-        name: String,
-    },
     items: [{
         itemId: {
         type: Schema.Types.ObjectId,

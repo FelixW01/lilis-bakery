@@ -22,7 +22,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   }
 
-  // Check if a regular user (non-guest) with the same email already exists
+  // Check if a regular user with the same email already exists
   const userExists = await User.findOne({ email, isGuest: false });
   if (userExists) {
     return res.status(400).json({

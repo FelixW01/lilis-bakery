@@ -17,6 +17,8 @@ export default function CartPage() {
   const [quantity, setQuantity] = useState(0)
   const [deleteItem, setDeleteItem] = useState(false)
   const token = localStorage.getItem('token');
+  const [cartChanged, setCartChanged] = useState(false)
+
 
   // Grabs cart information on mount
   useEffect(() => {
@@ -25,9 +27,6 @@ export default function CartPage() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
      };
-      const data = {
-        userId: user.id,
-      };
 
     try {
       if (!user && !loading || !user.id && !loading) {
@@ -41,8 +40,11 @@ export default function CartPage() {
 
       if (response.status === 200 || loading) {
         setCart(response.data);
+        console.log(response.data, '<<<<<< response data')
+        cart ? console.log(cart.data.items[0].quantity) : console.log('loading...')
         setItemId(response.data.data.items[0].itemId);
         setLoading(false);
+        setCartChanged(false)
       } else {
         console.error('Error fetching cart data: Unexpected response structure', response.data);
         setLoading(false);
@@ -55,7 +57,7 @@ export default function CartPage() {
   if(user) {
     fetchCartData();
   }
-}, [user, token, loading, quantity, deleteItem, cart]);
+}, [user, token, loading, quantity, deleteItem, cartChanged]);
 
 
 // Function to update cart quantity
@@ -86,6 +88,7 @@ const updateCartQuantity = async (itemId, newQuantity) => {
     if (response.status === 200) {
       console.log('Cart quantity updated successfully', response.data);
       toast.success('Cart quantity updated')
+      setCartChanged(true);
     } else {
       console.log('Error updating cart quantity', response.data.message);
       toast.error(data.error)
@@ -93,6 +96,13 @@ const updateCartQuantity = async (itemId, newQuantity) => {
   } catch (error) {
     console.error('Error updating cart quantity', error.message);
   }
+};
+
+
+// Grabs the quantity selected, updates cart quantity.
+const handleChange = (value) => { 
+  setQuantity(value);
+  updateCartQuantity(itemId, value);
 };
 
 // deletes a cart item
@@ -132,12 +142,6 @@ const deleteCartItem = async (itemId) => {
     console.error('Error deleting item', error.message);
   }
 }
-
-// Grabs the quantity selected, updates cart quantity.
-  const handleChange = (value) => { 
-    setQuantity(value);
-    updateCartQuantity(itemId, value);
-  };
 
   const handlePayment = async () => {
   try {
