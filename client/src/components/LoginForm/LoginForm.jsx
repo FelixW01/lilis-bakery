@@ -45,13 +45,7 @@ export default function Login() {
       // Set Axios Authorization header
       const token = responseData.token;
 
-      // Debugging
-      console.log('Received token:', token);
-
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      // Debugging
-      console.log('Authorization header set:', axios.defaults.headers.common['Authorization']);
 
       // Update user context
       setUser(responseData);
@@ -59,13 +53,10 @@ export default function Login() {
       // Store token in local storage
       localStorage.setItem('token', token);
 
-      // Reset form fields
       form.resetFields();
 
-      // Redirect user to home page
       navigate('/');
 
-      // Display success message
       toast.success('Login Successful. Welcome!');
     }
   } catch (error) {
@@ -86,13 +77,7 @@ export default function Login() {
         // Set Axios Authorization header
         const token = responseData.token;
   
-        // Debugging
-        console.log('Received token:', token);
-  
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  
-        // Debugging
-        console.log('Authorization header set:', axios.defaults.headers.common['Authorization']);
   
         // Update user context
         setUser(responseData);

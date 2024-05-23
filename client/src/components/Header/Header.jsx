@@ -32,7 +32,7 @@ export default function Header() {
   function capFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-user ? console.log(user.name) : console.log('no user')
+  
   return (
     <>
    <nav className={styles.navbar}>
