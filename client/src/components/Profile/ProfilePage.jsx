@@ -7,6 +7,8 @@ export default function ProfilePage() {
     function capFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  
   return (
     <>
     <div className={styles.container}>
