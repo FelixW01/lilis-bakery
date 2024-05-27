@@ -100,14 +100,12 @@ const guestLogin = asyncHandler(async (req, res) => {
       guest = await User.create({ name, email, isGuest: true });
     }
 
-    // Generate JWT token for the guest
     const token = jwt.sign(
       { email: guest.email, id: guest._id, name: guest.name },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    // Set HttpOnly cookie with the token
     res.cookie('token', token, { httpOnly: true, sameSite: 'none', secure: true });
     res.status(200).json({
       id: guest._id,

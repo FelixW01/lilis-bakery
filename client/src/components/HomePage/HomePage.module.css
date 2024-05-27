@@ -59,6 +59,12 @@ video {
   color: var(--black);
 }
 
+.orderNow button:hover {
+  background-color: var(--mid-cream);
+  text-decoration: none;
+  color: var(--black);
+}
+
 /* */
 
 /* About */
@@ -152,7 +158,8 @@ video {
 
 .addToCartBtn:hover {
   color: var(--black) !important;
-  border-color: var(--dark-cream) !important;
+  border-color: var(--mid-cream) !important;
+  background-color: var(--mid-cream);
 }
 /*  */
 
