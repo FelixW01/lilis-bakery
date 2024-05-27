@@ -71,7 +71,7 @@ export default function HomePage() {
       toast.success('Item added to cart');
     } else {
       console.log('Error adding item to cart', response.data.message);
-      toast.error('Please select a quantity');;
+      toast.error('Please select a quantity');
     }
   } catch (error) {
     console.error('Error adding item to cart', error.message);
@@ -95,7 +95,7 @@ const fadeInAnimationVariants = {
   animate: {
     opacity: 1,
     transition: {
-      delay: .25,
+      delay: .2,
       duration: 1.25,
     },
   },

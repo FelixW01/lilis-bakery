@@ -187,8 +187,8 @@ const fadeInAnimationVariants = {
   animate: {
     opacity: 1,
     transition: {
-      delay: .1,
-      duration: .8,
+      delay: .2,
+      duration: .5,
     },
   },
 };

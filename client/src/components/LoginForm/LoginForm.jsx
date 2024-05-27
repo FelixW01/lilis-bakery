@@ -72,7 +72,8 @@ export default function Login() {
       const responseData = response.data;
   
       if (responseData.error) {
-        toast.error(responseData.error);
+        toast.error('Email already registered. Please login.')
+        // toast.error(responseData.error);
       } else {
         // Set Axios Authorization header
         const token = responseData.token;
@@ -94,7 +95,8 @@ export default function Login() {
         toast.success('Guest Login Successful. Welcome!');
       }
     } catch (error) {
-      console.log(error);
+      console.error('Login failed:', error);
+      toast.error('Email already registered. Please login.');
     }
   }
 
