@@ -46,6 +46,7 @@ video {
   background-color: var(--dark-cream);
   text-decoration: none;
   margin-left: 0.25rem;
+  color: var(--black);
 }
 
 .orderNow {
@@ -56,6 +57,11 @@ video {
 }
 
 .orderNow:hover {
+  color: var(--black);
+}
+
+.orderNow button:focus {
+  outline: none;
   color: var(--black);
 }
 
