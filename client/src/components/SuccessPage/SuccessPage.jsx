@@ -112,9 +112,8 @@ const [latestOrder, setLatestOrder] = useState(null);
         setLoading(false);
 
         if(cart && cart.data && cart.data.isPaid) {
-          handleCreateOrder(); // Call handleCreateOrder only if payment is successful
-          handleDeleteCart(); // Call handleDeleteOrder only if payment is successful
-          // Fetch latest order after creating and deleting cart
+          handleCreateOrder(); 
+          handleDeleteCart(); 
           fetchLatestOrder();
         }
       } else {
