@@ -28,6 +28,10 @@
   color: var(--black);
 }
 
+.socialsLink:hover {
+  color: var(--dark-gray);
+}
+
 .upArrow {
   text-decoration: none;
   color: var(--black);
