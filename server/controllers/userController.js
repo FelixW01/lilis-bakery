@@ -143,6 +143,24 @@ const getMe = (req, res) => {
         res.json(null)
     }
 }
+
+// Get User Data from DB
+ const getUser = asyncHandler(async (req, res) => {
+    const { email } = req.query;
+   try {
+      const user = await User.findOne({ email });
+      if ( !user ) {
+        return res.status(404).json({error: 'No user found with this email'})
+      } else {
+        res.status(200).json(user)
+      }
+    } catch {
+      console.error('Error getting user data:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+ })
+
+
  //Forgot Password
  const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
@@ -201,4 +219,4 @@ const resetPassword = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword};
+module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser};

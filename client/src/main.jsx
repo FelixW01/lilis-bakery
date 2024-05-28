@@ -35,9 +35,7 @@ const router = createBrowserRouter(
       <Route 
         path="register" 
         element={
-          <ProtectedRoute2>
             <Register />
-          </ProtectedRoute2>
       } 
       />
       <Route 
