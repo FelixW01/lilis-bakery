@@ -1,8 +1,8 @@
 const User = require("../models/User.js");
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const asyncHandler = require('express-async-handler')
-
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const asyncHandler = require('express-async-handler');
+const nodemailer = require('nodemailer');
 
 // Function to generate a token for a user
 const generateToken = (userId) => {
@@ -143,5 +143,62 @@ const getMe = (req, res) => {
         res.json(null)
     }
 }
+ //Forgot Password
+ const forgotPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: 'No user found with this email' });
+    }
 
-module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin};
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: 'Password Reset',
+      text: `You requested a password reset. Click the link to reset your password: ${process.env.CLIENT_URL}/reset-password?token=${token}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: 'Password reset email sent!' });
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+//Reset Password
+const resetPassword = asyncHandler(async (req, res) => {
+    const { token, password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.password = password;
+    await user.save();
+
+    res.status(200).json({ message: 'Password reset successful' });
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
+module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword};
