@@ -29,6 +29,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
 
    // Handles login of user
   const handleFormSubmit = async (values, e) => {
@@ -118,6 +119,29 @@ export default function Login() {
     setOpen(false);
   };
 
+  const showForgotPasswordModal = () => {
+    setForgotPasswordOpen(true);
+  };
+
+  const handleForgotPasswordCancel = () => {
+    setForgotPasswordOpen(false);
+  };
+
+  const handleForgotPasswordOk = async () => {
+    try {
+      await form.validateFields(['forgotEmail']);
+      const { email } = form.getFieldsValue();
+      const response = await axios.post('/user/forgot-password', { email: email });
+      toast.success('Password reset email sent!');
+      setForgotPasswordOpen(false);
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
+      toast.error('Error sending password reset email');
+    }
+  };
+
+  
+
   return (
     <div className={styles.backgroundContainer}>
     
@@ -135,6 +159,7 @@ export default function Login() {
         onFinish={handleFormSubmit}
       >
         <Title>Login</Title>
+        {/* Email */}
         <Form.Item
           label="Email"
           className={styles.formItem}
@@ -154,6 +179,8 @@ export default function Login() {
             type="email"
           />
         </Form.Item>
+
+        {/* Password */}
         <Form.Item
           label="Password"
           className={styles.formItem}
@@ -173,15 +200,54 @@ export default function Login() {
             type="password"
           />
         </Form.Item>
-        <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+          
+        {/* Remember me */}
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
+        {/* Forgot password */}
+          <a className={styles.loginFormForgot} href="#" onClick={showForgotPasswordModal}>
+            Forgot password
+          </a>
+      <Modal
+        title="Forgot Password"
+        open={forgotPasswordOpen}
+        onOk={handleForgotPasswordOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleForgotPasswordCancel}
+      >
+        <Card bordered={false} style={{ width: 300 }} className={styles.loginForm}>
+          <Form
+            form={form}
+            id="login-form"
+            layout="vertical"
+          >
+            <Form.Item
+              label="Email"
+              className={styles.formItem}
+              name="email"
+              value={data.email}
+              onChange={(e) => setData({...data, email: e.target.value})}
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter your email!',
+                },
+              ]}
+            >
+            <Input
+              placeholder="youremail@test.com"
+              name="email"
+               type="email"
+            />
+        </Form.Item>
+          </Form>
+        </Card>
+      </Modal>
+
+          
+        {/* Login button */}
         <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
           Login
         </Button>

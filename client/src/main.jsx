@@ -16,6 +16,7 @@ import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import ResetPassword from "./pages/ResetPassword";
 
 import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoutes/ProtectedRoutes";
 
@@ -79,8 +80,17 @@ const router = createBrowserRouter(
           </ProtectedRoute>
       } 
       />
+
+      <Route 
+        path="reset-password" 
+        element={ 
+            <ResetPassword />
+      } 
+      />
       
     </Route>
+    
+    
   )
 );
 
