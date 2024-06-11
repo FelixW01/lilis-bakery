@@ -161,6 +161,7 @@ const getMe = (req, res) => {
  })
 
 
+
  //Forgot Password
  const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
@@ -171,6 +172,39 @@ const getMe = (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    const emailTemplate = `
+            <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #d3b1a0;
+                        color: #8d665e;
+                        padding: 20px;
+                    }
+                    .container {
+                        background-color: #c8a494;
+                        padding: 20px;
+                        border-radius: 10px;
+                    }
+                    .message {
+                        margin-bottom: 20px;
+                    }
+                    .link {
+                        color: #000000;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h2>Password Reset</h2>
+                    <p class="message">You requested a password reset. Click the link below to reset your password:</p>
+                    <a class="link" href="${process.env.CLIENT_URL}/reset-password?token=${token}">${process.env.CLIENT_URL}/reset-password?token=${token}</a>
+                </div>
+            </body>
+            </html>
+        `;
 
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -184,7 +218,7 @@ const getMe = (req, res) => {
       from: process.env.EMAIL,
       to: user.email,
       subject: 'Password Reset',
-      text: `You requested a password reset. Click the link to reset your password: ${process.env.CLIENT_URL}/reset-password?token=${token}`,
+      html: emailTemplate,
     };
 
     await transporter.sendMail(mailOptions);
