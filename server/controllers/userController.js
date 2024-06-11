@@ -218,5 +218,34 @@ const resetPassword = asyncHandler(async (req, res) => {
   }
 });
 
+const resetPasswordFromProfile = asyncHandler(async (req, res) => {
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
 
-module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser};
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        if (!(await bcrypt.compare(currentPassword, user.password))) {
+            return res.status(401).json({ error: 'Invalid current password' });
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            return res.status(400).json({ error: 'New passwords do not match' });
+        }
+
+        // Hash the new password before saving it
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+
+        await user.save();
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser, resetPasswordFromProfile};
