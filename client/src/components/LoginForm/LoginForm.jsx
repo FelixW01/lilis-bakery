@@ -74,7 +74,6 @@ export default function Login() {
   
       if (responseData.error) {
         toast.error('Email already registered. Please login.')
-        // toast.error(responseData.error);
       } else {
         // Set Axios Authorization header
         const token = responseData.token;
