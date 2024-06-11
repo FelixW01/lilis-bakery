@@ -219,31 +219,45 @@ const resetPassword = asyncHandler(async (req, res) => {
 });
 
 const resetPasswordFromProfile = asyncHandler(async (req, res) => {
-    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+    const { currentPassword, newPassword, confirmNewPassword, userId } = req.body;
 
     try {
-        const user = await User.findById(req.user.id);
+
+        const user = await User.findById(userId);
 
         if (!user) {
+            console.error('User not found');
             return res.status(404).json({ error: 'User not found' });
         }
 
-        if (!(await bcrypt.compare(currentPassword, user.password))) {
+        // Verify current password
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            console.error('Invalid current password');
             return res.status(401).json({ error: 'Invalid current password' });
         }
 
+        // Check if new passwords match
         if (newPassword !== confirmNewPassword) {
+            console.error('New passwords do not match');
             return res.status(400).json({ error: 'New passwords do not match' });
         }
 
-        // Hash the new password before saving it
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
+        // Check if new password is the same as the current password
+        if (currentPassword === newPassword) {
+            console.error("New password can't be the same as the current password");
+            return res.status(400).json({ error: "New password can't be the same as the current password" });
+        }
 
+        user.password = newPassword;
+
+        // Save the user with the new password
         await user.save();
 
+        console.log('Password updated successfully');
         res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
+        console.error('Server error:', error);
         res.status(500).json({ error: 'Server error' });
     }
 });

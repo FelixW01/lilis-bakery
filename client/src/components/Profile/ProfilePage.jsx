@@ -22,6 +22,7 @@ export default function ProfilePage() {
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: '',
+    userId: ''
   })
 
     function capFirst(str) {
@@ -45,6 +46,7 @@ export default function ProfilePage() {
 
         if (response.status === 200) {
           setCurrentUser(response.data);
+          setData({userId: response.data._id})
           setLoading(false)
         } else {
           console.error('Error fetching user data:', response.data);
@@ -61,30 +63,34 @@ export default function ProfilePage() {
     }
   }, [user, token]);
 
-  const handleResetPassword = async (values) => {
-
+ const handleResetPassword = async (values) => {
     try {
-      const response = await axios.post('/user/reset-password-from-profile', data, {
-        withCredentials: true
-      })
-      const responseData = response.data;
-      console.log(responseData, '<<<<<<response data');
-      if (responseData.error) { 
-        console.log(responseData.error);
-        toast.error(responseData.message)
-        form.resetFields();
-      } else {
-        console.log(responseData.message);
-        toast.success('Password reset successful')
-        setOpen(false);
-        form.resetFields();
-        setData({})
-      }
+        const response = await axios.post('/user/reset-password-from-profile', data, {
+            withCredentials: true
+        });
+        const responseData = response.data;
 
+        if (responseData.error) {
+            console.log(responseData.error);
+            toast.error('responseData.error');
+            form.resetFields();
+        } else {
+            console.log(responseData.message);
+            toast.success('Password reset successful');
+            setOpen(false);
+            form.resetFields();
+            setData({});
+        }
     } catch (error) {
-      console.log(error);
+        console.error('Error resetting password:', error);
+        if (error.response && error.response.data) {
+            const errorMessage = error.response.data.error || 'An error occurred while resetting the password.';
+            toast.error(errorMessage);
+          } else {
+            toast.error('An unknown error occurred.');
+        }
     }
-  }
+};
 
  const fadeInAnimationVariants = {
   initial: {
@@ -113,9 +119,9 @@ export default function ProfilePage() {
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   };
+
   return (
     <>
       <div className={styles.container}>
