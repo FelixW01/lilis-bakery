@@ -1,14 +1,18 @@
 import styles from "./Header.module.css";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo-light.png';
+import DarkIcon from '../Icons/DarkIcon';
+import LightIcon from '../Icons/LightIcon';
 import { useLocation } from 'react-router-dom';
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
-import { Dropdown } from 'antd';
+import { Dropdown, Tooltip, Button, Typography} from 'antd';
 import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { useTheme } from '../../../context/themeContext';
 
 export default function Header() {
   const location = useLocation();
+  const [darkMode, setDarkMode] = useTheme();
   const {user, logout} = useContext(UserContext);
   const items = [
   {
@@ -27,8 +31,8 @@ export default function Header() {
       <a href="#logout" type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
     )
   },
+];
 
-]
   function capFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -43,18 +47,31 @@ export default function Header() {
           <img src={logo} alt='logo' className={styles.logo}/>
           </Link>}
       </div>
-      {/* if logged in, show logout, if logged out show login */}
-      {user ? 
       <div className={styles.navDiv2}>
+      <div className={styles.navDiv}>
+      <Tooltip placement='bottom' title={darkMode ? 'Light mode' : 'Dark mode'} className={styles.themeLogo}>
+            <Button
+              type='text'
+              onClick={() => {
+                setDarkMode(!darkMode);
+              }}
+              className={styles.themeBtn}
+            >
+              {darkMode ? <LightIcon /> : <DarkIcon />}
+            </Button>
+          </Tooltip>
+        </div>
+      <div className={styles.navDiv}>
+      {user ? 
       <Dropdown menu={{ items }} trigger={['hover']} lacement='bottomRight'>
         <a href="#" onClick={(e) => e.preventDefault()} className={styles.navLink2}>{`Hi, ${capFirst(user.name)}`}<DownOutlined className={styles.downOutlined}/></a>
       </Dropdown>
-      </div>
-      : <div className={styles.navDiv}>
+      : 
             <Link to='/login' className={styles.navLink}>Login</Link>
-      </div>
       }
+      </div>
       <div className={styles.navDiv}><Link to='/cart' className={styles.navLink}><ShoppingCartOutlined className={styles.navIcon} />Cart</Link></div>
+      </div>
     </nav>
     </>
   );

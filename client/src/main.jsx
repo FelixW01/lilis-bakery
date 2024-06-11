@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import ResetPassword from "./pages/ResetPassword";
+import { ThemeProvider } from "../context/themeContext";
 
 import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoutes/ProtectedRoutes";
 
@@ -94,6 +95,8 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+  <ThemeProvider>
     <RouterProvider router={router} />
+  </ThemeProvider>
   </React.StrictMode>
 )

@@ -1,6 +1,6 @@
 .logo {
-  max-height: 95%;
-  max-width: 60%;
+  height: clamp(3rem, 5vw, 4.5rem);
+  width: clamp(6.75rem, 10vw, 9.5rem);
 }
 
 .navbar {
@@ -26,7 +26,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 0.75rem 1rem;
+  margin: 0.75rem 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .navDiv {
+    margin: 0.75rem 0.25rem;
+  }
 }
 
 .navDiv2 {
@@ -80,4 +86,32 @@
 .navIcon {
   font-size: clamp(0.85rem, 1vw, 1.25rem);
   margin-right: 0.25rem;
+}
+
+.themeBtn {
+  padding: 0.2rem;
+  width: 34px;
+  height: 32px;
+}
+
+.themeBtn:hover {
+  background-color: transparent;
+}
+
+.themeBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.themeLogo {
+  text-decoration: none;
+  color: var(--black);
+  min-width: 4rem;
+}
+
+@media (max-width: 768px) {
+  .themeLogo {
+    min-width: 0;
+    max-width: 1.5rem;
+  }
 }
