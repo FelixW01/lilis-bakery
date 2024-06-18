@@ -95,7 +95,7 @@
 }
 
 .themeBtn:hover {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .themeBtn svg {
@@ -113,5 +113,6 @@
   .themeLogo {
     min-width: 0;
     max-width: 1.5rem;
+    margin-right: 0.7rem;
   }
 }
