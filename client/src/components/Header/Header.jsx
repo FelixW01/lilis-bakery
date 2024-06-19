@@ -6,7 +6,7 @@ import LightIcon from '../Icons/LightIcon';
 import { useLocation } from 'react-router-dom';
 import { useContext } from "react";
 import { UserContext } from "../../../context/userContext";
-import { Dropdown, Tooltip, Button, Typography} from 'antd';
+import { Dropdown, Tooltip, Button} from 'antd';
 import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useTheme } from '../../../context/themeContext';
 

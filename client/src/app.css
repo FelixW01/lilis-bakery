@@ -18,6 +18,10 @@
   --light-cream: #fffff8;
   --mid-cream: #c8a494;
   --dark-cream: #d3b1a0;
+
+  --navbar-bg-color: var(--dark-cream);
+  --navbar-text-color: var(--black);
+  --navbar-hover-color: var(--black);
 }
 
 html,
@@ -27,4 +31,19 @@ body {
   padding: 0;
   margin: 0;
   background-color: var(--cream);
+}
+
+.dark {
+  --background-color: #3b2f2f; /* Warm dark brown */
+  --text-color: var(--mid-cream); /* Light cream text */
+  --button-bg-color: #5c4033; /* Rich dark brown */
+  --button-text-color: var(--mid-cream); /* Light cream button text */
+  --accent-color: #c57b57; /* Warm accent color */
+
+  --navbar-bg-color: #2e2e2e; /* Darker background for navbar */
+  --navbar-text-color: var(--mid-cream); /* Light cream text for navbar */
+  --navbar-hover-color: #efb4a1; /* Warm hover color for navbar links */
+
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
