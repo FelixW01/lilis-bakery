@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark-cream);
+  background-color: var(--navbar-bg-color);
   min-height: 15dvh;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .socialsLink {
-  color: var(--black);
+  color: var(--navbar-text-color);
 }
 
 .socialsLink:hover {
@@ -34,6 +34,6 @@
 
 .upArrow {
   text-decoration: none;
-  color: var(--black);
+  color: var(--navbar-text-color);
   margin-top: 0.75rem;
 }

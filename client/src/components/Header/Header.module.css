@@ -8,7 +8,7 @@
   max-height: 13vh;
   width: 100%;
   display: flex;
-  background-color: var(--dark-cream);
+  background-color: var(--navbar-bg-color);
   flex-direction: row;
   justify-content: space-between;
   position: fixed;
@@ -40,7 +40,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 0.75rem 0.25rem;
+  margin: 0.75rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .navDiv {
+    margin: 0.75rem 0.25rem;
+  }
 }
 
 .logoDiv {
@@ -54,13 +60,13 @@
 
 .navLink {
   text-decoration: none;
-  color: var(--black);
+  color: var(--navbar-text-color);
   min-width: 4rem;
 }
 
 .navLink2 {
   text-decoration: none;
-  color: var(--black);
+  color: var(--navbar-text-color);
   min-width: 5rem;
   height: auto;
   margin-bottom: 0;
