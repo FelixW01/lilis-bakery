@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import ResetPassword from "./pages/ResetPassword";
+import Contact from "./pages/Contact";
 import { ThemeProvider } from "../context/themeContext";
 
 import {ProtectedRoute, ProtectedRoute2 } from "./components/ProtectedRoutes/ProtectedRoutes";
@@ -84,6 +85,13 @@ const router = createBrowserRouter(
         path="reset-password" 
         element={ 
             <ResetPassword />
+      } 
+      />
+
+      <Route 
+        path="Contact" 
+        element={ 
+            <Contact />
       } 
       />
       
