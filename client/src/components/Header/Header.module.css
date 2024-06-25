@@ -109,10 +109,8 @@
   height: 20px;
 }
 
-.themeLogo {
-  text-decoration: none;
-  color: var(--black);
-  min-width: 4rem;
+.LightIcon {
+  color: var(--mid-cream) !important;
 }
 
 @media (max-width: 768px) {
