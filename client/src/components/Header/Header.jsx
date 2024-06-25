@@ -50,7 +50,6 @@ export default function Header() {
       </div>
       <div className={styles.navDiv2}>
       <div className={styles.navDiv}>
-      <Tooltip placement='bottom' title={darkMode ? 'Light mode' : 'Dark mode'} className={styles.themeLogo}>
             <Button
               type='text'
               onClick={() => {
@@ -60,7 +59,6 @@ export default function Header() {
             >
               {darkMode ? <LightIcon /> : <DarkIcon />}
             </Button>
-          </Tooltip>
         </div>
       <div className={styles.navDiv}>
       {user ? 
