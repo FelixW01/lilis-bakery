@@ -16,7 +16,7 @@ export const ThemeProvider = ({ children }) => {
             document.body.classList.remove('dark');
         }
 
-        // Cleanup - remove the class when the component unmounts
+        // Remove the class when the component unmounts
         return () => {
             document.body.classList.remove('dark');
         };
