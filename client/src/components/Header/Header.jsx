@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo-light.png';
+import logoDark from '../../assets/logo-light-bg.png';
 import DarkIcon from '../Icons/DarkIcon';
 import LightIcon from '../Icons/LightIcon';
 import { useLocation } from 'react-router-dom';
@@ -36,15 +37,15 @@ export default function Header() {
   function capFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
-  
+
   return (
     <>
    <nav className={styles.navbar}>
       <div className={styles.logoDiv}>
       {location.pathname === "/" ? 
-      <a href="#main"><img src={logo} alt='logo' className={styles.logo} loading="lazy"></img></a> 
+      <a href="#main"><img src={darkMode ? logoDark : logo} alt='logo' className={styles.logo} loading="lazy"></img></a> 
       : <Link to={'/'}>
-          <img src={logo} alt='logo' className={styles.logo}/>
+          <img src={darkMode ? logoDark : logo} alt='logo' className={styles.logo}/>
           </Link>}
       </div>
       <div className={styles.navDiv2}>

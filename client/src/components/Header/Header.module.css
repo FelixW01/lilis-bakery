@@ -1,6 +1,6 @@
 .logo {
-  height: clamp(3rem, 5vw, 4.5rem);
-  width: clamp(6.75rem, 10vw, 9.5rem);
+  height: clamp(4.5rem, 4.5vw, 8rem);
+  width: clamp(5rem, 4.5vw, 8rem);
 }
 
 .navbar {
