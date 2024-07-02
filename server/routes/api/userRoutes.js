@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser, resetPasswordFromProfile} = require("../../controllers/userController.js");
+const {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser, resetPasswordFromProfile, sendEmail} = require("../../controllers/userController.js");
 const auth = require("../../middleware/auth.js");
 
 
@@ -12,7 +12,8 @@ router.post("/reset-password", resetPassword);
 router.post("/reset-password-from-profile", resetPasswordFromProfile);
 router.post("/forgot-password", forgotPassword);
 router.get("/me", auth, getMe);
-router.get("/getUser", auth, getUser)
+router.get("/getUser", auth, getUser);
+router.post("/send-email", sendEmail);
 
 // Export the router
 module.exports = router;
