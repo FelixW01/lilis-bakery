@@ -11,20 +11,36 @@ import { motion } from 'framer-motion';
 import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 export default function ContactPage() {
   const [form] = Form.useForm();
-  const [data, setData] = useState({
+  const initialState = {
     name: '',
     email: '',
     subject: '',
     message: '',
-  })
+  }
+  const [data, setData] = useState(initialState)
+  
+  const handleFormSubmit = async () => {
+    try {
+      const response = await axios.post('/user/send-email', data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log('submitted')
+    if(response.status === 200) {
+      toast.success(' Your message has been sent successfully!')
+      form.resetFields();
+      setData(initialState);
+      } else {
+        toast.error('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   return (

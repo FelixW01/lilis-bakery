@@ -161,6 +161,13 @@ const getMe = (req, res) => {
  })
 
 
+const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
 
  //Forgot Password
  const forgotPassword = asyncHandler(async (req, res) => {
@@ -205,14 +212,6 @@ const getMe = (req, res) => {
             </body>
             </html>
         `;
-
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
 
     const mailOptions = {
       from: process.env.EMAIL,
@@ -296,4 +295,26 @@ const resetPasswordFromProfile = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser, resetPasswordFromProfile};
+const sendEmail = asyncHandler(async (req, res) => { 
+  const { name, email, subject, message } = req.body;
+  const mailOptions = {
+      from: email,
+      replyTo: email,
+      to: process.env.EMAIL,
+      subject: subject || 'New message from your website',
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if ( error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ error: 'Internal Server error' });
+      } else {
+        console.log('Email sent:', info.response);
+        res.status(200).json({ message: 'Email sent successfully' });
+      }
+    })
+
+})
+
+module.exports = {registerUser, loginUser, getMe, logoutUser, guestLogin, forgotPassword, resetPassword, getUser, resetPasswordFromProfile, sendEmail};
