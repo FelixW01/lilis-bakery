@@ -91,7 +91,6 @@ const loginUser = asyncHandler(async (req, res) => {
 const guestLogin = asyncHandler(async (req, res) => {
   const { name, email } = req.body;
 
-  try {
     // Check if a guest with the same email already exists
     let guest = await User.findOne({ email, isGuest: true });
 
@@ -114,10 +113,6 @@ const guestLogin = asyncHandler(async (req, res) => {
       token,
     });
 
-  } catch (error) {
-    console.error('Error during guest login:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
 });
 
 
@@ -147,17 +142,12 @@ const getMe = (req, res) => {
 // Get User Data from DB
  const getUser = asyncHandler(async (req, res) => {
     const { email } = req.query;
-   try {
       const user = await User.findOne({ email });
       if ( !user ) {
         return res.status(404).json({error: 'No user found with this email'})
       } else {
         res.status(200).json(user)
       }
-    } catch {
-      console.error('Error getting user data:', error);
-      res.status(500).json({ error: 'Server error' });
-    }
  })
 
 
@@ -172,7 +162,6 @@ const transporter = nodemailer.createTransport({
  //Forgot Password
  const forgotPassword = asyncHandler(async (req, res) => {
     const { email } = req.body;
-  try {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: 'No user found with this email' });
@@ -223,17 +212,12 @@ const transporter = nodemailer.createTransport({
     await transporter.sendMail(mailOptions);
 
     res.status(200).json({ message: 'Password reset email sent!' });
-  } catch (error) {
-    console.error('Error sending password reset email:', error);
-    res.status(500).json({ error: 'Server error' });
-  }
 });
 
 //Reset Password
 const resetPassword = asyncHandler(async (req, res) => {
     const { token, password } = req.body;
 
-  try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
 
@@ -245,16 +229,10 @@ const resetPassword = asyncHandler(async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: 'Password reset successful' });
-  } catch (error) {
-    console.error('Error resetting password:', error);
-    res.status(500).json({ error: 'Server error' });
-  }
 });
 
 const resetPasswordFromProfile = asyncHandler(async (req, res) => {
     const { currentPassword, newPassword, confirmNewPassword, userId } = req.body;
-
-    try {
 
         const user = await User.findById(userId);
 
@@ -289,10 +267,6 @@ const resetPasswordFromProfile = asyncHandler(async (req, res) => {
 
         console.log('Password updated successfully');
         res.status(200).json({ message: 'Password updated successfully' });
-    } catch (error) {
-        console.error('Server error:', error);
-        res.status(500).json({ error: 'Server error' });
-    }
 });
 
 const sendEmail = asyncHandler(async (req, res) => { 

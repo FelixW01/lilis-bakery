@@ -24,23 +24,35 @@ export default function Register() {
   })
   
   // Handles registration of new user
-  const handleFormSubmit = async (e) => {
-    const {name, email, password} = data;
+  const handleFormSubmit = async () => {
+    const { name, email, password } = data;
+
     try {
-      const { data } = await axios.post('/user/register', {
-        name, email, password
-      });
-      if (data.error) {
-        toast.error(data.error)
-      } else {
-        setData({})
-        toast.success('Registration Successful. Welcome!')
-        navigate('/login')
-      }
+        const response = await axios.post('/user/register', {
+            name,
+            email,
+            password,
+        });
+
+        if (response.data.error) {
+            console.log(response.data.error);
+            toast.error(response.data.error);
+        } else {
+            setData({});
+            toast.success('Registration Successful. Welcome!');
+            navigate('/login');
+        }
     } catch (error) {
-      console.log(error)
+        // Check if the error response has data and error message
+        if (error.response && error.response.data && error.response.data.error) {
+            toast.error(error.response.data.error);
+        } else {
+            // Fallback for unexpected errors
+            console.error('Unexpected error:', error);
+            toast.error('An unexpected error occurred. Please try again.');
+        }
     }
-  }
+};
 
   return (
     <div className={styles.backgroundContainer}>
