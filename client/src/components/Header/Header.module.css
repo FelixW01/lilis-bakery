@@ -63,7 +63,29 @@
   color: var(--navbar-text-color);
   min-width: 4rem;
 }
+.contactLink {
+  text-decoration: none;
+  color: var(--navbar-text-color);
+  min-width: 4rem;
+  margin-right: 2rem;
+}
 
+@media screen and (max-width: 410px) {
+  .navLink {
+    font-size: 0.8rem;
+    max-width: 1rem !important;
+  }
+
+  .contactLink {
+    margin-right: 0.25rem;
+    font-size: 0.8rem;
+  }
+  .navDiv {
+    margin: 0.2rem 0rem;
+  }
+}
+@media screen and (max-width: 360px) {
+}
 .navLink2 {
   text-decoration: none;
   color: var(--navbar-text-color);

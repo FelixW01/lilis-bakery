@@ -27,7 +27,12 @@ export default function Header() {
       <Link to='/profile' className={styles.logoutButton}>Profile</Link>
     )
   },{
-    key: '3',
+     key: '3',
+    label: (
+      <Link to='/contact' className={styles.logoutButton}>Contact</Link>
+    )
+  },{
+    key: '4',
     label: (
       <a href="#logout" type='text' className={styles.logoutButton} onClick={logout}>Logout</a>
     )
@@ -66,7 +71,12 @@ export default function Header() {
         <a href="#" onClick={(e) => e.preventDefault()} className={styles.navLink2}>{`Hi, ${capFirst(user.name)}`}<DownOutlined className={styles.downOutlined}/></a>
       </Dropdown>
       : 
+      <>
+      <div className={styles.navDiv}>
+            <Link to='/contact' className={styles.contactLink}>Contact</Link>
             <Link to='/login' className={styles.navLink}>Login</Link>
+      </div>
+      </>
       }
       </div>
       <div className={styles.navDiv}><Link to='/cart' className={styles.navLink}><ShoppingCartOutlined className={styles.navIcon} />Cart</Link></div>
