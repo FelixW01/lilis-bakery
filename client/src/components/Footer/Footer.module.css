@@ -29,11 +29,15 @@
 }
 
 .socialsLink:hover {
-  color: var(--dark-gray);
+  color: var(--navbar-hover-color);
 }
 
 .upArrow {
   text-decoration: none;
   color: var(--navbar-text-color);
   margin-top: 0.75rem;
+}
+
+.upArrow:hover {
+  color: var(--navbar-hover-color);
 }

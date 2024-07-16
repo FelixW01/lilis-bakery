@@ -1,5 +1,7 @@
 import styles from "./Footer.module.css";
 import { UpOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { Tooltip } from 'antd';
 
 const socials = [
     {
@@ -35,27 +37,27 @@ export default function Footer() {
       {/* Loop through socials array */}
         {socials.map((social, index) => {
           const socialKey = Object.keys(social)[0]
-          const { icon, href, name} = social[socialKey]
+          const { icon, href, name } = social[socialKey]
           return (
+      <Tooltip title={name}>
         <li key={index}>
             <a
              href={href}
              target="_blank"
-             rel="noopener noreferrer" // Added for Security
+             rel="noopener noreferrer"
              className={styles.socialsLink}
-             aria-label={name} // Add aria-label with the name of the social media platform
+             aria-label={name}
              >
               <i className={icon} alt={`${name}_icon`}></i>
             </a>
         </li>
+      </Tooltip>
           )
         })}
         <li>
-          <a href="mailto:felixwillem01@yahoo.com" className={styles.socialsLink}
-          aria-label="Email" // Add aria-label for the email link
-            >
-            <i className="fa-solid fa-envelope"></i>
-          </a>
+          <Tooltip title="Contact">
+            <Link to='/contact' className={styles.socialsLink}> <i className="fa-solid fa-envelope"></i></Link>
+          </Tooltip> 
         </li>
       </ul>
     </div>
